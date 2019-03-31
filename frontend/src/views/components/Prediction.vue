@@ -42,7 +42,7 @@
                             <div class="col-md-3 py-3 border rounded">
                                 <label for=""><h5 class="text-secondary">Select methods to use for prediction.</h5></label>
                                  <div>
-                                    <base-checkbox v-model="predictionMethodToggles[index]" v-for="(method, index) in predictionMethods">
+                                    <base-checkbox v-model="predictionMethodToggles[index]" :key=method.id v-for="(method, index) in predictionMethods">
                                         <span class="toggle-text">{{method.name}}</span>
                                     </base-checkbox>
                                     <!-- <base-checkbox v-model="cctopToggle">CCTOP</base-checkbox>
@@ -64,6 +64,7 @@
         </section>
 </template>
 <script>
+// import { randomString } from "./stringUtils"; // for random key generation
 import ToolsToggler from "@/views/components/ToolsToggler"
 export default {
     data(){

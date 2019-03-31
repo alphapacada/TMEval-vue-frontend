@@ -24,7 +24,7 @@
                                 <form id="form_id" @submit="checkForm" method="post">
                                     <div class="form-group">
                                         <label for="">Fasta sequence</label>
-                                        <textarea class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
+                                        <textarea :class="{'is-invalid':errorSequence}" class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
                                         <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
                                             {{ errorSequence }}
                                         </div>
@@ -40,9 +40,21 @@
                                 
                             </div>
                             <div class="col-md-3 py-3 border rounded">
-                                <label for="">Select methods to use for prediction.</label>
-                                 <tools-toggler></tools-toggler>
+                                <label for=""><h5 class="text-secondary">Select methods to use for prediction.</h5></label>
+                                 <div>
+                                    <base-checkbox v-model="predictionMethodToggles[index]" v-for="(method, index) in predictionMethods">
+                                        <span class="toggle-text">{{method.name}}</span>
+                                    </base-checkbox>
+                                    <!-- <base-checkbox v-model="cctopToggle">CCTOP</base-checkbox>
+                                    <base-checkbox v-model="hmmtopToggle">HMMTOP</base-checkbox>
+                                    <base-checkbox v-model="philiusToggle">Philius</base-checkbox>
+                                    <base-checkbox v-model="otherToggle">Other Prediction</base-checkbox> -->
+                                    <div class="text-danger invalid-feedback" style="display: block;" v-show="errorToggle">
+                                            {{ errorToggle }}
+                                    </div>
+                                </div>
                             </div>
+
                         
                         </div>
                     </div>
@@ -56,8 +68,11 @@ import ToolsToggler from "@/views/components/ToolsToggler"
 export default {
     data(){
         return{
+            predictionMethods:[],
+            predictionMethodToggles:[],
             errorEmail: '',
             errorSequence: '',
+            errorToggle: '',
             usecctop: true,
             message: null,
             email: '',
@@ -75,6 +90,20 @@ export default {
         ToolsToggler.test();
         },
         checkForm(e) {
+            e.preventDefault();
+            var checkResults = [this.checkEmail(), this.checkSequence(),this.checkToggles()];
+            if(!checkResults.includes(false)){
+                this.submitForm();
+            }
+        },
+        validEmail: function (email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        },
+        setExample() {
+            this.sequence = this.example;
+        },
+        checkEmail(){
             if (!this.email) 
             {
                 this.errorEmail = 'Please fill in this field.';
@@ -88,38 +117,65 @@ export default {
             else
             {
                 this.errorEmail = '';
+                return true;
             }
-
+            return false;
+        },
+        checkSequence(){
             if(!this.sequence){
                 console.log('Empty textarea');
                 this.errorSequence = 'Please enter a sequence.';
             }
             else{
                 this.errorSequence = '';
+                return true;
             }
-            e.preventDefault();
+            return false;
         },
-        validEmail: function (email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
+        checkToggles(){
+            if(!(this.cctopToggle || this.hmmtopToggle || this.philiusToggle || this.otherToggle) )
+            {
+                this.errorToggle ='Please select a least 1 prediction method.';
+            }
+            else
+            {
+                this.errorToggle = '';
+                return true;
+            }
+            return false;
         },
-        setExample() {
-            this.sequence = this.example;
-        },
-        submitSequence() {
-            
+        submitForm() {
+            console.log("Form submitted!");
         },
         clearForm() {
             this.email = '';
             this.sequence = '';
             this.errorEmail = '';
             this.errorSequence = '';
+            this.errorToggle = '';
+            var i;
+            for(i = 0; i < this.predictionMethods.length; i++){
+                this.predictionMethodToggles[i] = true;
+            }
         }
 
 
     },
     mounted () {
+        var fakeApiResults ={
+            "methods":[
+            {"id":"0", "name":"CCTOP"}, 
+            {"id":"1", "name":"HMMTOP"},
+            {"id":"2", "name":"Philius"},
+            {"id":"3", "name":"Other prediction"}
+            ]
+        };
 
+        this.predictionMethods = fakeApiResults.methods;
+        var i;
+        for(i = 0; i < this.predictionMethods.length; i++){
+            this.predictionMethodToggles[i] = true;
+        }
         // this.axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
         // .then(response => (this.message = response))
     },
@@ -130,3 +186,8 @@ export default {
 
 </script>
 
+<style>
+.toggle-text{
+    font-size:1rem;
+}
+</style>

@@ -2,10 +2,11 @@
     <section class="section bg-secondary section-lg">
          <div class="container">
              <div class="pt-5">
+                 {{ msg }}
                     <h3 class="display-3">This tool assesses the performance accuracies of five Transmembrane Topology Prediction Methods.</h3>
                     </div>
                     <div class="">
-                    
+                        
 
                         <div class="">
                             <h4 class=""><a href ="http://www.enzim.hu/hmmtop/html/adv_submit.html">HMMTOP</a>
@@ -48,7 +49,10 @@ import JobSection from "@/views/components/JobSection.vue";
 export default {
     components:{
         JobSection
-    }
+    },
+    props: {
+    msg: String
+  }
 }
 </script>
 

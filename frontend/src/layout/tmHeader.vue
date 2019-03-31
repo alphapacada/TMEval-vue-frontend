@@ -2,7 +2,7 @@
     <header class="header-global">
         <base-nav class="navbar-main" transparent  title="Random titmle" type="success" effect="light" expand>
             <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-                <img src="img/brand/tmbrand.png" alt="logo">
+                <img src="img/brand/tmbrand.png" alt="logo" class="img-fluid">
             </router-link>
 
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
@@ -78,6 +78,23 @@ export default {
 </script>
 <style>
 .navbar-main{
-    position: fixed !important
+    position: fixed !important;
+    padding: 0px !important;
+    height: 60px !important;  
+    line-height: 1 !important;
 }
+.container{
+    padding: 0px 24px 0px 24px !important;
+}
+
+.nav-link{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.img-fluid{
+    max-height: 100%;
+    width:auto;
+}
+
 </style>

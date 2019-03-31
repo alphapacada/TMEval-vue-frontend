@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar"
+    <nav class="navbar navbar-sm"
          :class="[
             {'navbar-expand-lg': expand},
             {[`navbar-${effect}`]: effect},

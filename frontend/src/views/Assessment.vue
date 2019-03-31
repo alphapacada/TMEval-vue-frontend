@@ -23,10 +23,10 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="nav-item"><a class="nav-link active" href="#basics" aria-controls="basics" role="tab" data-toggle="tab">Basics</a></li>
-        <li role="presentation class=" nav-item"><a class="nav-link" href="#predRes" aria-controls="predRes" role="tab" data-toggle="tab">Prediction Results</a></li>
+        <li role="presentation" class=" nav-item"><a class="nav-link" href="#predRes" aria-controls="predRes" role="tab" data-toggle="tab">Prediction Results</a></li>
         <li role="presentation" class="nav-item"><a class="nav-link" href="#NtermRes" aria-controls="NtermRes" role="tab" data-toggle="tab">N-terminal Locations</a></li>
         <li role="presentation" class="nav-item"><a class="nav-link" href="#evalRes" aria-controls="evalRes" role="tab" data-toggle="tab">Performance Evaluation</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link href="#sovRes" aria-controls="sovRes" role="tab" data-toggle="tab">SOV</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#sovRes" aria-controls="sovRes" role="tab" data-toggle="tab">SOV</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">

@@ -134,19 +134,19 @@ export default {
             return false;
         },
         checkToggles(){
-            if(!(this.cctopToggle || this.hmmtopToggle || this.philiusToggle || this.otherToggle) )
-            {
-                this.errorToggle ='Please select a least 1 prediction method.';
-            }
-            else
+            if(this.predictionMethodToggles.includes(true))
             {
                 this.errorToggle = '';
                 return true;
             }
-            return false;
+            else
+            {
+                this.errorToggle = 'Please select at least 1 prediction method.';
+                return false;
+            }
         },
         submitForm() {
-            console.log("Form submitted!");
+            console.log('Form submitted!');
         },
         clearForm() {
             this.email = '';

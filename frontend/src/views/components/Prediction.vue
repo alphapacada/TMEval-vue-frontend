@@ -29,7 +29,21 @@
                                             {{ errorSequence }}
                                         </div>
                                     </div>
-                                    
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-1 my-auto pr-0 text-center">
+                                                <span>or</span>
+                                            </div>
+                                            <div class="col-11">
+                                                <b-form-file
+                                                    v-model="file"
+                                                    :state="Boolean(file)"
+                                                    placeholder="Choose a file..."
+                                                    drop-placeholder="Drop file here..."
+                                                    ></b-form-file>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <base-input :error="errorEmail" v-model="email" label="Email (for batch submissions)" >
                                         <!-- <template name="label">ajijij</template> -->
                                     </base-input>
@@ -45,16 +59,12 @@
                                     <base-checkbox v-model="predictionMethodToggles[index]" :key=method.id v-for="(method, index) in predictionMethods">
                                         <span class="toggle-text">{{method.name}}</span>
                                     </base-checkbox>
-                                    <!-- <base-checkbox v-model="cctopToggle">CCTOP</base-checkbox>
-                                    <base-checkbox v-model="hmmtopToggle">HMMTOP</base-checkbox>
-                                    <base-checkbox v-model="philiusToggle">Philius</base-checkbox>
-                                    <base-checkbox v-model="otherToggle">Other Prediction</base-checkbox> -->
                                     <div class="text-danger invalid-feedback" style="display: block;" v-show="errorToggle">
                                             {{ errorToggle }}
                                     </div>
                                 </div>
                             </div>
-
+                            
                         
                         </div>
                     </div>
@@ -65,10 +75,12 @@
 </template>
 <script>
 // import { randomString } from "./stringUtils"; // for random key generation
+import BFormFile from 'bootstrap-vue/es/components/form-file/form-file'
 import ToolsToggler from "@/views/components/ToolsToggler"
 export default {
     data(){
         return{
+            file: null,
             predictionMethods:[],
             predictionMethodToggles:[],
             errorEmail: '',
@@ -83,7 +95,8 @@ export default {
         };
     },
     components: {
-        ToolsToggler
+        ToolsToggler,
+        "b-form-file": BFormFile,
     },
     methods:{
         test() {

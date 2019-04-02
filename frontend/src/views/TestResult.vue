@@ -14,25 +14,26 @@
                 <div class="col-sm-8">
                     <h1 class="text-white display-2">Prediction results</h1>
                 </div>
-                <div class="col-sm-4 dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select method
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+                <div class="col-sm-4">
+                    <base-dropdown>
+                        <base-button slot="title" type="secondary" class="dropdown-toggle">
+                            {{ selectedMethod }}
+                        </base-button>
+
+                       <li style="cursor:pointer" @click="setSelectedMethod(index)" class="dropdown-item" :key=method.id v-for="(method,index) in predictionMethods">{{ method.name }}</li>
+
+
+                    </base-dropdown>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <h5 class="text-white">Raw results</h5>
-                    <textarea class="form-control col" rows="20" readonly></textarea>
+                    <textarea v-model="rawResult" class="form-control col" rows="20" readonly></textarea>
                 </div>
                 <div class="col-sm-6">
                     <h5 class="text-white">Processed results</h5>
-                    <textarea class="form-control col" rows="20" readonly></textarea>
+                    <textarea v-model="processedResult" class="form-control col" rows="20" readonly></textarea>
                 </div>
             </div>
             </div>
@@ -40,7 +41,41 @@
     </section>
 </template>
 <script>
-export default {}
+export default {
+    data(){
+        return{
+            predictionMethods:[],
+            selectedMethod:'Method',
+            selectedMethodIndex: 0,
+            rawResult:'',
+            processedResult:''
+        }
+    },
+    mounted(){
+        var fakeApiResults ={
+            "methods":[
+            {"id":"0", "name":"CCTOP"}, 
+            {"id":"1", "name":"HMMTOP"},
+            {"id":"2", "name":"Philius"},
+            {"id":"3", "name":"Other prediction"}
+            ]
+        };
+        this.predictionMethods = fakeApiResults.methods;
+        this.selectedMethod = this.predictionMethods[0].name;
+
+        this.rawResult = 'Raw results for ' + this.selectedMethod;
+        this.processedResult = 'Refined results for ' + this.selectedMethod;
+    },
+    methods:{
+        setSelectedMethod(index){
+            this.selectedMethod = this.predictionMethods[index].name;
+            this.selectedMethodIndex = index;
+
+            this.rawResult = 'Raw results for ' + this.selectedMethod;
+            this.processedResult = 'Refined results for ' + this.selectedMethod;
+        }
+    }
+}
 </script>
 <style>
 textarea {

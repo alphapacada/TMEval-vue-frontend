@@ -24,17 +24,18 @@
                                 <form id="form_id" @submit="checkForm" method="post">
                                     <div class="form-group">
                                         <label for="">Fasta sequence</label>
-                                        <textarea :class="{'is-invalid':errorSequence}" class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
-                                        <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
-                                            {{ errorSequence }}
-                                        </div>
+                                        <textarea :disabled="Boolean(file)" :class="{'is-invalid':errorSequence}" class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
+                                        
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-1 my-auto pr-0 text-center">
+                                            <div v-if="!Boolean(file)" class="col-1 my-auto pr-0 text-center">
                                                 <span>or</span>
                                             </div>
-                                            <div class="col-11">
+                                            <div v-if="Boolean(file)" class="col-2 pr-0">
+                                                <base-button class="col" type="danger" v-on:click="removeFile">Remove</base-button>
+                                            </div>
+                                            <div :class="Boolean(file) ? 'col-10' : 'col-11'" @click="clearSequence">
                                                 <b-form-file
                                                     v-model="file"
                                                     :state="Boolean(file)"
@@ -43,6 +44,9 @@
                                                     ></b-form-file>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
+                                        {{ errorSequence }}
                                     </div>
                                     <base-input :error="errorEmail" v-model="email" label="Email (for batch submissions)" >
                                         <!-- <template name="label">ajijij</template> -->
@@ -116,6 +120,7 @@ export default {
         },
         setExample() {
             this.sequence = this.example;
+            this.file = null;
         },
         checkEmail(){
             if (!this.email) 
@@ -136,9 +141,13 @@ export default {
             return false;
         },
         checkSequence(){
-            if(!this.sequence){
+            if(!this.sequence && !Boolean(this.file)){
                 console.log('Empty textarea');
-                this.errorSequence = 'Please enter a sequence.';
+                this.errorSequence = 'Please enter a sequence or upload a file.';
+            }
+            else if(this.sequence && Boolean(this.file)){
+                console.log('This shouldnt be reached.');
+                this.errorSequence = 'Please input either a sequence or a file only.';
             }
             else{
                 this.errorSequence = '';
@@ -167,10 +176,17 @@ export default {
             this.errorEmail = '';
             this.errorSequence = '';
             this.errorToggle = '';
+            this.file = null;
             var i;
             for(i = 0; i < this.predictionMethods.length; i++){
                 this.predictionMethodToggles[i] = true;
             }
+        },
+        removeFile() {
+            this.file = null;
+        },
+        clearSequence() {
+            this.sequence = '';
         }
 
 

@@ -10,11 +10,12 @@
                v-b-popover.hover.top ="'Vivamus sagittis lacus vel augue laoreet rutrum faucibus.'"
                title="Popover On Left">On left
                 </base-button>
-                
-                 <topology
-                 ></topology>
-                 <topology></topology>
-                 <topology></topology>
+                <div v-for="t in topologies" :key="t.id">
+                    <h6>{{t.name}}</h6>
+                    <topology :seq="t.sequence"></topology>
+                 </div>
+                 <!-- <topology></topology>
+                 <topology></topology> -->
     
              </div>
          </div>
@@ -34,14 +35,28 @@ export default {
     directives: {
         BTooltip,
         BPopover
-  }
-    // mounted(){
+    },
+    data(){
+        return{
+            topologies:[]
+        }
+    },
+    mounted(){
     //     new ProtVista({
     //     el:yourDiv,
     //     uniprotacc: 'P05067',
     //     inclusions: ['TOPOLOGY']
     //     });
-    // }
+        var fakeApiResults ={
+            "data":[
+            {"id":"0", "name":"CCTOP", "sequence":"oooiiMMMMMMMMMiioooo"}, 
+            {"id":"1", "name":"HMMTOP", "sequence":"oooiiMMMiiMMMMiioooo"},
+            {"id":"2", "name":"Philius", "sequence":"oooiiMMiiioooMMMMiioooo"},
+            {"id":"3", "name":"Other prediction", "sequence":"oooiiMMMMiiiiioooo"}
+            ]
+        };
+        this.topologies = fakeApiResults.data;
+    }
     
 }
 </script>

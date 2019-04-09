@@ -11,10 +11,10 @@
         <div class="container shape-container align-items-center">
             <div  id="content-result">
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-md-9">
                     <h1 class="text-white display-2">Prediction results</h1>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-md-3 align-items-right">
                     <base-dropdown>
                         <base-button slot="title" type="secondary" class="dropdown-toggle">
                             {{ selectedMethod }}

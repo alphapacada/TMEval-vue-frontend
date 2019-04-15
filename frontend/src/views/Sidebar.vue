@@ -4,9 +4,8 @@
     <div id="sidebar-container" class="col-md-3">
         <v-navigation-drawer
     stateless
-    floating="true"
-    value="true"
-  >
+    :floating="true"
+    value="true">
     <v-list>
       
       <v-list-tile to="/sidebartest/assessment">

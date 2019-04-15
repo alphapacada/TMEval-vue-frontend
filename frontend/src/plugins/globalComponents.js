@@ -13,7 +13,7 @@ import Icon from "../components/Icon";
 import BaseToggle from "../components/BaseToggle";
 import Tabs from "../components/Tabs/Tabs";
 import TabPane from "../components/Tabs/TabPane";
-
+import BaseDropdown from "../components/BaseDropdown";
 export default {
   install(Vue) {
     Vue.component(Badge.name, Badge);
@@ -31,6 +31,6 @@ export default {
     Vue.component(BaseToggle.name, BaseToggle);
     Vue.component(Tabs.name, Tabs);
     Vue.component(TabPane.name, TabPane);
-
+    Vue.component(BaseDropdown.name, BaseDropdown);
   }
 };

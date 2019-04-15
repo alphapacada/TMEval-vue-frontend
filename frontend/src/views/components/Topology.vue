@@ -7,7 +7,7 @@
                         <path class="up_pftv_highlight" d="M-1,-1" transform="translate(-1,-1)" height="40"></path>
                     </g> -->
                     <g class="up_pftv_category-viewer-group">
-                        <path v-for="p in paths"  v-b-tooltip.hover.top="p.popover.popover_msg" :title="p.popover.title" :class="p.class" :key="p.id" :d="p.d" :transform="p.transform">
+                        <path tabindex="0" v-for="p in paths" v-b-popover.hover.top="p.popover.popover_msg" :title="p.popover.title" :content="p.popover.popover_msg" :class="p.class" :key="p.id" :d="p.d" :transform="p.transform">
                             
                         </path>
                     
@@ -24,16 +24,12 @@
 </template>
 
 <script>
-export default {
-    name:'topology',
-    data() {
-        return {
-            paths:[
-            {
+/*
+{
                 name:"TOPOLOGY_0",
                 class:"up_pftv_feature up_pftv_topo_dom",
-                d:"M-0.48051948051948035,0L656.8701298701296,0L656.8701298701296,13L-0.48051948051948035,13Z",
-                transform:"translate(26.337662337662337,12.5)",
+                d:FeatureFactory.getFeature('transmem',1,10,300),
+                transform:"translate(0,12.5)",
                 popover:{
                     popover_msg :  "'I am popover content!'",
                     title: "Popover Title"
@@ -44,8 +40,8 @@ export default {
             {
                 name:"TOPOLOGY_1",
                 class:"up_pftv_feature up_pftv_transmem",
-                d:"M-0.48051948051948035,0L19.701298701298693,0L19.701298701298693,13L-0.48051948051948035,13Z",
-                transform:"translate(683.6883116883117,12.5)",
+                d:FeatureFactory.getFeature('topo_dom',1,10,200),
+                transform:"translate(300,12.5)",
                 popover:{
                     popover_msg :  "",
                     title: ""
@@ -63,10 +59,85 @@ export default {
             
             
             }
-        
-        ]
+            */
+import BPopover from "bootstrap-vue/es/directives/popover/popover";
+import FeatureFactory from 'ProtVista/src/FeatureFactory';
+export default {
+    name:'topology',
+    directives: {
+        BPopover
+    },
+    props:{
+        seq: String
+    },
+    data() {
+        return {
+            sequence:'',
+            paths:[]
         };
         
+    },
+    methods:{
+        loadPaths(){
+            console.log('+loadPaths()');
+            this.sequence = this.seq;
+            var length = this.sequence.length;
+            console.log('length: ' + length);
+            var newPath = {};
+            var tOffset = 0,
+                pathCount = 0,
+                currentLength = 0,
+                currentIndex = 0,
+                currentClass = '',
+                currentChar = '';
+                
+            if(length > 0)
+            {
+                currentChar = this.sequence.charAt(currentIndex);
+                for(currentIndex = 0;currentIndex <= length; currentIndex++)
+                {
+                    if(this.sequence.charAt(currentIndex) == currentChar)
+                    {
+                        currentLength++;
+                    }
+                    else
+                    {
+                        switch(currentChar)
+                        {
+                            case 'i':
+                            case 'o':
+                                currentClass = 'up_pftv_feature up_pftv_topo_dom';
+                                break;
+                            case 'M':
+                                currentClass = 'up_pftv_feature up_pftv_transmem';
+                                break;
+                        }
+                        newPath = {
+                        'name':"TOPOLOGY_" + pathCount,
+                        'class':currentClass,
+                        'd':FeatureFactory.getFeature('transmem',1,10,(currentLength / length) * 760 ),
+                        'transform':'translate(' + tOffset + ',12.5)',
+                        'popover':{
+                                'popover_msg' : currentLength.toString(),
+                                'title': 'Length'
+                            }
+                        };
+                        this.paths.push(newPath);
+                        currentChar = this.sequence.charAt(currentIndex);
+                        pathCount++;
+                        tOffset += (currentLength / length) * 760;
+                        currentLength = 0;
+                        currentIndex--;
+                    }
+                }
+
+            }
+            console.log('-loadPaths()');
+        }
+    },
+    mounted(){
+        console.log('Mounted!');
+        this.loadPaths();
     }
 }
 </script>

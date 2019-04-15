@@ -15,6 +15,7 @@ import Protvista from "./views/ProtvistaView.vue"
 import TableTest from "./views/TableTest.vue"
 import SideBar from "./views/Sidebar.vue"
 import Assessment from "./views/Assessment.vue"
+import TestResult from "./views/TestResult.vue"
 
 Vue.use(Router);
 
@@ -130,6 +131,15 @@ export default new Router({
                 { path: '/sidebartest/table', component: TableTest }
             ]
         },
+        {
+            path: "/testresults",
+            name: "testresults",
+            components: {
+                header: tmHeader,
+                default: TestResult,
+                footer: AppFooter
+            }
+        }
 
 
     ],

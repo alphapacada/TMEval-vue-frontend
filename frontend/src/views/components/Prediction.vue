@@ -24,12 +24,30 @@
                                 <form id="form_id" @submit="checkForm" method="post">
                                     <div class="form-group">
                                         <label for="">Fasta sequence</label>
-                                        <textarea :class="{'is-invalid':errorSequence}" class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
-                                        <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
-                                            {{ errorSequence }}
+                                        <textarea :disabled="Boolean(file)" :class="{'is-invalid':errorSequence}" class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div v-if="!Boolean(file)" class="col-1 my-auto pr-0 text-center">
+                                                <span>or</span>
+                                            </div>
+                                            <div v-if="Boolean(file)" class="col-2 pr-0">
+                                                <base-button class="col" type="danger" v-on:click="removeFile">Remove</base-button>
+                                            </div>
+                                            <div :class="Boolean(file) ? 'col-10' : 'col-11'" @click="clearSequence">
+                                                <b-form-file
+                                                    v-model="file"
+                                                    :state="Boolean(file)"
+                                                    placeholder="Choose a file..."
+                                                    drop-placeholder="Drop file here..."
+                                                    ></b-form-file>
+                                            </div>
                                         </div>
                                     </div>
-                                    
+                                    <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
+                                        {{ errorSequence }}
+                                    </div>
                                     <base-input :error="errorEmail" v-model="email" label="Email (for batch submissions)" >
                                         <!-- <template name="label">ajijij</template> -->
                                     </base-input>
@@ -45,16 +63,12 @@
                                     <base-checkbox v-model="predictionMethodToggles[index]" :key=method.id v-for="(method, index) in predictionMethods">
                                         <span class="toggle-text">{{method.name}}</span>
                                     </base-checkbox>
-                                    <!-- <base-checkbox v-model="cctopToggle">CCTOP</base-checkbox>
-                                    <base-checkbox v-model="hmmtopToggle">HMMTOP</base-checkbox>
-                                    <base-checkbox v-model="philiusToggle">Philius</base-checkbox>
-                                    <base-checkbox v-model="otherToggle">Other Prediction</base-checkbox> -->
                                     <div class="text-danger invalid-feedback" style="display: block;" v-show="errorToggle">
                                             {{ errorToggle }}
                                     </div>
                                 </div>
                             </div>
-
+                            
                         
                         </div>
                     </div>
@@ -65,10 +79,12 @@
 </template>
 <script>
 // import { randomString } from "./stringUtils"; // for random key generation
+import BFormFile from 'bootstrap-vue/es/components/form-file/form-file'
 import ToolsToggler from "@/views/components/ToolsToggler"
 export default {
     data(){
         return{
+            file: null,
             predictionMethods:[],
             predictionMethodToggles:[],
             errorEmail: '',
@@ -83,7 +99,8 @@ export default {
         };
     },
     components: {
-        ToolsToggler
+        ToolsToggler,
+        "b-form-file": BFormFile,
     },
     methods:{
         test() {
@@ -103,6 +120,7 @@ export default {
         },
         setExample() {
             this.sequence = this.example;
+            this.file = null;
         },
         checkEmail(){
             if (!this.email) 
@@ -123,9 +141,13 @@ export default {
             return false;
         },
         checkSequence(){
-            if(!this.sequence){
+            if(!this.sequence && !Boolean(this.file)){
                 console.log('Empty textarea');
-                this.errorSequence = 'Please enter a sequence.';
+                this.errorSequence = 'Please enter a sequence or upload a file.';
+            }
+            else if(this.sequence && Boolean(this.file)){
+                console.log('This shouldnt be reached.');
+                this.errorSequence = 'Please input either a sequence or a file only.';
             }
             else{
                 this.errorSequence = '';
@@ -134,19 +156,19 @@ export default {
             return false;
         },
         checkToggles(){
-            if(!(this.cctopToggle || this.hmmtopToggle || this.philiusToggle || this.otherToggle) )
-            {
-                this.errorToggle ='Please select a least 1 prediction method.';
-            }
-            else
+            if(this.predictionMethodToggles.includes(true))
             {
                 this.errorToggle = '';
                 return true;
             }
-            return false;
+            else
+            {
+                this.errorToggle = 'Please select at least 1 prediction method.';
+                return false;
+            }
         },
         submitForm() {
-            console.log("Form submitted!");
+            console.log('Form submitted!');
         },
         clearForm() {
             this.email = '';
@@ -154,10 +176,17 @@ export default {
             this.errorEmail = '';
             this.errorSequence = '';
             this.errorToggle = '';
+            this.file = null;
             var i;
             for(i = 0; i < this.predictionMethods.length; i++){
                 this.predictionMethodToggles[i] = true;
             }
+        },
+        removeFile() {
+            this.file = null;
+        },
+        clearSequence() {
+            this.sequence = '';
         }
 
 

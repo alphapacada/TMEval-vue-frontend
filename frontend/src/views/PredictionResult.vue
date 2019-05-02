@@ -34,19 +34,41 @@ export default {
     components:{
         JobSection
     },
+    
+    created() {
+        this.fetchData()
+        console.log(this.$route.query.jobId)
+
+    },
+    watch: {
+        // call again the method if the route changes
+        '$route': 'fetchData'
+    },
     methods: {
+        fetchData() {
+            this.error = null
+            if (this.$route.query.jobId) {
+                this.getLongTask()
+            }
+        },
+       
         postLongTask() {
+            
+            
              $backend.postLongTask()
              .then(responseData => {
-                 console.log(responseData)
+                console.log(responseData)
+                
                  //let status_url = responseHeaders['location'];
-                 let task_id = responseData['task_id']
+                let task_id = responseData['task_id']
+                this.$router.push({query: {jobId: task_id}})
+                this.getLongTask(this.$route.query.jobId)
                  
-                 this.updateProgress(task_id)
+                
              })
 
         },
-        updateProgress(task_id) {
+        getLongTask(task_id) {
             console.log(task_id)
             $backend.getLongTask(task_id) 
             .then(responseData => {
@@ -58,15 +80,18 @@ export default {
                 this.status = responseData['status'];
                 this.job_status = "Prediction Job: " + responseData['state']
                 if (responseData['state'] != 'PENDING' && responseData['state'] != 'PROGRESS') {
-                     if ('result' in responseData) {
-                    this.result = 'Result' + responseData['result'];
-                    } else {
+                    // if Job completed
+                    if ('result' in responseData) {
+                        this.result = 'Result' + responseData['result'];
+                        this.fetchPredictionResults(responseData['prediction'])
+                    } else { 
+                    // check if job failed. e.g. result == 'FAILURE'
                         this.result = 'Result' + responseData['state'];
                     }
                 }
                 else {
                     setTimeout( () =>{
-                        this.updateProgress(task_id);
+                        this.getLongTask(task_id);
                     },2000);
                 }
                
@@ -75,9 +100,13 @@ export default {
            
 
         },
+        //prediction_res -> a dict containing the results of the prediction 
+        fetchPredictionResults(prediction_res) {
+            console.log(prediction_res)
+        }
        
         // .then(response => (this.message = response))
-    }
+    },
 }
 
 

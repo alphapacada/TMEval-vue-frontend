@@ -1,6 +1,66 @@
 <template>
     
     <div id="topdiv">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            parameter1: 
+            <base-dropdown>    
+                <base-button slot="title" type="secondary" class="dropdown-toggle">
+                    {{ selectedParameter1Text }}
+                </base-button>
+                <li style="cursor:pointer" @click="setParameter1(index)" class="dropdown-item" :key=choice.value v-for="(choice,index) in parameter1Choices">{{ choice.text}}</li>
+            </base-dropdown>           
+          </div>
+          <div class="col-sm-4">
+              parameter2: 
+              <base-dropdown>
+                  <base-button slot="title" type="secondary" class="dropdown-toggle">
+                      {{ selectedParameter2Text }}
+                  </base-button>
+                  <li style="cursor:pointer" @click="setParameter2(index)" class="dropdown-item" :key=choice.value v-for="(choice,index) in parameter2Choices">{{ choice.text}}</li>
+              </base-dropdown>
+            </div>
+            <div class="col-sm-4">
+              parameter3: 
+              <base-dropdown>
+                  <base-button slot="title" type="secondary" class="dropdown-toggle">
+                      {{ selectedParameter3Text }}
+                  </base-button>
+                  <li style="cursor:pointer" @click="setParameter3(index)" class="dropdown-item" :key=choice.value v-for="(choice,index) in parameter3Choices">{{ choice.text}}</li>
+              </base-dropdown>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            parameter4: 
+            <base-dropdown>
+                <base-button slot="title" type="secondary" class="dropdown-toggle">
+                    {{ selectedParameter4Text }}
+                </base-button>
+                <li style="cursor:pointer" @click="setParameter4(index)" class="dropdown-item" :key=choice.value v-for="(choice,index) in parameter4Choices">{{ choice.text}}</li>
+            </base-dropdown>           
+          </div>
+          <div class="col-sm-4">
+              parameter5: 
+              <base-dropdown>
+                  <base-button slot="title" type="secondary" class="dropdown-toggle">
+                      {{ selectedParameter5Text }}
+                  </base-button>
+                  <li style="cursor:pointer" @click="setParameter5(index)" class="dropdown-item" :key=choice.value v-for="(choice,index) in parameter5Choices">{{ choice.text}}</li>
+              </base-dropdown>
+            </div>
+            <div class="col-sm-4">
+              parameter6: 
+              <base-dropdown>
+                  <base-button slot="title" type="secondary" class="dropdown-toggle">
+                      {{ selectedParameter6Text }}
+                  </base-button>
+                  <li style="cursor:pointer" @click="setParameter6(index)" class="dropdown-item" :key=choice.value v-for="(choice,index) in parameter6Choices">{{ choice.text}}</li>
+              </base-dropdown>
+            </div>
+        </div>
+      </div>
     <v-card-title>
       TMeval Results
       <v-spacer></v-spacer>
@@ -52,6 +112,24 @@
 export default {
     data () {
         return {
+        selectedParameter1Text:'A',
+        selectedParameter2Text:'A',
+        selectedParameter3Text:'A',
+        selectedParameter4Text:'A',
+        selectedParameter5Text:'A',
+        selectedParameter6Text:'A',
+        selectedParameter1Value:'a',
+        selectedParameter2Value:'a',
+        selectedParameter3Value:'a',
+        selectedParameter4Value:'a',
+        selectedParameter5Value:'a',
+        selectedParameter6Value:'a',
+        parameter1Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
+        parameter2Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
+        parameter3Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
+        parameter4Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
+        parameter5Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
+        parameter6Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
         search: '',
         rows: [5],
         mainHeaders: [
@@ -94,6 +172,38 @@ export default {
           ['Delete', 'delete']
         ]
         }
+    },
+    methods: {
+      setParameter1(index){
+        this.selectedParameter1Text = this.parameter1Choices[index].text;
+        this.selectedParameter1Value = this.parameter1Choices[index].value;
+        console.log('parameter1: '+ this.selectedParameter1Text + ':' + this.selectedParameter1Value);
+      },
+      setParameter2(index){
+        this.selectedParameter2Text = this.parameter2Choices[index].text;
+        this.selectedParameter2Value = this.parameter2Choices[index].value;
+        console.log('parameter2: '+ this.selectedParameter2Text + ':' + this.selectedParameter2Value);
+      },
+      setParameter3(index){
+        this.selectedParameter3Text = this.parameter3Choices[index].text;
+        this.selectedParameter3Value = this.parameter3Choices[index].value;
+        console.log('parameter3: '+ this.selectedParameter3Text + ':' + this.selectedParameter3Value);
+      },
+      setParameter4(index){
+        this.selectedParameter4Text = this.parameter4Choices[index].text;
+        this.selectedParameter4Value = this.parameter4Choices[index].value;
+        console.log('parameter4: '+ this.selectedParameter4Text + ':' + this.selectedParameter4Value);
+      },
+      setParameter5(index){
+        this.selectedParameter5Text = this.parameter5Choices[index].text;
+        this.selectedParameter5Value = this.parameter5Choices[index].value;
+        console.log('parameter5: '+ this.selectedParameter5Text + ':' + this.selectedParameter5Value);
+      },
+      setParameter6(index){
+        this.selectedParameter6Text = this.parameter6Choices[index].text;
+        this.selectedParameter6Value = this.parameter6Choices[index].value;
+        console.log('parameter6: '+ this.selectedParameter6Text + ':' + this.selectedParameter6Value);
+      }
     }
 }
 </script>

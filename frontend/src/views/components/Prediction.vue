@@ -112,7 +112,7 @@ export default {
         },
         checkForm(e) {
             e.preventDefault();
-            var checkResults = [this.checkSequence(),this.checkToggles()];
+            var checkResults = [this.checkSequence(),this.checkToggles(),this.checkEmail()];
             if(!checkResults.includes(false)){
                 this.submitForm();
             }
@@ -126,18 +126,38 @@ export default {
             this.file = null;
         },
         checkEmail(){
-            if (!this.email) 
+            // Require email if fasta file is uploaded
+            if(Boolean(this.file))
             {
-                this.errorEmail = 'Please fill in this field.';
-                console.log('empty email');
-            } 
-            else if (!this.validEmail(this.email)) 
-            {
-                this.errorEmail = 'Please enter a valid email address.';
-                console.log('invalid email');
+                if (!this.email) 
+                {
+                    this.errorEmail = 'Please fill in this field.';
+                    console.log('empty email');
+                } 
+                else if (!this.validEmail(this.email)) 
+                {
+                    this.errorEmail = 'Please enter a valid email address.';
+                    console.log('invalid email');
+                }
+                else
+                {
+                    this.errorEmail = '';
+                    return true;
+                }
             }
             else
             {
+                // If user entered email without uploading file,
+                // validate the email.
+                if(this.email)
+                {
+                    if(!this.validEmail(this.email))
+                    {
+                        this.errorEmail = 'Please enter a valid email address.';
+                        return false;
+                    }
+                    
+                }
                 this.errorEmail = '';
                 return true;
             }

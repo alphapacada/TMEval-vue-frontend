@@ -1,7 +1,24 @@
 <template>
     
     <div id="topdiv">
-      <div class="container">
+      <v-card id="filter-card">
+        <div class="row">
+          <div class="col">
+            <v-card-title primary-title class="mb-0 pb-0">
+              <h2 class="mb-0 pb-0">Filters</h2>
+            </v-card-title>
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col">
+            <v-card-text>
+            Use options below to narrow down results then click "Apply" at the lower left.
+            </v-card-text>
+          </div>
+        </div>
+        
+      <div id="parameter-container" class="container">
         <div class="row">
           <div class="col-sm-4">
             parameter1: 
@@ -59,10 +76,17 @@
                   <li style="cursor:pointer" @click="setParameter6(index)" class="dropdown-item" :key=choice.value v-for="(choice,index) in parameter6Choices">{{ choice.text}}</li>
               </base-dropdown>
             </div>
+          </div>
         </div>
-      </div>
+        <v-card-actions>
+          <v-btn flat color="green" style="font-weight:bold" @click="sendParameters">APPLY</v-btn>
+          <v-btn flat color="red" style="font-weight:bold" @click="resetParameters">RESET</v-btn>
+        </v-card-actions>
+      </v-card>
     <v-card-title>
-      TMeval Results
+      <h2 class="pb-0">
+        TMeval Results
+      </h2>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -174,6 +198,19 @@ export default {
         }
     },
     methods: {
+      sendParameters(){
+        console.log("Parameters sent!");
+      },
+      resetParameters(){
+        this.setParameter1(0);
+        this.setParameter2(0);
+        this.setParameter3(0);
+        this.setParameter4(0);
+        this.setParameter5(0);
+        this.setParameter6(0);
+        console.log("Parameters reset!");
+        this.sendParameters();
+      },
       setParameter1(index){
         this.selectedParameter1Text = this.parameter1Choices[index].text;
         this.selectedParameter1Value = this.parameter1Choices[index].value;
@@ -207,6 +244,9 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style>
+#filter-card{
+  margin-top:10px;
+}
 /* @import 'vuetify/dist/vuetify.min.css' */
 </style>

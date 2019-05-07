@@ -60,6 +60,7 @@
                             <div class="col-md-3 py-3 border rounded">
                                 <label for=""><h5 class="text-secondary">Select methods to use for prediction.</h5></label>
                                  <div>
+                                    
                                     <base-checkbox v-model="predictionMethodToggles[index]" :key=method.id v-for="(method, index) in predictionMethods">
                                         <span class="toggle-text">{{method.name}}</span>
                                     </base-checkbox>
@@ -81,12 +82,14 @@
 // import { randomString } from "./stringUtils"; // for random key generation
 import BFormFile from 'bootstrap-vue/es/components/form-file/form-file'
 import ToolsToggler from "@/views/components/ToolsToggler"
+import $backend from '@/api'
 export default {
     data(){
         return{
             file: null,
             predictionMethods:[],
             predictionMethodToggles:[],
+            checkedMethods:[],
             errorEmail: '',
             errorSequence: '',
             errorToggle: '',
@@ -109,7 +112,7 @@ export default {
         },
         checkForm(e) {
             e.preventDefault();
-            var checkResults = [this.checkEmail(), this.checkSequence(),this.checkToggles()];
+            var checkResults = [this.checkSequence(),this.checkToggles()];
             if(!checkResults.includes(false)){
                 this.submitForm();
             }
@@ -168,6 +171,30 @@ export default {
             }
         },
         submitForm() {
+            // $backend.postFasta()
+            console.log(this.sequence)
+            console.log(this.predictionMethodToggles)
+
+            var predictionData = [];
+            var data;
+            var i;
+            for(i = 0; i < this.predictionMethodToggles.length; i++)
+            {
+                if(this.predictionMethodToggles[i])
+                {
+                    data = {"id":this.predictionMethods[i].id}
+                    predictionData.push(data);
+                }
+            }
+            console.log(predictionData);
+            var evaluationData = {
+                "file": this.file,
+                "sequence": this.sequence,
+                "email": this.email,
+                "tools": predictionData
+            }
+            console.log(evaluationData)
+            $backend.postFasta(evaluationData)
             console.log('Form submitted!');
         },
         clearForm() {
@@ -187,7 +214,14 @@ export default {
         },
         clearSequence() {
             this.sequence = '';
-        }
+        },
+        getTools() {
+            $backend.getPredTools().then(responseData=>{
+                 this.predictionMethods = responseData
+                
+            })
+        },
+        
 
 
     },
@@ -200,8 +234,8 @@ export default {
             {"id":"3", "name":"Other prediction"}
             ]
         };
-
-        this.predictionMethods = fakeApiResults.methods;
+        this.getTools();
+        console.log(this.predictionMethodToggles.map(function(idx) { return str.length > 0; }))
         var i;
         for(i = 0; i < this.predictionMethods.length; i++){
             this.predictionMethodToggles[i] = true;

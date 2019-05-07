@@ -23,10 +23,13 @@ module.exports = {
         sourceMap: process.env.NODE_ENV !== 'production'
     },
     devServer: {
+        inline:true,
+        host:'0.0.0.0',
+        port:8080,
         proxy: {
             '/api*': {
                 //Forward frontend dev server request for /api tp flask dev server
-                target: 'http://localhost:5000/'
+                target: 'http://192.168.1.6:5000/'
             }
         },
         watchOptions: {

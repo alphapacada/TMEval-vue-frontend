@@ -4,75 +4,56 @@
     <div id="sidebar-container" class="col-md-3">
         <v-navigation-drawer
     stateless
-    :floating="true"
     value="true">
     <v-list>
       
-      <v-list-tile to="/sidebartest/assessment">
-        <v-list-tile-action>
-          <v-icon>home</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title>Assessment</v-list-tile-title>
-      </v-list-tile>
-
       <v-list-tile to="/sidebartest/table">
-        <v-list-tile-action>
-          <v-icon>home</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title>Table</v-list-tile-title>
+        <v-list-tile-title class="pl-3">TMeval Dataset</v-list-tile-title>
       </v-list-tile>
 
-      <v-list-group
-        prepend-icon="account_circle"
-        value="true"
-      >
+      <v-list-group>
         <template v-slot:activator>
           <v-list-tile>
-            <v-list-tile-title>Users</v-list-tile-title>
+            <v-list-tile-title class="pl-3">Prediction Methods vs. TMeval Dataset Comparison</v-list-tile-title>
           </v-list-tile>
         </template>
-        <v-list-group
-          no-action
-          sub-group
-          value="true"
-        >
-          <template v-slot:activator>
-            <v-list-tile>
-              <v-list-tile-title>Admin</v-list-tile-title>
+            <v-list-tile to="/sidebartest/testresults">
+              <v-list-tile-title class="pl-5">1</v-list-tile-title>
             </v-list-tile>
-          </template>
-
-          <v-list-tile
-            v-for="(admin, i) in admins"
-            :key="i"
-          >
-            <v-list-tile-title v-text="admin[0]"></v-list-tile-title>
-            <v-list-tile-action>
-              <v-icon v-text="admin[1]"></v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list-group>
-
-        <v-list-group
-          sub-group
-          no-action
-        >
-          <template v-slot:activator>
             <v-list-tile>
-              <v-list-tile-title>Actions</v-list-tile-title>
+              <v-list-tile-title class="pl-5">2</v-list-tile-title>
             </v-list-tile>
-          </template>
-          <v-list-tile
-            v-for="(crud, i) in cruds"
-            :key="i"
-          >
-            <v-list-tile-title v-text="crud[0]"></v-list-tile-title>
-            <v-list-tile-action>
-              <v-icon v-text="crud[1]"></v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list-group>
+            <v-list-tile>
+              <v-list-tile-title class="pl-5">3</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-title class="pl-5">4</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-title class="pl-5">5</v-list-tile-title>
+            </v-list-tile>
       </v-list-group>
+
+      <v-list-tile>
+        <v-list-tile-title class="pl-3">Prediction Results</v-list-tile-title>
+      </v-list-tile>
+
+      <v-list-tile >
+        <v-list-tile-title class="pl-3">N Terminal Locations</v-list-tile-title>
+      </v-list-tile>
+
+      <v-list-tile>
+        <v-list-tile-title class="pl-3">SOV analysis</v-list-tile-title>
+      </v-list-tile>
+      
+      <v-list-tile>
+        <v-list-tile-title class="pl-3">Confusion Matrix</v-list-tile-title>
+      </v-list-tile>
+
+      <v-list-tile>
+        <v-list-tile-title class="pl-3">Performance Evaluation</v-list-tile-title>
+      </v-list-tile>
+
     </v-list>
   </v-navigation-drawer>
     </div>
@@ -108,6 +89,17 @@ export default {
 };
 </script>
 <style>
+
+.v-list .primary--text {
+  color:#2dce89 !important;
+  caret-color: #2dce89 !important;
+}
+.v-list a:hover{
+  color:#2dce89 !important;
+}
+.theme--light.application {
+  background-color: #ffffff
+}
 #assessment {
   padding: 60px 0px 0px 0px;
 

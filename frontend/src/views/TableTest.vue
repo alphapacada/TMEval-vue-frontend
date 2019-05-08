@@ -1,6 +1,7 @@
 <template>
     
     <div id="topdiv">
+      <v-app>
       <v-card id="filter-card">
         <div class="row">
           <div class="col">
@@ -83,12 +84,14 @@
           <v-btn flat color="red" style="font-weight:bold" @click="resetParameters">RESET</v-btn>
         </v-card-actions>
       </v-card>
-    <v-card-title>
-      <h2 class="pb-0">
+      <v-card class="mt-4">
+    <v-card-title primary-title class="align-middle">
+      <h2 class="pb-0 mb-0">
         TMeval Results
       </h2>
       <v-spacer></v-spacer>
       <v-text-field
+        class="align-middle pt-0" 
         v-model="search"
         append-icon="search"
         label="Search"
@@ -129,6 +132,8 @@
     </v-card>
   </template>
  </v-data-table>
+ </v-card>
+ </v-app>
     </div>
     
 </template>
@@ -245,6 +250,16 @@ export default {
 }
 </script>
 <style>
+.v-card__title .primary--text{
+  color:#2dce89 !important;
+  caret-color: #2dce89 !important;
+}
+
+.v-input + .primary--text{
+  color:#2dce89 !important;
+  caret-color: #2dce89 !important;
+}
+
 #filter-card{
   margin-top:10px;
 }

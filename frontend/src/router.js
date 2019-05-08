@@ -129,7 +129,9 @@ export default new Router({
 
                 // UserPosts will be rendered inside User's <router-view>
                 // when /user/:id/posts is matched
-                { path: '/sidebartest/table', component: TableTest }
+                { path: '/sidebartest/table', component: TableTest },
+
+                { path: '/sidebartest/testresults', component: TestResult }
             ]
         },
         {

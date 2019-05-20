@@ -51,13 +51,14 @@
                     </a>
                 </li>
                 <li class="nav-item d-none d-lg-block ml-lg-4">
-                    <a href="" target="_blank" rel="noopener"
-                       class="btn btn-neutral btn-icon">
-                <span class="btn-inner--icon">
-                  <i class="fa fa-cloud-download mr-2"></i>
-                </span>
-                        <span class="nav-link-inner--text">Download Dataset</span>
-                    </a>
+                    <router-link to="/downloads">
+                        <span class="btn btn-neutral btn-icon">
+                            <span class="btn-inner--icon">
+                            <i class="fa fa-cloud-download mr-2"></i>
+                            </span>
+                            <span class="nav-link-inner--text">Download Dataset</span>
+                        </span>
+                    </router-link>
                 </li>
             </ul>
         </base-nav>

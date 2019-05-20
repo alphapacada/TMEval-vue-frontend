@@ -16,6 +16,7 @@ import TableTest from "./views/TableTest.vue"
 import SideBar from "./views/Sidebar.vue"
 import Assessment from "./views/Assessment.vue"
 import TestResult from "./views/TestResult.vue"
+import Downloads from "./views/Downloads.vue"
 
 Vue.use(Router);
 
@@ -140,6 +141,15 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: TestResult,
+                footer: AppFooter
+            }
+        },
+        {
+            path: "/downloads",
+            name: "downloads",
+            components: {
+                header: tmHeader,
+                default: Downloads,
                 footer: AppFooter
             }
         }

@@ -116,8 +116,8 @@ export default new Router({
             }
         },
         {
-            path: "/sidebartest",
-            name: "sidebar",
+            path: "/evaluation",
+            name: "evaluation",
             components: {
                 header: tmHeader,
                 default: SideBar,
@@ -126,13 +126,13 @@ export default new Router({
             children: [
                 // UserProfile will be rendered inside User's <router-view>
                 // when /user/:id/profile is matched
-                { path: '/sidebartest/assessment', component: Assessment },
+                { path: '/evaluation/assessment', component: Assessment },
 
                 // UserPosts will be rendered inside User's <router-view>
                 // when /user/:id/posts is matched
-                { path: '/sidebartest/table', component: TableTest },
+                { path: '/evalutation/table', component: TableTest },
 
-                { path: '/sidebartest/testresults', component: TestResult }
+                { path: '/evaluation/testresults', component: TestResult }
             ]
         },
         {

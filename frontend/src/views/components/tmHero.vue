@@ -15,7 +15,7 @@
                         <p class="lead text-white mt-4 mb-5">Evaluator for Transmembrane Protein Prediction Methods</p>
                         <div class="btn-wrapper">
                             <base-button tag="a"
-                                href="#view_assessment"
+                                href="/evaluation"
                                 class="mb-3 mb-sm-0"
                                 type="success"
                                 icon="fa fa-bar-chart">

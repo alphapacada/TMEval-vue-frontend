@@ -7,7 +7,7 @@
     value="true">
     <v-list>
       
-      <v-list-tile to="/sidebartest/table">
+      <v-list-tile to="/evaluation/table">
         <v-list-tile-title class="pl-3">TMeval Dataset</v-list-tile-title>
       </v-list-tile>
 
@@ -17,7 +17,7 @@
             <v-list-tile-title class="pl-3">Prediction Methods vs. TMeval Dataset Comparison</v-list-tile-title>
           </v-list-tile>
         </template>
-            <v-list-tile to="/sidebartest/testresults">
+            <v-list-tile to="/evaluation/testresults">
               <v-list-tile-title class="pl-5">1</v-list-tile-title>
             </v-list-tile>
             <v-list-tile>

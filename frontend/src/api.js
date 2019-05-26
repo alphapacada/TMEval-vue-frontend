@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000';
 let $axios = axios.create({
-  baseURL: 'http://192.168.1.6:5000/api/v1/',
+  baseURL: 'http://localhost:5000/api/v1/',
   timeout: 5000,
   headers: {'Content-Type': 'application/json'}
 })
@@ -39,13 +39,17 @@ export default {
       .then(response => { 
         console.log(response)
         if(response.status === 201) {
-          this.$router.push({ path : '/'})
-        }
+          this.$router.push({ path : `/prediction/${response['task_id']}`})
+          }
       })
       .catch(error => {
           console.log(error.response)
       });
+    },
+    getPredResults() {
+        return $axios.get
     }
+
 
     // headers: { 'Access-Control-Allow-Origin': true }
     //github.com/axios/axios#handling-errors

@@ -1,24 +1,33 @@
 
 <template>
         <section  id ="predict_sequences" class="section bg-secondary section-lg pt-0">
-           
-        
+        <v-snackbar v-model="snackbar" :timeout="5000" :top="true">
+            Submit failed. Please check inputs. 
+            <v-icon class="pl-1" color="green" @click="snackbar = false">
+                highlight_off
+            </v-icon>
+        </v-snackbar>
+            
             <div class="container">
+                <span>
+                    <h2 class="display-1 pb-2">TMEval Topology Prediction</h2>
+                </span>
                 <card gradient="success"
                     no-body
                     shadow-size="lg"
-                    class="border-0"
-                    headerClasses="text-success bg-gradient-primary">
-                    <template v-slot:header>
-                        <h3 class="text-secondary"><strong>TMEval Topology Prediction</strong>
-                        </h3>
-                    </template>
-                    <div class="p-5 text-white">
+                    class="border-1"
+                    headerClasses="bg-gradient-success">  
+                    <!-- bg-gradient-primary-->
+                    <!-- text-success  =-->
+                    <!-- <template v-slot:header>
+                        <h1 class="display-1">TMEval Topology Prediction</h1>
+                    </template>  -->
+                    <div class="p-5  text-white">
                         <h3 class="text-white">Submit a fasta sequence for TM Topology Prediction.</h3>
                         <p class="lead text-white mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad omnis quae expedita ipsum nobis praesentium velit animi minus amet perspiciatis laboriosam similique debitis iste ratione nemo ea at corporis aliquam.</p>
                         <div class="row">
                             
-                            <div class="col-md-8 py-3 mr-2  border rounded">
+                            <div class="col-md-8 py-3 mr-2 border rounded">
                                
                     
                                 <form id="form_id" @submit="checkForm" method="post">
@@ -38,6 +47,7 @@
                                             <div :class="Boolean(file) ? 'col-10' : 'col-11'" @click="clearSequence">
                                                 <b-form-file
                                                     v-model="file"
+                                                    v-on:change="previewFiles()"
                                                     :state="Boolean(file)"
                                                     placeholder="Choose a file..."
                                                     drop-placeholder="Drop file here..."
@@ -57,7 +67,7 @@
                                 </form>
                                 
                             </div>
-                            <div class="col-md-3 py-3 border rounded">
+                            <div class="col-md-3 py-3 mx-auto border rounded">
                                 <label for=""><h5 class="text-secondary">Select methods to use for prediction.</h5></label>
                                  <div>
                                     
@@ -86,6 +96,7 @@ import $backend from '@/api'
 export default {
     data(){
         return{
+            snackbar: false,
             file: null,
             predictionMethods:[],
             predictionMethodToggles:[],
@@ -106,6 +117,9 @@ export default {
         "b-form-file": BFormFile,
     },
     methods:{
+        previewFiles: function() {
+            console.log(this.file)
+        },
         test() {
         console.log("Button clicked!");
         ToolsToggler.test();
@@ -115,6 +129,10 @@ export default {
             var checkResults = [this.checkSequence(),this.checkToggles(),this.checkEmail()];
             if(!checkResults.includes(false)){
                 this.submitForm();
+            }
+            else
+            {
+                this.snackbar = true;
             }
         },
         validEmail: function (email) {
@@ -164,17 +182,27 @@ export default {
             return false;
         },
         checkSequence(){
-            if(!this.sequence && !Boolean(this.file)){
+            if(!this.sequence && !Boolean(this.file))
+            {
                 console.log('Empty textarea');
                 this.errorSequence = 'Please enter a sequence or upload a file.';
             }
-            else if(this.sequence && Boolean(this.file)){
+            else if(this.sequence && Boolean(this.file))
+            {
                 console.log('This shouldnt be reached.');
                 this.errorSequence = 'Please input either a sequence or a file only.';
             }
-            else{
+            else
+            {
                 this.errorSequence = '';
-                return true;
+                if(this.validateFasta(this.sequence))
+                {
+                    return true;
+                }
+                else
+                {
+                    this.errorSequence = 'Invalid fasta sequence!'
+                }
             }
             return false;
         },
@@ -190,6 +218,36 @@ export default {
                 return false;
             }
         },
+        validateFasta(fasta) {
+
+            if (!fasta) { // check there is something first of all
+                return false;
+            }
+
+            // immediately remove trailing spaces
+            fasta = fasta.trim();
+
+            // split on newlines... 
+            var lines = fasta.split('\n');
+
+            // check for header
+            if (fasta[0] == '>') {
+                // remove one line, starting at the first position
+                lines.splice(0, 1);
+            }
+
+            // join the array back into a single string without newlines and 
+            // trailing or leading spaces
+            fasta = lines.join('').trim();
+
+            if (!fasta) { // is it empty whatever we collected ? re-check not efficient 
+                return false;
+            }
+
+            // note that the empty string is caught above
+            // allow for Selenocysteine (U)
+            return /^[GALMFWKQESPVICYHRNDT\s]{1,20000}$/i.test(fasta);
+    },
         submitForm() {
             // $backend.postFasta()
             console.log(this.sequence)
@@ -202,8 +260,8 @@ export default {
             {
                 if(this.predictionMethodToggles[i])
                 {
-                    data = {"id":this.predictionMethods[i].id}
-                    predictionData.push(data);
+                    // data = {"id":this.predictionMethods[i].id}
+                    predictionData.push(this.predictionMethods[i].name);
                 }
             }
             console.log(predictionData);
@@ -214,8 +272,14 @@ export default {
                 "tools": predictionData
             }
             console.log(evaluationData)
-            $backend.postFasta(evaluationData)
+            $backend.postFasta(evaluationData).then(responseData=>{
+                console.log(responseData['task_id'])
+                this.$router.push({
+                    path: `/prediction/${responseData['task_id']}`
+                })
+            })
             console.log('Form submitted!');
+            
         },
         clearForm() {
             this.email = '';

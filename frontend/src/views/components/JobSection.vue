@@ -5,10 +5,10 @@
             <tbody></tbody>
             <tr>
                 <td>Job ID:</td>
-                <td>id</td>
+                <td>{{ id }}</td>
             </tr>
             <tr><td>Time of Submission: </td>
-                <td> 09:02:07 Nov 28, 2018</td>
+                <td> {{ date }}</td>
             </tr>
             <tr>
                 <td>Number of sequences read in:</td>
@@ -28,7 +28,19 @@
 
 <script>
 export default {
+    data(){
+        return{
+            date:''
+        }
+    },
     name: "job-section",
+    props:{
+        id:String
+    },
+    created(){
+        var today = new Date();
+        this.date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        }
 }
 </script>
 

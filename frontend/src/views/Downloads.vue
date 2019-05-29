@@ -9,12 +9,13 @@
                         </h3>
                         <table class="container">
                             <tr class="row" :key="index" v-for="(file, index) in tmevalDataset">
-                                <td v-ripple="true" class="table-entry col" >
+                                <td @click="downloadFile(file.name)" v-ripple="true" class="table-entry col" >
                                     <tr class="row">
-                                        <td class="col-1 pr-1 text-center align-items-center">
-                                            <a :href="file.link" target="_blank">
-                                                Download
+                                        <td  class="col-1 pr-1 text-center align-items-center">
+                                            <a target="_blank">
+                                                
                                             </a>
+                                            <span @click="downloadFile(file.name)" class="text-blue">Download</span>
                                         </td>
                                         <td class="col-10">
                                             <tr class="row col pb-1">
@@ -36,6 +37,9 @@
                         </table>
                     </div>
                 </div>
+                <a style="display:none" ref="download">
+                    
+                </a>
                 <div id="training-dataset" class="row">
                     <div class="col">
                         <h3>
@@ -46,9 +50,7 @@
                                 <td v-ripple="true" class="table-entry col" >
                                     <tr class="row">
                                         <td class="col-1 pr-1 text-center align-items-center">
-                                            <a :href="file.link" target="_blank">
-                                                Download
-                                            </a>
+                                            <span @click="downloadFile(file.name)" class="download-text">Download</span>
                                         </td>
                                         <td class="col-10">
                                             <tr class="row col pb-1">
@@ -68,6 +70,7 @@
     </section>
 </template>
 <script>
+import $backend from '../api'
 export default {
     data() {
         return {
@@ -87,21 +90,52 @@ export default {
             ],
             trainingDataset: [
                 {
-                    name: "cctop.gz",
-                    size: "500MB",
-                    link: ""
+                    name: "CCTOP.tar.xz",
+                    size: "147.4 kB",
                 },
                 {
-                    name: "hmtop.gz",
-                    size: "500MB",
-                    link: ""
+                    name: "HMMTOP.tar.xz",
+                    size: "520 bytes",
                 },
                 {
-                    name: "memsat-svm.gz",
-                    size: "500MB",
-                    link: ""
+                    name: "Memsat-svm.tar.xz",
+                    size: "531.3 kB"
+                },
+                {
+                    name: "philius.tar.xz",
+                    size: "803.1 kB"
+                },
+                {
+                    name: "tmhmm2.tar.xz",
+                    size: "114.5 kB"
+                },
+                {
+                    name: "TOPCONS2.tar.xz",
+                    size: "1.8 MB"
+                },
+                {
+                    name: "TOPDB.tar.xz",
+                    size: "4.5 MB"
                 }
             ]
+        }
+    },
+    methods:
+    {
+        downloadFile(filename)
+        {
+                console.log($backend.getBaseURL());
+                this.$refs.download.href = $backend.getBaseURL() + 'files/datasets/prediction/' + filename;
+                this.$refs.download.click();
+                // console.log("Downloading: ", filename);
+                // $backend.getDownloadable(filename)
+                // .then(response => {
+                // console.log("NIGGA",response.headers['content-type']);
+                // let blob = new Blob([response.data], {type: response.headers['content-type']}),
+                // url=window.URL.createObjectURL(blob)
+                // window.open(url)
+            // })
+            
         }
     }
 }
@@ -109,5 +143,9 @@ export default {
 <style>
     .table-entry :hover{
         background-color:rgb(188, 248, 188);
+    }
+    .download-text{
+        color:blue;
+        cursor:pointer;
     }
 </style>

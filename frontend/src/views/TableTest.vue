@@ -22,7 +22,7 @@
       <div id="parameter-container" class="container">
         <div class="row">
           <div class="col-sm-4">
-            parameter1: 
+            Transmembrane: 
             <base-dropdown>    
                 <base-button slot="title" type="secondary" class="dropdown-toggle">
                     {{ selectedParameter1Text }}
@@ -31,7 +31,7 @@
             </base-dropdown>           
           </div>
           <div class="col-sm-4">
-              parameter2: 
+              Signal Peptide: 
               <base-dropdown>
                   <base-button slot="title" type="secondary" class="dropdown-toggle">
                       {{ selectedParameter2Text }}
@@ -40,7 +40,7 @@
               </base-dropdown>
             </div>
             <div class="col-sm-4">
-              parameter3: 
+              Taxonomy: 
               <base-dropdown>
                   <base-button slot="title" type="secondary" class="dropdown-toggle">
                       {{ selectedParameter3Text }}
@@ -51,7 +51,7 @@
         </div>
         <div class="row">
           <div class="col-sm-4">
-            parameter4: 
+            # of TM Helices: 
             <base-dropdown>
                 <base-button slot="title" type="secondary" class="dropdown-toggle">
                     {{ selectedParameter4Text }}
@@ -60,7 +60,7 @@
             </base-dropdown>           
           </div>
           <div class="col-sm-4">
-              parameter5: 
+              Topology Type: 
               <base-dropdown>
                   <base-button slot="title" type="secondary" class="dropdown-toggle">
                       {{ selectedParameter5Text }}
@@ -69,7 +69,7 @@
               </base-dropdown>
             </div>
             <div class="col-sm-4">
-              parameter6: 
+              Sequence Identity: 
               <base-dropdown>
                   <base-button slot="title" type="secondary" class="dropdown-toggle">
                       {{ selectedParameter6Text }}
@@ -102,6 +102,8 @@
         <v-data-table 
                :headers="mainHeaders"
                :items="mainItems"
+               :loading="loadInProgress"
+               :no-data-text="tableText"
                item-key="name"
                expand
                :rows-per-page-items="rows"
@@ -110,10 +112,17 @@
   <template slot="items" slot-scope="props">
     <tr @click="props.expanded = !props.expanded">
       <td class="text-xs">{{ props.item.name }}</td>
-      <td class="text-xs">{{ props.item.age }}</td>
+      <td class="text-xs">{{ props.item.length }}</td>
+      <td class="text-xs">{{ props.item.organism }}</td>
+      <td class="text-xs">{{ props.item.orientation }}</td>
+      <td class="text-xs">{{ props.item.taxonomy }}</td>
+      <td class="text-xs">{{ props.item.tm }}</td>
+      <td class="text-xs">{{ props.item.sp }}</td>
+      <td class="text-xs">{{ props.item.topo_type }}</td>
+      <td class="text-xs">{{ props.item.count }}</td>
     </tr>
   </template>
-  <template slot="expand" slot-scope="props">
+  <!-- <template slot="expand" slot-scope="props">
     <v-card class="elevation-10">
       <v-card-text>
 
@@ -130,7 +139,7 @@
 
       </v-card-text>
     </v-card>
-  </template>
+  </template> -->
  </v-data-table>
  </v-card>
  </v-app>
@@ -138,72 +147,117 @@
     
 </template>
 <script>
+import $backend from '../api'
+const LOADING_MSG = 'Download in progress...'
 export default {
     data () {
         return {
-        selectedParameter1Text:'A',
-        selectedParameter2Text:'A',
-        selectedParameter3Text:'A',
-        selectedParameter4Text:'A',
-        selectedParameter5Text:'A',
-        selectedParameter6Text:'A',
-        selectedParameter1Value:'a',
-        selectedParameter2Value:'a',
-        selectedParameter3Value:'a',
-        selectedParameter4Value:'a',
-        selectedParameter5Value:'a',
-        selectedParameter6Value:'a',
-        parameter1Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
-        parameter2Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
-        parameter3Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
-        parameter4Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
-        parameter5Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
-        parameter6Choices:[{text:'A', value:'a'},{text:'B', value:'b'},{text:'C', value:'c'}],
+        tableText: '',
+        loadInProgress: false,
+        parameters: {
+          tm: '',
+          sp: '',
+          tx: '',
+          count: '',
+          topo_type: '',
+          reduced: 30
+        },
+        selectedParameter1Text:'ALL',
+        selectedParameter2Text:'ALL',
+        selectedParameter3Text:'ALL',
+        selectedParameter4Text:'ANY',
+        selectedParameter5Text:'ANY',
+        selectedParameter6Text:'30',
+        parameter1Choices:[
+          {text:'ALL', value:''},
+          {text:'TRUE', value:true},
+          {text:'FALSE', value:false}
+        ],
+        parameter2Choices:[
+          {text:'ALL', value:''},
+          {text:'TRUE', value:true},
+          {text:'FALSE', value:false}
+        ],
+        parameter3Choices:[
+          {text:'ALL', value:''},
+          {text:'BACTERIA', value:'Bacteria'},
+          {text:'VIRUSES', value:'Viruses'},
+          {text:'ARCHAEA', value:'Archaea'},
+          {text:'EUKARYOTES', value:'Eukaryotes'}
+        ],
+        parameter4Choices:[
+          {text:'ANY', value:''},
+          {text:'1', value: '1'},
+          {text:'2', value: '2'},
+          {text:'3', value: '3'},
+          {text:'4', value: '4'},
+          {text:'5', value: '5'},
+          {text:'6', value: '6'},
+          {text:'7', value: '7'},
+          {text:'8', value: '8'},
+          {text:'9', value: '9'},
+          {text:'10', value: '10'},
+          {text:'11', value: '11'},
+          {text:'12', value: '12'},
+          {text:'13+', value: '[13 TO *]'},
+        ],
+        parameter5Choices:[
+          {text:'ANY', value:''},
+          {text: 'I', value:'type I'},
+          {text: 'II', value:'type II'},
+          {text: 'III', value:'type III'},
+          {text: 'IV', value: 'type IV'}
+        ],
+        parameter6Choices:[
+          {text:'25', value:25},
+          {text:'30', value:30},
+          {text:'40', value:40},
+          {text:'70', value:70}
+        ],
         search: '',
-        rows: [5],
         mainHeaders: [
-            { text: 'Name', value: 'name' },
-            { text: 'Age', value: 'age' },
-            { text: 'Dream', value:'dream'},
-            { text: 'Talent', value: 'talent'},
-            { text: 'Weakness', value: 'weakness'}
+          { text: 'Name', value: 'name'},
+          { text: 'Length', value: 'length'},
+          { text: 'Organism', value: 'organism'},
+          { text: 'Orientation', value: 'orientation'},
+          { text: 'Taxonomy', value: 'taxonomy'},
+          { text: 'TM', value: 'tm'},
+          { text: 'SP', value: 'sp'},
+          { text: 'Topology', value: 'topo_type' },
+          { text: 'Count', value: 'count'}
         ],
-        subHeaders: [
-            { text: 'Color', value: 'color' },
-            { text: 'Value', value: 'value' }
-        ],
-        mainItems: [
-            { name: 'Marc	Moreno', age: '30' },
-            { name: 'Wallace	Frank', age: '31' },
-            { name: 'Enrique	Sanders', age: '45' },
-            { name: 'Alyssa	Butler', age: '23' },
-            { name: 'Domingo	Gill', age: '29' },
-            { name: 'Felix	May', age: '28' },
-            { name: 'Bradford	Powell', age: '15' },
-            { name: 'Hattie	Coleman', age: '17' },
-            { name: 'Marty	Jordan', age: '23' },
-            { name: 'Bobbie	Webb', age: '28' }
-        ],
-        subItems: [
-            { color: 'Red', value: '1' },
-            { color: 'Green', value: '2' },
-            { color: 'Blue', value: '3' },
-            { color: 'Black', value: '4' }
-        ],
-        admins: [
-        ['Management', 'people_outline'],
-        ['Settings', 'settings']
-        ],
-        cruds: [
-          ['Create', 'add'],
-          ['Read', 'insert_drive_file'],
-          ['Update', 'update'],
-          ['Delete', 'delete']
-        ]
+        rows: [5],
+        mainItems: [],
+        defaultParams: [],
         }
     },
     methods: {
+      loadProteins(parameters) {
+        this.mainItems = [];
+        this.tableText = LOADING_MSG;
+        console.log('Downloading data...');
+        this.loadInProgress = true;
+        console.log(parameters);
+         $backend.getProteins(parameters)
+          .then(responseData => {
+            console.log('Download complete');
+            console.log(responseData);
+            this.tableText = '';
+            this.mainItems = responseData;
+            this.loadInProgress = false;
+            if(this.mainItems.length == 0)
+              this.tableText = 'No matches.';
+            console.log("mainitems: ", this.mainItems);
+          }).catch(responseData => {
+            this.loadInProgress = false;
+            this.tableText = 'Download failed!';
+            console.log('Download failed!');
+          })
+      },
       sendParameters(){
+        var parameters = JSON.parse(JSON.stringify(this.parameters));
+        this.loadProteins(parameters)
+        console.log(parameters);
         console.log("Parameters sent!");
       },
       resetParameters(){
@@ -212,41 +266,42 @@ export default {
         this.setParameter3(0);
         this.setParameter4(0);
         this.setParameter5(0);
-        this.setParameter6(0);
+        this.setParameter6(1);
         console.log("Parameters reset!");
         this.sendParameters();
       },
       setParameter1(index){
         this.selectedParameter1Text = this.parameter1Choices[index].text;
-        this.selectedParameter1Value = this.parameter1Choices[index].value;
-        console.log('parameter1: '+ this.selectedParameter1Text + ':' + this.selectedParameter1Value);
+        this.parameters.tm = this.parameter1Choices[index].value;
       },
       setParameter2(index){
         this.selectedParameter2Text = this.parameter2Choices[index].text;
-        this.selectedParameter2Value = this.parameter2Choices[index].value;
-        console.log('parameter2: '+ this.selectedParameter2Text + ':' + this.selectedParameter2Value);
+        this.parameters.sp = this.parameter2Choices[index].value;
       },
       setParameter3(index){
         this.selectedParameter3Text = this.parameter3Choices[index].text;
-        this.selectedParameter3Value = this.parameter3Choices[index].value;
-        console.log('parameter3: '+ this.selectedParameter3Text + ':' + this.selectedParameter3Value);
+        this.parameters.tx = this.parameter3Choices[index].value;
       },
       setParameter4(index){
         this.selectedParameter4Text = this.parameter4Choices[index].text;
-        this.selectedParameter4Value = this.parameter4Choices[index].value;
-        console.log('parameter4: '+ this.selectedParameter4Text + ':' + this.selectedParameter4Value);
+        this.parameters.count = this.parameter4Choices[index].value;
       },
       setParameter5(index){
         this.selectedParameter5Text = this.parameter5Choices[index].text;
-        this.selectedParameter5Value = this.parameter5Choices[index].value;
-        console.log('parameter5: '+ this.selectedParameter5Text + ':' + this.selectedParameter5Value);
+        this.parameters.topo_type = this.parameter5Choices[index].value;
       },
       setParameter6(index){
         this.selectedParameter6Text = this.parameter6Choices[index].text;
-        this.selectedParameter6Value = this.parameter6Choices[index].value;
-        console.log('parameter6: '+ this.selectedParameter6Text + ':' + this.selectedParameter6Value);
+        this.parameters.reduced = this.parameter6Choices[index].value;
       }
-    }
+    },
+    mounted() {
+      var parameters = JSON.parse(JSON.stringify(this.parameters));
+      console.log("huehue")
+      this.loadProteins(parameters);
+      this.loadInProgress = true;
+      this.tableText = LOADING_MSG;
+    },
 }
 </script>
 <style>

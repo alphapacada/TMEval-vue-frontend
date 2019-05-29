@@ -23,9 +23,9 @@ module.exports = {
         sourceMap: process.env.NODE_ENV !== 'production'
     },
     devServer: {
-        inline:true,
-        host:'0.0.0.0',
-        port:8080,
+        inline: true,
+        host: '0.0.0.0',
+        port: 8080,
         proxy: {
             '/api*': {
                 //Forward frontend dev server request for /api tp flask dev server

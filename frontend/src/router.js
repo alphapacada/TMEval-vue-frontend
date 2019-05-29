@@ -17,6 +17,7 @@ import SideBar from "./views/Sidebar.vue"
 import Assessment from "./views/Assessment.vue"
 import TestResult from "./views/TestResult.vue"
 import Downloads from "./views/Downloads.vue"
+import DataComparison from "./views/DataComparison.vue"
 
 Vue.use(Router);
 
@@ -89,7 +90,7 @@ export default new Router({
             }
         },
         {
-            path: "/prediction",
+            path: "/prediction/:id",
             name: "prediction",
             components: {
                 header: tmHeader,
@@ -130,9 +131,9 @@ export default new Router({
 
                 // UserPosts will be rendered inside User's <router-view>
                 // when /user/:id/posts is matched
-                { path: '/evalutation/table', component: TableTest },
+                { path: '/evaluation/table', component: TableTest },
 
-                { path: '/evaluation/testresults', component: TestResult }
+                { path: '/evaluation/dataset-comparison', component: DataComparison }
             ]
         },
         {
@@ -158,7 +159,7 @@ export default new Router({
     ],
     scrollBehavior: to => {
         if (to.hash) {
-            return { selector: to.hash };
+            return { selector: to.hash, offset: { x: 0, y: 60 } };
         } else {
             return { x: 0, y: 0 };
         }

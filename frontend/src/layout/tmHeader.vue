@@ -2,7 +2,7 @@
     <header class="header-global">
         <base-nav class="navbar-main" transparent  title="Random titmle" type="success" effect="light" expand>
             <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-                <img src="img/brand/tmbrand.png" alt="logo" class="img-fluid">
+                <img src="/img/brand/tmbrand.png" alt="logo" class="img-fluid">
             </router-link>
 
             <div class="row" slot="content-header" slot-scope="{closeMenu}">

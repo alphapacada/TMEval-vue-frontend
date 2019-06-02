@@ -125,6 +125,7 @@ export default new Router({
                 footer: AppFooter
             },
             children: [
+                { path: '/evaluation/', component: TableTest },
                 // UserProfile will be rendered inside User's <router-view>
                 // when /user/:id/profile is matched
                 { path: '/evaluation/assessment', component: Assessment },
@@ -157,11 +158,26 @@ export default new Router({
 
 
     ],
+    // scrollBehavior: to => {
+    //     if (to.hash) {
+    //         return { selector: to.hash, offset: { x: 0, y: 60 } };
+    //     } else {
+    //         return { x: 0, y: 0 };
+    //     }
+    // }
     scrollBehavior: to => {
         if (to.hash) {
-            return { selector: to.hash, offset: { x: 0, y: 60 } };
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve({ selector: to.hash, offset: { x: 0, y: 60 } })
+                }, 400)
+            })
         } else {
-            return { x: 0, y: 0 };
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve({ x: 0, y: 0 })
+                }, 200)
+            })
         }
     }
 });

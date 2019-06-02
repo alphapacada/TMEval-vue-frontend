@@ -60,7 +60,7 @@
                                     <v-card-title primary-title>
                                         <h4>
                                             <a href="http://bioinf.cs.ucl.ac.uk/psipred/?memsatsvm=1" target="_blank">MEMSAT-SVM </a>
-                                            <badge rounded type="primary">SVM</badge>
+                                            <badge rounded type="primary">SVM</badge> <badge rounded type="warning">Unavailable</badge>
                                         </h4>
                                     </v-card-title>
                                     <v-card-text>
@@ -77,7 +77,7 @@
                                     <v-card-title primary-title>
                                         <h4>
                                             <a href="http://topcons.net/" target="_blank">TOPCONS </a>
-                                            <badge rounded type="default">Consensus</badge>
+                                            <badge rounded type="default">Consensus</badge> <badge rounded type="warning">Unavailable</badge>
                                         </h4>
                                     </v-card-title>
                                     <v-card-text>
@@ -96,8 +96,9 @@
                                         </h4>
                                     </v-card-title>
                                     <v-card-text>
-                                        Predicts both the localization of helical transmembrane segments and the topology of transmembrane proteins.
+                                        It predicts transmembrane helices and discriminate between soluble and membrane proteins with high degree of accuracy.
                                     </v-card-text>
+                                    
                                 <!-- </a> -->
                             </v-card>
                         </div>

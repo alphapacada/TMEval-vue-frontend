@@ -4,20 +4,12 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000';
 let $axios = axios.create({
-<<<<<<< HEAD
-        baseURL: 'http://192.168.254.109:5000/api/v1/',
+        baseURL: 'http://192.168.254.103:5000/api/v1/',
         timeout: 0,
         headers: { 'Content-Type': 'application/json' },
         // credential: 'same-origin'
     })
     // https://github.com/gtalarico/flask-vuejs-template/blob/master/src/backend.js
-=======
-  baseURL: 'http://localhost:5000/api/v1/',
-  timeout: 5000,
-  headers: {'Content-Type': 'application/json'}
-})
-// https://github.com/gtalarico/flask-vuejs-template/blob/master/src/backend.js
->>>>>>> bd5b7617fd71c74d4ee517fe9958f2a1db1a1a9c
 
 export default {
     getBaseURL() {
@@ -49,7 +41,6 @@ export default {
             .then(response => response.data)
     },
     postFasta(data) {
-<<<<<<< HEAD
         return $axios.post('predict/', data)
             .then(response => response.data)
             .catch(error => {
@@ -68,21 +59,6 @@ export default {
     getDownloadable(name) {
         return $axios.get(`files/datasets/prediction/${name}`)
             .then(response => response)
-=======
-      return $axios.post('predict/', data)
-      .then(response => { 
-        console.log(response)
-        if(response.status === 201) {
-          this.$router.push({ path : `/prediction/${response['task_id']}`})
-          }
-      })
-      .catch(error => {
-          console.log(error.response)
-      });
-    },
-    getPredResults() {
-        return $axios.get
->>>>>>> bd5b7617fd71c74d4ee517fe9958f2a1db1a1a9c
     }
 
 

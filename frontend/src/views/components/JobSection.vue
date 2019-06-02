@@ -12,11 +12,11 @@
             </tr>
             <tr>
                 <td>Number of sequences read in:</td>
-                <td>10 </td>
+                <td>1 </td>
             </tr>
             <tr>
                 <td>Results url:</td>
-                <td>google.com</td>
+                <td>{{ url }}</td>
             </tr>
         </table>
     </div>
@@ -35,7 +35,8 @@ export default {
     },
     name: "job-section",
     props:{
-        id:String
+        id:String,
+        url:String
     },
     created(){
         var today = new Date();

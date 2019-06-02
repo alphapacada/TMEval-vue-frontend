@@ -24,7 +24,7 @@
                     </template>  -->
                     <div class="p-5  text-white">
                         <h3 class="text-white">Submit a fasta sequence for TM Topology Prediction.</h3>
-                        <p class="lead text-white mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad omnis quae expedita ipsum nobis praesentium velit animi minus amet perspiciatis laboriosam similique debitis iste ratione nemo ea at corporis aliquam.</p>
+                        <p class="lead text-white mt-3">Enter ONE fasta sequence in the textarea below or upload a fasta file then select the tools you want use for the prediction. Click 'SUBMIT' to start prediction job.</p>
                         <div class="row">
                             
                             <div class="col-md-8 py-3 mr-2 border rounded">
@@ -58,9 +58,6 @@
                                     <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
                                         {{ errorSequence }}
                                     </div>
-                                    <base-input :error="errorEmail" v-model="email" label="Email (for batch submissions)" >
-                                        <!-- <template name="label">ajijij</template> -->
-                                    </base-input>
                                     <base-button class="col-md-3" type="primary" v-on:click="checkForm">Submit</base-button>
                                     <base-button size="sm" v-on:click="setExample" type="secondary">Example</base-button> 
                                     <base-button size="sm" @click="clearForm" type="secondary">Clear</base-button>
@@ -101,12 +98,10 @@ export default {
             predictionMethods:[],
             predictionMethodToggles:[],
             checkedMethods:[],
-            errorEmail: '',
             errorSequence: '',
             errorToggle: '',
             usecctop: true,
             message: null,
-            email: '',
             fasta: null,
             sequence: '',
             example: '>Q9CQZ5 NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 6\nMAAAATGLRQAAAAAASTSVKPIFSRDLNEAKRRVRELYRAWYREVPNTVHLMQLDITVKQGRDKVREMFMKNAHVTDPRVVDLLVIKGKMELQETIKVWKQRTHVMRFFHETETPRPKDFLSKFYMGHDP'
@@ -126,7 +121,7 @@ export default {
         },
         checkForm(e) {
             e.preventDefault();
-            var checkResults = [this.checkSequence(),this.checkToggles(),this.checkEmail()];
+            var checkResults = [this.checkSequence(),this.checkToggles()];
             if(!checkResults.includes(false)){
                 this.submitForm();
             }
@@ -135,51 +130,9 @@ export default {
                 this.snackbar = true;
             }
         },
-        validEmail: function (email) {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
-        },
         setExample() {
             this.sequence = this.example;
             this.file = null;
-        },
-        checkEmail(){
-            // Require email if fasta file is uploaded
-            if(Boolean(this.file))
-            {
-                if (!this.email) 
-                {
-                    this.errorEmail = 'Please fill in this field.';
-                    console.log('empty email');
-                } 
-                else if (!this.validEmail(this.email)) 
-                {
-                    this.errorEmail = 'Please enter a valid email address.';
-                    console.log('invalid email');
-                }
-                else
-                {
-                    this.errorEmail = '';
-                    return true;
-                }
-            }
-            else
-            {
-                // If user entered email without uploading file,
-                // validate the email.
-                if(this.email)
-                {
-                    if(!this.validEmail(this.email))
-                    {
-                        this.errorEmail = 'Please enter a valid email address.';
-                        return false;
-                    }
-                    
-                }
-                this.errorEmail = '';
-                return true;
-            }
-            return false;
         },
         checkSequence(){
             if(!this.sequence && !Boolean(this.file))
@@ -268,7 +221,6 @@ export default {
             var evaluationData = {
                 "file": this.file,
                 "sequence": this.sequence,
-                "email": this.email,
                 "tools": predictionData
             }
             console.log(evaluationData)
@@ -282,9 +234,7 @@ export default {
             
         },
         clearForm() {
-            this.email = '';
             this.sequence = '';
-            this.errorEmail = '';
             this.errorSequence = '';
             this.errorToggle = '';
             this.file = null;

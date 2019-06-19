@@ -12,9 +12,6 @@
                                 <td @click="downloadFile(file.name)" v-ripple="true" class="table-entry col" >
                                     <tr class="row">
                                         <td  class="col-1 pr-1 text-center align-items-center">
-                                            <a target="_blank">
-                                                
-                                            </a>
                                             <span @click="downloadFile(file.name)" class="download-text">Download</span>
                                         </td>
                                         <td class="col-10">

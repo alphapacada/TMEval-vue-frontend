@@ -7,24 +7,51 @@
                 </h1>
             </div>
         </div>
-        <div id="dc-cctop" class="row pt-2">
+        <div id="dc-all" class="row pt-2">
             <div class="col">
                 <div class="row">
                     <div class="col">
                         <h3>
-                            CCTOP
+                            Prediction tools vs TMeval
                         </h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <img src="/img/boi.png" class="img-fluid" >
+                        <img src="/img/figures/predtools.png" class="img-fluid" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p>
-                            The keyboard warrior is formidable opponent and a reliable ally for as long as it can hide behind its keyboard.
+                            From 10494 proteins with no more than 25% pairwise sequence 
+                            similarity, only 8488 entries remained after 
+                            common entries from the dataset of Tmeval and the prediction tools were removed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <v-divider></v-divider>
+        <div id="dc-cctop" class="row pt-2">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <h3>
+                            CCTOP vs TMeval
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <img src="/img/figures/CCTOP.png" class="img-fluid" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            There are only 29 common entries between the CCTOP and TMEval datasets. 
+                            Accession Ids in the 'CrossRef' section of a CCTOPItem  was used to find common entries.
                         </p>
                     </div>
                 </div>
@@ -36,19 +63,19 @@
                 <div class="row">
                     <div class="col">
                         <h3>
-                            HMMTOP
+                            HMMTOP vs TMeval
                         </h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <img src="/img/boi.png" class="img-fluid" >
+                        <img src="/img/figures/hmmtop.png" class="img-fluid" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p>
-                            The keyboard warrior is formidable opponent and a reliable ally for as long as it can hide behind its keyboard.
+                            Only 9 entries are common between HMMTOP and TMeval. The HMMTOP dataset contains Uniprot entry names.
                         </p>
                     </div>
                 </div>
@@ -60,19 +87,20 @@
                 <div class="row">
                     <div class="col">
                         <h3>
-                            Philius
+                            Philius vs TMeval
                         </h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <img src="/img/boi.png" class="img-fluid" >
+                        <img src="/img/figures/philius.png" class="img-fluid" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p>
-                            The keyboard warrior is formidable opponent and a reliable ally for as long as it can hide behind its keyboard.
+                             With 412 entries in common, Philius and TMeval have the second-most number of common entries . 
+                             Philius used the Phobius dataset for model development.
                         </p>
                     </div>
                 </div>
@@ -84,19 +112,19 @@
                 <div class="row">
                     <div class="col">
                         <h3>
-                            TMHMM2
+                            TMHMM2 vs TMeval
                         </h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <img src="/img/boi.png" class="img-fluid" >
+                        <img src="/img/figures/TMHMM2.png" class="img-fluid" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p>
-                            The keyboard warrior is formidable opponent and a reliable ally for as long as it can hide behind its keyboard.
+                            Twenty percent of TMHMM2's dataset exists within the TMeval dataset.
                         </p>
                     </div>
                 </div>
@@ -108,19 +136,20 @@
                 <div class="row">
                     <div class="col">
                         <h3>
-                            TOPCONS2
+                            TOPCONS2 vs TMeval
                         </h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <img src="/img/boi.png" class="img-fluid" >
+                        <img src="/img/figures/TOPCONS.png" class="img-fluid" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p>
-                            The keyboard warrior is formidable opponent and a reliable ally for as long as it can hide behind its keyboard.
+                            The TOPCONS2 dataset, being the largest of all prediction tools, 
+                            has 1238 entries in common with the TMeval dataset.
                         </p>
                     </div>
                 </div>

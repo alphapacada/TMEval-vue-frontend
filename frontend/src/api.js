@@ -4,9 +4,10 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000';
 let $axios = axios.create({
-        baseURL: 'http://192.168.254.103:5000/api/v1/',
+        baseURL: 'http://192.168.254.108:5000/api/v1/',
         timeout: 0,
         headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
         // credential: 'same-origin'
     })
     // https://github.com/gtalarico/flask-vuejs-template/blob/master/src/backend.js
@@ -41,7 +42,12 @@ export default {
             .then(response => response.data)
     },
     postFasta(data) {
-        return $axios.post('predict/', data)
+        return $axios.post('predict/', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+
+                }
+            })
             .then(response => response.data)
             .catch(error => {
                 console.log("error")

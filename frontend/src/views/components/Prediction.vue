@@ -47,7 +47,6 @@
                                             <div :class="Boolean(file) ? 'col-10' : 'col-11'" @click="clearSequence">
                                                 <b-form-file
                                                     v-model="file"
-                                                    v-on:change="previewFiles()"
                                                     :state="Boolean(file)"
                                                     placeholder="Choose a file..."
                                                     drop-placeholder="Drop file here..."
@@ -55,7 +54,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
+                                    <div class="text-danger invalid-Yedback" style="display: block;" v-show="errorSequence">
                                         {{ errorSequence }}
                                     </div>
                                     <base-button class="col-md-3" type="primary" v-on:click="checkForm">Submit</base-button>
@@ -147,15 +146,23 @@ export default {
             }
             else
             {
-                this.errorSequence = '';
-                if(this.validateFasta(this.sequence))
-                {
-                    return true;
+                if (this.sequence){
+                    this.errorSequence = '';
+                    if(this.validateFasta(this.sequence))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        
+                        this.errorSequence = 'Invalid fasta sequence!'
+                    }
                 }
-                else
-                {
-                    this.errorSequence = 'Invalid fasta sequence!'
+                if (Boolean(this.file)) {
+                    return true
                 }
+
+                    
             }
             return false;
         },
@@ -223,8 +230,18 @@ export default {
                 "sequence": this.sequence,
                 "tools": predictionData
             }
-            console.log(evaluationData)
-            $backend.postFasta(evaluationData).then(responseData=>{
+            let formData = new FormData();
+            formData.append('file', this.file);
+            formData.append('sequence', this.sequence);
+            console.log(this.file, this.sequence, predictionData);
+            console.log(formData);
+            // for (var i = 0; i < predictionData.length; i++) {
+            //     formData.append('tools[]', predictionData[i]);
+            // }
+            // console.log(formData)
+            formData.append('tools', JSON.stringify(predictionData))
+            // console.log(evaluationData)
+            $backend.postFasta(formData).then(responseData=>{
                 console.log(responseData['task_id'])
                 this.$router.push({
                     path: `/prediction/${responseData['task_id']}`

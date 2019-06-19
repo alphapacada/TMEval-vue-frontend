@@ -18,6 +18,9 @@ import Assessment from "./views/Assessment.vue"
 import TestResult from "./views/TestResult.vue"
 import Downloads from "./views/Downloads.vue"
 import DataComparison from "./views/DataComparison.vue"
+import PerformanceEvaluation from "./views/PerformanceEvaluation.vue"
+import SOV from "./views/SOVAnalysis.vue"
+import ConfusionMatrix from "./views/ConfusionMatrix.vue"
 
 Vue.use(Router);
 
@@ -134,7 +137,10 @@ export default new Router({
                 // when /user/:id/posts is matched
                 { path: '/evaluation/table', component: TableTest },
 
-                { path: '/evaluation/dataset-comparison', component: DataComparison }
+                { path: '/evaluation/dataset-comparison', component: DataComparison },
+                { path: '/evaluation/perf-eval', component: PerformanceEvaluation },
+                { path: '/evaluation/sov', component: SOV },
+                { path: '/evaluation/confusion-matrix', component: ConfusionMatrix }
             ]
         },
         {

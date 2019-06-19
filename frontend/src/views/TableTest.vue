@@ -2,6 +2,37 @@
     
     <div id="topdiv">
       <v-app>
+
+        <v-dialog
+          v-model="modalOn"
+          width="700">
+        <v-card>
+          <v-card-title
+            class="headline grey lighten-2"
+            primary-title
+          >
+            Topology
+          </v-card-title>
+
+          <v-card-text style="word-wrap:break-word">
+            {{ modalText }}
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              flat
+              @click="modalOn = false"
+            >
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-card id="filter-card">
         <div class="row">
           <div class="col">
@@ -98,6 +129,9 @@
         single-line
         hide-details
       ></v-text-field>
+      <v-btn @click="appliedSearch = search">
+        Search
+      </v-btn>
     </v-card-title>
         <v-data-table 
                :headers="mainHeaders"
@@ -106,8 +140,9 @@
                :no-data-text="tableText"
                item-key="name"
                expand
+               :disable-initial-sort="true"
                :rows-per-page-items="rows"
-               :search="search"
+               :search="appliedSearch"
                class="elevation-1">
   <template slot="items" slot-scope="props">
     <tr @click="props.expanded = !props.expanded">
@@ -118,6 +153,7 @@
       <td class="text-xs">{{ props.item.taxonomy }}</td>
       <td class="text-xs">{{ props.item.tm }}</td>
       <td class="text-xs">{{ props.item.sp }}</td>
+      <td class="text-xs"><base-button @click="showTopology(props.item.topology)">Show</base-button></td>
       <td class="text-xs">{{ props.item.topo_type }}</td>
       <td class="text-xs">{{ props.item.count }}</td>
     </tr>
@@ -152,6 +188,11 @@ const LOADING_MSG = 'Download in progress...'
 export default {
     data () {
         return {
+        appliedSearch: '',
+        modalOn: false,
+        modalText: '',
+        pageNumber:0,
+        itemPerPage: 10,
         tableText: '',
         loadInProgress: false,
         parameters: {
@@ -223,15 +264,20 @@ export default {
           { text: 'Taxonomy', value: 'taxonomy'},
           { text: 'TM', value: 'tm'},
           { text: 'SP', value: 'sp'},
-          { text: 'Topology', value: 'topo_type' },
+          { text: 'Topology', value:"topology"},
+          { text: 'Topology Type', value: 'topo_type' },
           { text: 'Count', value: 'count'}
         ],
-        rows: [5],
+        rows: [10],
         mainItems: [],
         defaultParams: [],
         }
     },
     methods: {
+      showTopology(text){
+          this.modalOn = true;
+          this.modalText = text;
+      },
       loadProteins(parameters) {
         this.mainItems = [];
         this.tableText = LOADING_MSG;
@@ -271,8 +317,33 @@ export default {
         this.sendParameters();
       },
       setParameter1(index){
+        console.log(this.parameter1Choices[index].value , this.parameters.tm);
+        if(this.parameter1Choices[index].value !== this.parameters.tm)
+        {
         this.selectedParameter1Text = this.parameter1Choices[index].text;
         this.parameters.tm = this.parameter1Choices[index].value;
+
+            if(this.parameters.tm === false)
+            {
+                this.parameters.sp = '';
+                this.parameter5Choices = [{text: '---', value: ''}];
+                this.selectedParameter5Text = '---';
+                this.parameters.topo_type = '';            
+            }
+            else
+            {
+                this.parameter5Choices = [
+                    {text:'ANY', value:''},
+                    {text: 'I', value:'type I'},
+                    {text: 'II', value:'type II'},
+                    {text: 'III', value:'type III'},
+                    {text: 'IV', value: 'type IV'}
+                ];
+                this.selectedParameter5Text = 'ALL';
+                this.parameters.topo_type = '';
+            }
+        
+        }
       },
       setParameter2(index){
         this.selectedParameter2Text = this.parameter2Choices[index].text;

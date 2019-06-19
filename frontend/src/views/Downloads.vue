@@ -15,12 +15,12 @@
                                             <a target="_blank">
                                                 
                                             </a>
-                                            <span @click="downloadFile(file.name)" class="text-blue">Download</span>
+                                            <span @click="downloadFile(file.name)" class="download-text">Download</span>
                                         </td>
                                         <td class="col-10">
                                             <tr class="row col pb-1">
                                                 <td class="file-name col">
-                                                    {{ file.name }} ({{ file.size }})
+                                                    {{ file.name }} <!--({{ file.size }})-->
                                                 </td>
                                             </tr>
                                             <tr class="row col">
@@ -76,17 +76,47 @@ export default {
         return {
             tmevalDataset: [
                 {
-                    name: "Doggo.gz",
-                    size: "5 DoggoBytes",
-                    description: "Relevant af",
-                    link: "http://facebook.com"
+                    name: "tmeval_25.gz",
+                    size: "5 KB",
+                    description: "TMeval dataset with 25% sequence identity."
                 },
                 {
-                    name:"Catto.gz",
-                    size: "1 niggaByte",
-                    description: "List of useless records.",
-                    link: ""
-                }
+                    name:"tmeval_30.gz",
+                    size: "1 GB",
+                    description: "TMeval dataset with 30% sequence identity."
+                },
+
+                {
+                    name:"tmeval_40.gz",
+                    size: "1 GB",
+                    description: "TMeval dataset with 40% sequence identity."
+                },
+                {
+                    name:"tmeval_70.gz",
+                    size: "1 GB",
+                    description: "TMeval dataset with 70% sequence identity."
+                },
+                {
+                    name:"tmeval_25_+TM-SP.gz",
+                    size: "1 GB",
+                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes but do not have signal peptides."
+                },
+                {
+                    name:"tmeval_25_+TM+SP.gz",
+                    size: "1 GB",
+                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes and signal peptides."
+                },
+                {
+                    name:"tmeval_25_-TM-SP.gz",
+                    size: "1 GB",
+                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes and signal peptides."
+                },
+                {
+                    name:"tmeval_25_-TM+SP.gz",
+                    size: "1 GB",
+                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes but have signal peptides."
+                },
+
             ],
             trainingDataset: [
                 {

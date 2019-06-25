@@ -1,4 +1,3 @@
-
 <template>
         <section  id ="predict_sequences" class="section bg-secondary section-lg pt-0">
         <v-snackbar v-model="snackbar" :timeout="5000" :top="true">
@@ -7,7 +6,6 @@
                 highlight_off
             </v-icon>
         </v-snackbar>
-            
             <div class="container">
                 <span>
                     <h2 class="display-1 pb-2">TMEval Topology Prediction</h2>
@@ -17,24 +15,15 @@
                     shadow-size="lg"
                     class="border-1"
                     headerClasses="bg-gradient-success">  
-                    <!-- bg-gradient-primary-->
-                    <!-- text-success  =-->
-                    <!-- <template v-slot:header>
-                        <h1 class="display-1">TMEval Topology Prediction</h1>
-                    </template>  -->
-                    <div class="p-5  text-white">
+                    <div class="p-5 text-white">
                         <h3 class="text-white">Submit a fasta sequence for TM Topology Prediction.</h3>
                         <p class="lead text-white mt-3">Enter ONE fasta sequence in the textarea below or upload a fasta file then select the tools you want use for the prediction. Click 'SUBMIT' to start prediction job.</p>
                         <div class="row">
-                            
                             <div class="col-md-8 py-3 mr-2 border rounded">
-                               
-                    
                                 <form id="form_id" @submit="checkForm" method="post">
                                     <div class="form-group">
                                         <label for="">Fasta sequence</label>
                                         <textarea :disabled="Boolean(file)" :class="{'is-invalid':errorSequence}" class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
-                                        
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
@@ -61,12 +50,10 @@
                                     <base-button size="sm" v-on:click="setExample" type="secondary">Example</base-button> 
                                     <base-button size="sm" @click="clearForm" type="secondary">Clear</base-button>
                                 </form>
-                                
                             </div>
                             <div class="col-md-3 py-3 mx-auto border rounded">
                                 <label for=""><h5 class="text-secondary">Select methods to use for prediction.</h5></label>
                                  <div>
-                                    
                                     <base-checkbox v-model="predictionMethodToggles[index]" :key=method.id v-for="(method, index) in predictionMethods">
                                         <span class="toggle-text">{{method.name}}</span>
                                     </base-checkbox>
@@ -75,17 +62,13 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                        
                         </div>
                     </div>
-                
                 </card>
             </div>
         </section>
 </template>
 <script>
-// import { randomString } from "./stringUtils"; // for random key generation
 import BFormFile from 'bootstrap-vue/es/components/form-file/form-file'
 import ToolsToggler from "@/views/components/ToolsToggler"
 import $backend from '@/api'
@@ -115,7 +98,6 @@ export default {
             console.log(this.file)
         },
         test() {
-        console.log("Button clicked!");
         ToolsToggler.test();
         },
         checkForm(e) {
@@ -154,15 +136,12 @@ export default {
                     }
                     else
                     {
-                        
                         this.errorSequence = 'Invalid fasta sequence!'
                     }
                 }
                 if (Boolean(this.file)) {
                     return true
                 }
-
-                    
             }
             return false;
         },
@@ -200,16 +179,13 @@ export default {
             // trailing or leading spaces
             fasta = lines.join('').trim();
 
-            if (!fasta) { // is it empty whatever we collected ? re-check not efficient 
+            if (!fasta) {  
                 return false;
             }
 
-            // note that the empty string is caught above
-            // allow for Selenocysteine (U)
             return /^[GALMFWKQESPVICYHRNDT\s]{1,20000}$/i.test(fasta);
     },
         submitForm() {
-            // $backend.postFasta()
             console.log(this.sequence)
             console.log(this.predictionMethodToggles)
 
@@ -220,7 +196,6 @@ export default {
             {
                 if(this.predictionMethodToggles[i])
                 {
-                    // data = {"id":this.predictionMethods[i].id}
                     predictionData.push(this.predictionMethods[i].name);
                 }
             }
@@ -235,12 +210,7 @@ export default {
             formData.append('sequence', this.sequence);
             console.log(this.file, this.sequence, predictionData);
             console.log(formData);
-            // for (var i = 0; i < predictionData.length; i++) {
-            //     formData.append('tools[]', predictionData[i]);
-            // }
-            // console.log(formData)
             formData.append('tools', JSON.stringify(predictionData))
-            // console.log(evaluationData)
             $backend.postFasta(formData).then(responseData=>{
                 console.log(responseData['task_id'])
                 this.$router.push({
@@ -248,7 +218,6 @@ export default {
                 })
             })
             console.log('Form submitted!');
-            
         },
         clearForm() {
             this.sequence = '';
@@ -272,9 +241,6 @@ export default {
                 
             })
         },
-        
-
-
     },
     mounted () {
         var fakeApiResults ={
@@ -291,16 +257,9 @@ export default {
         for(i = 0; i < this.predictionMethods.length; i++){
             this.predictionMethodToggles[i] = true;
         }
-        // this.axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        // .then(response => (this.message = response))
     },
-    
-
 };
-
-
 </script>
-
 <style>
 .toggle-text{
     font-size:1rem;

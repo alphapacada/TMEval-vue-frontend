@@ -51,7 +51,7 @@ export default new Router({
             path: "/login",
             name: "login",
             components: {
-                header: AppHeader,
+                header: tmHeader,
                 default: Login,
                 footer: AppFooter
             }

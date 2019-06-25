@@ -65,8 +65,11 @@ export default {
     getDownloadable(name) {
         return $axios.get(`files/datasets/prediction/${name}`)
             .then(response => response)
+    },
+    getAssessment(seqId, set) {
+        return $axios.get(`assessment/${seqId}/${set}`)
+            .then(response => response.data)
     }
-
 
     // headers: { 'Access-Control-Allow-Origin': true }
     //github.com/axios/axios#handling-errors

@@ -422,7 +422,9 @@
     </section>
 </template>
 <script>
+import $backend from '../api'
 export default{
+    
     name:'PredictionResultTable',
     data(){
         return{
@@ -459,35 +461,42 @@ export default{
             this.currentSeqId = this.seqIdentity;
             this.currentSet = this.set;
             console.log('Fetching results...\nSeq:',this.currentSeqId,' Set: ', this.currentSet);
+            $backend.getAssessment(this.currentSeqId, this.currentSet)
+                .then(response => {
+                    this.current_pred_acc = response.pred_acc;
+                    this.current_pred_acc_classification = response.pred_acc_classification;
+                    this.current_per_segment_fn_fp = response.per_segment_fn_fp;
+                    this.current_mcc = response.mcc;
+                    this.current_sov = response.sov;
+                })
+            // let fakeResults = {
+            //     exp_set:'A',
+            //     pred_acc: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_pred_acc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Correct TM Count</th>\n      <th>Correct Segment Location</th>\n      <th>N Location Success Rate</th>\n      <th>Correct Topology</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>95.586260</td>\n      <td>99.261178</td>\n      <td>95.854922</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>70.629438</td>\n      <td>97.591633</td>\n      <td>6.208021</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>95.557475</td>\n      <td>98.973326</td>\n      <td>78.919593</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>93.302629</td>\n      <td>98.618307</td>\n      <td>6.351948</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>96.094799</td>\n      <td>99.155632</td>\n      <td>7.685665</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
+            //     pred_acc_classification: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25.df_pred_acc_classification">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>+TM-SP</th>\n      <th>+TM+SP</th>\n      <th>-TM-SP</th>\n      <th>-TM+SP</th>\n      <th>Overall</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>80.322004</td>\n      <td>90.756303</td>\n      <td>97.449483</td>\n      <td>89.424460</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>54.561717</td>\n      <td>49.019608</td>\n      <td>77.895515</td>\n      <td>32.589928</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>58.139535</td>\n      <td>80.672269</td>\n      <td>92.102021</td>\n      <td>94.748201</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>54.203936</td>\n      <td>68.907563</td>\n      <td>98.780187</td>\n      <td>72.446043</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>69.409660</td>\n      <td>85.714286</td>\n      <td>96.365205</td>\n      <td>91.294964</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
+            //     per_segment_fn_fp: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_fn_fp">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>FN Per-segment</th>\n      <th>FP Per-segment</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.470159</td>\n      <td>3.943581</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.815582</td>\n      <td>28.554980</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>1.285742</td>\n      <td>3.156784</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>1.228171</td>\n      <td>5.469200</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.767607</td>\n      <td>3.137594</td>\n    </tr>\n  </tbody>\n</table>',
+            //     mcc: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_reduced_df_mcc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Protein Orientation MCC</th>\n      <th>Protein Classification MCC</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.692814</td>\n      <td>0.359149</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.277160</td>\n      <td>0.238049</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.487906</td>\n      <td>0.741812</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>0.399812</td>\n      <td>0.376336</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.606363</td>\n      <td>0.825429</td>\n    </tr>\n  </tbody>\n</table>',
+            //     sov: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_sov_tm_helix">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SOV</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.849833</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.810492</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.806505</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>0.810561</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.830279</td>\n    </tr>\n  </tbody>\n</table>',
+            //     plot_sample: 'somepath',
+            //     plot_cm_orientation: {
+            //         cctop: 'somepath',
+            //         hmmtop: 'somepath'
+            //     },
+            //     plot_cm_orientation: {
+            //         cctop: 'somepath',
+            //         hmmtop: 'somepath'
+            //     },
+            //     plot_tmh_length: {
+            //         cctop: 'somepath',
+            //         hmmtop: 'somepath'
+            //     },
+            // };
+            // let response = fakeResults;
 
-            let fakeResults = {
-                exp_set:'A',
-                pred_acc: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_pred_acc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Correct TM Count</th>\n      <th>Correct Segment Location</th>\n      <th>N Location Success Rate</th>\n      <th>Correct Topology</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>95.586260</td>\n      <td>99.261178</td>\n      <td>95.854922</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>70.629438</td>\n      <td>97.591633</td>\n      <td>6.208021</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>95.557475</td>\n      <td>98.973326</td>\n      <td>78.919593</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>93.302629</td>\n      <td>98.618307</td>\n      <td>6.351948</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>96.094799</td>\n      <td>99.155632</td>\n      <td>7.685665</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
-                pred_acc_classification: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25.df_pred_acc_classification">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>+TM-SP</th>\n      <th>+TM+SP</th>\n      <th>-TM-SP</th>\n      <th>-TM+SP</th>\n      <th>Overall</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>80.322004</td>\n      <td>90.756303</td>\n      <td>97.449483</td>\n      <td>89.424460</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>54.561717</td>\n      <td>49.019608</td>\n      <td>77.895515</td>\n      <td>32.589928</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>58.139535</td>\n      <td>80.672269</td>\n      <td>92.102021</td>\n      <td>94.748201</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>54.203936</td>\n      <td>68.907563</td>\n      <td>98.780187</td>\n      <td>72.446043</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>69.409660</td>\n      <td>85.714286</td>\n      <td>96.365205</td>\n      <td>91.294964</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
-                per_segment_fn_fp: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_fn_fp">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>FN Per-segment</th>\n      <th>FP Per-segment</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.470159</td>\n      <td>3.943581</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.815582</td>\n      <td>28.554980</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>1.285742</td>\n      <td>3.156784</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>1.228171</td>\n      <td>5.469200</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.767607</td>\n      <td>3.137594</td>\n    </tr>\n  </tbody>\n</table>',
-                mcc: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_reduced_df_mcc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Protein Orientation MCC</th>\n      <th>Protein Classification MCC</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.692814</td>\n      <td>0.359149</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.277160</td>\n      <td>0.238049</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.487906</td>\n      <td>0.741812</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>0.399812</td>\n      <td>0.376336</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.606363</td>\n      <td>0.825429</td>\n    </tr>\n  </tbody>\n</table>',
-                sov: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_sov_tm_helix">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SOV</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.849833</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.810492</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.806505</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>0.810561</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.830279</td>\n    </tr>\n  </tbody>\n</table>',
-                plot_sample: 'somepath',
-                plot_cm_orientation: {
-                    cctop: 'somepath',
-                    hmmtop: 'somepath'
-                },
-                plot_cm_orientation: {
-                    cctop: 'somepath',
-                    hmmtop: 'somepath'
-                },
-                plot_tmh_length: {
-                    cctop: 'somepath',
-                    hmmtop: 'somepath'
-                },
-            };
-            let response = fakeResults;
-
-            this.current_pred_acc = response.pred_acc;
-            this.current_pred_acc_classification = response.pred_acc_classification;
-            this.current_per_segment_fn_fp = response.per_segment_fn_fp;
-            this.current_mcc = response.mcc;
-            this.current_sov = response.sov;
+            // this.current_pred_acc = response.pred_acc;
+            // this.current_pred_acc_classification = response.pred_acc_classification;
+            // this.current_per_segment_fn_fp = response.per_segment_fn_fp;
+            // this.current_mcc = response.mcc;
+            // this.current_sov = response.sov;
 
 
         },

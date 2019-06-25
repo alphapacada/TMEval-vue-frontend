@@ -2,7 +2,7 @@
     <header class="header-global">
         <base-nav class="navbar-main" transparent  title="Random titmle" type="success" effect="light" expand>
             <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-                <img src="img/brand/tmbrand.png" alt="logo" class="img-fluid">
+                <img src="/img/brand/tmbrand.png" alt="logo" class="img-fluid">
             </router-link>
 
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
@@ -17,7 +17,7 @@
             </div>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                         <li class="nav-item">
-                            <router-link to="/tmlanding" class="nav-link"  role="button">
+                            <router-link to="/" class="nav-link"  role="button">
                               <i class="ni ni-ui-04 d-lg-none"></i>
                               <span class="nav-link-inner--text">Home</span>
                             </router-link>
@@ -36,9 +36,9 @@
                         <i class="ni ni-collection d-lg-none"></i>
                         <span class="nav-link-inner--text">Browse</span>
                     </a>
-                    <router-link to="/landing#view_assessment" class="dropdown-item">View Assessment</router-link>
-                    <router-link to="/landing" class="dropdown-item">View Dataset</router-link>
-                    <router-link to="/landing#predict_sequences" class="dropdown-item">Predict Topology</router-link>
+                    <router-link to="/evaluation" class="dropdown-item">View Assessment</router-link>
+                    <router-link to="/evaluation/table" class="dropdown-item">View Dataset</router-link>
+                    <router-link to="/#predict_sequences" class="dropdown-item">Predict Topology</router-link>
                 </base-dropdown>
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">

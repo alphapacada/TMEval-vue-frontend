@@ -1,6 +1,6 @@
 <template>
     <div class="up_pftv_category_TOPOLOGY">
-        <div class="up_pftv_category">
+        <div class="up_pftv_category text-center">
             <div class="up_pftv_category-viewer">
                 <svg width="760" height="40">
                     <!-- <g>
@@ -79,6 +79,7 @@ export default {
     },
     methods:{
         loadPaths(){
+            this.paths = [];
             console.log('+loadPaths()');
             this.sequence = this.seq;
             var length = this.sequence.length;
@@ -89,7 +90,8 @@ export default {
                 currentLength = 0,
                 currentIndex = 0,
                 currentClass = '',
-                currentChar = '';
+                currentChar = '',
+                currentText = '';
                 
             if(length > 0)
             {
@@ -105,12 +107,31 @@ export default {
                         switch(currentChar)
                         {
                             case 'i':
-                            case 'o':
+                            case 'I':
                                 currentClass = 'up_pftv_feature up_pftv_topo_dom';
+                                currentText= 'Inside\n' + 
+                                                'Length: ' + currentLength.toString();
+                                break;
+                            case 'o':
+                            case 'O':
+                                currentClass = 'up_pftv_feature up_pftv_topo_dom';
+                                currentText= 'Outside\n' + 
+                                                'Length: ' + currentLength.toString();
                                 break;
                             case 'M':
                                 currentClass = 'up_pftv_feature up_pftv_transmem';
+                                currentText= 'Transmembrane\n' + 
+                                                'Length: ' + currentLength.toString();
                                 break;
+                            case 'S':
+                                currentClass = 'transmem_green';
+                                currentText= 'Signal Peptide\n' + 
+                                                'Length: ' + currentLength.toString();
+                                break;
+                            default:
+                                currentText= '\"' + currentChar + '\"' + '\n' + 
+                                                'Length: ' + currentLength.toString();
+                                currentClass = 'transmem_default';
                         }
                         newPath = {
                         'name':"TOPOLOGY_" + pathCount,
@@ -118,8 +139,8 @@ export default {
                         'd':FeatureFactory.getFeature('transmem',1,10,(currentLength / length) * 760 ),
                         'transform':'translate(' + tOffset + ',12.5)',
                         'popover':{
-                                'popover_msg' : currentLength.toString(),
-                                'title': 'Length'
+                                'popover_msg' : currentText,
+                                'title': 'Details'
                             }
                         };
                         this.paths.push(newPath);
@@ -132,6 +153,10 @@ export default {
                 }
 
             }
+            else
+            {
+                this.paths = [];
+            }
             console.log('-loadPaths()');
         }
     },
@@ -143,5 +168,15 @@ export default {
 </script>
 
 <style>
+.transmem_green
+{
+    fill:green;
+    stroke: darkgreen;
+}
 
+.transmem_default
+{
+    stroke:gray;
+    fill: transparent;
+}
 </style>

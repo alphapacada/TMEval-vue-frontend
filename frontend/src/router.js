@@ -17,6 +17,10 @@ import SideBar from "./views/Sidebar.vue"
 import Assessment from "./views/Assessment.vue"
 import TestResult from "./views/TestResult.vue"
 import Downloads from "./views/Downloads.vue"
+import DataComparison from "./views/DataComparison.vue"
+import PerformanceEvaluation from "./views/PerformanceEvaluation.vue"
+import SOV from "./views/SOVAnalysis.vue"
+import ConfusionMatrix from "./views/ConfusionMatrix.vue"
 
 Vue.use(Router);
 
@@ -89,7 +93,7 @@ export default new Router({
             }
         },
         {
-            path: "/prediction",
+            path: "/prediction/:id",
             name: "prediction",
             components: {
                 header: tmHeader,
@@ -116,23 +120,27 @@ export default new Router({
             }
         },
         {
-            path: "/sidebartest",
-            name: "sidebar",
+            path: "/evaluation",
+            name: "evaluation",
             components: {
                 header: tmHeader,
                 default: SideBar,
                 footer: AppFooter
             },
             children: [
+                { path: '/evaluation/', component: TableTest },
                 // UserProfile will be rendered inside User's <router-view>
                 // when /user/:id/profile is matched
-                { path: '/sidebartest/assessment', component: Assessment },
+                { path: '/evaluation/assessment', component: Assessment },
 
                 // UserPosts will be rendered inside User's <router-view>
                 // when /user/:id/posts is matched
-                { path: '/sidebartest/table', component: TableTest },
+                { path: '/evaluation/table', component: TableTest },
 
-                { path: '/sidebartest/testresults', component: TestResult }
+                { path: '/evaluation/dataset-comparison', component: DataComparison },
+                { path: '/evaluation/perf-eval', component: PerformanceEvaluation },
+                { path: '/evaluation/sov', component: SOV },
+                { path: '/evaluation/confusion-matrix', component: ConfusionMatrix }
             ]
         },
         {
@@ -156,11 +164,26 @@ export default new Router({
 
 
     ],
+    // scrollBehavior: to => {
+    //     if (to.hash) {
+    //         return { selector: to.hash, offset: { x: 0, y: 60 } };
+    //     } else {
+    //         return { x: 0, y: 0 };
+    //     }
+    // }
     scrollBehavior: to => {
         if (to.hash) {
-            return { selector: to.hash };
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve({ selector: to.hash, offset: { x: 0, y: 60 } })
+                }, 400)
+            })
         } else {
-            return { x: 0, y: 0 };
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve({ x: 0, y: 0 })
+                }, 200)
+            })
         }
     }
 });

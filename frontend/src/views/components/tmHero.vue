@@ -14,23 +14,16 @@
                         <img src="img/brand/tmbrand.png" style="width: 300px;" class="img-fluid">
                         <p class="lead text-white mt-4 mb-5">Evaluator for Transmembrane Protein Prediction Methods</p>
                         <div class="btn-wrapper">
-                            <base-button tag="a"
-                                href="#view_assessment"
+                            <base-button
+                                @click="$router.push('evaluation')" 
                                 class="mb-3 mb-sm-0"
                                 type="success"
                                 icon="fa fa-bar-chart">
                                 View Assessment
                             </base-button>
-                            <!-- <base-button tag="a"
-                                                 href="#submit_sequences"
-                                                 class="mb-3 mb-sm-0"
-                                                 type="success"
-                                                 icon="fa fa-upload">
-                                        Choose Protein Groups
-                            </base-button> -->
-                            <base-button tag="a"
+                            <base-button
                                 key="hello"
-                                href="#predict_sequences"
+                                @click="$router.push('/#predict_sequences')"
                                 class="mb-3 mb-sm-0"
                                 type="secondary"
                                 icon="fa fa-upload">

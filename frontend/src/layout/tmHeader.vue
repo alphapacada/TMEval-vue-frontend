@@ -8,7 +8,7 @@
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
                 <div class="col-6 collapse-brand">
                     <a href="">
-                        <img src="img/brand/blue.png">
+                        <img src="img/brand/tmbrand.png">
                     </a>
                 </div>
                 <div class="col-6 collapse-close">
@@ -28,7 +28,7 @@
                               <span class="nav-link-inner--text">About</span>
                             </router-link>
                         </li>
-                        
+
             </ul>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <base-dropdown tag="li" class="nav-item">

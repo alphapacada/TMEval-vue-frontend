@@ -1,10 +1,7 @@
 import axios from 'axios'
 
-
-
-const API_URL = 'http://localhost:5000';
 let $axios = axios.create({
-        baseURL: 'http://192.168.254.108:5000/api/v1/',
+        baseURL: 'http://202.92.153.69:5000/api/v1/',
         timeout: 0,
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,

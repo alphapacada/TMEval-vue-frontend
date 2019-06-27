@@ -6,9 +6,7 @@
     <base-checkbox v-model="otherToggle">Other Prediction</base-checkbox>
     <button @click="test">TEST RESET</button>
   </div>
-  
 </template>
-
 <script>
 export default {
   name: "tools-toggler",
@@ -22,7 +20,6 @@ export default {
   },
   methods:{
     test() {
-      console.log("Button clicked!");
       this.cctopToggle = true;
       this.hmmtopToggle = true;
       this.philiusToggle = true;

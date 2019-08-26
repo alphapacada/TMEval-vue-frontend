@@ -10,7 +10,7 @@
         <div class="container shape-container d-flex align-items-center">
             <div class="col px-0">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-7 text-center pt-lg">
+                    <div class="col-lg-8 text-center pt-lg">
                         <img src="img/brand/tmbrand.png" style="width: 300px;" class="img-fluid">
                         <p class="lead text-white mt-4 mb-5">Evaluator for Transmembrane Protein Prediction Methods</p>
                         <div class="btn-wrapper">
@@ -22,9 +22,10 @@
                                 View Assessment
                             </base-button>
                             <base-button
+                                
                                 key="hello"
                                 @click="$router.push('/#predict_sequences')"
-                                class="mb-3 mb-sm-0"
+                                class="mb-3 mb-sm-0 text-wrap"
                                 type="secondary"
                                 icon="fa fa-upload">
                                 Submit Sequences for Prediction
@@ -55,5 +56,8 @@ export default {
     name: "tm-hero",
 };
 </script>
-<style>
+<style scoped>
+.text-wrap {
+  white-space: normal;
+}
 </style>

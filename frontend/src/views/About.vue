@@ -7,8 +7,8 @@
                     <h3 class="display-1 mb-4">This tool assesses the performance accuracies of six Transmembrane Topology Prediction Methods.</h3>
              
                     <div class="row mb-5">
-                        <div class="col-6">
-                            <v-card min-height="170" :ripple="{ class: 'success--text' }" class="mr-1">
+                        <div class="col-sm-6">
+                            <v-card min-height="170" :ripple="{ class: 'success--text' }" class="mr-sm-1 mb-2">
                                 <!-- <a href="http://www.enzim.hu/hmmtop/html/adv_submit.html" target="_blank"> -->
                                     <v-card-title primary-title>
                                         <h4>
@@ -22,8 +22,8 @@
                                 <!-- </a> -->
                             </v-card>
                         </div>
-                        <div class="col-6" >
-                            <v-card min-height="170" :ripple="{ class: 'default--text' }" class="ml-1">
+                        <div class="col-sm-6" >
+                            <v-card min-height="170" :ripple="{ class: 'default--text' }" class="ml-sm-1 mb-xs-2">
                                 <!-- <a href="http://cctop.enzim.ttk.mta.hu/" target="_blank"> -->
                                     <v-card-title primary-title>
                                         <h4>

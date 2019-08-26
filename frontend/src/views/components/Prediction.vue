@@ -1,5 +1,5 @@
 <template>
-        <section  id ="predict_sequences" class="section bg-secondary section-lg pt-0">
+        <section  id ="predict_sequences" class="pt-5 bg-gradient-success section section-lg pt-0">
         <v-snackbar v-model="snackbar" :timeout="5000" :top="true">
             Submit failed. Please check inputs. 
             <v-icon class="pl-1" color="green" @click="snackbar = false">
@@ -8,16 +8,16 @@
         </v-snackbar>
             <div class="container">
                 <span>
-                    <h2 class="display-1 pb-2">TMEval Topology Prediction</h2>
+                    <h1 class="display-1 pb-4 text-white">Topology Prediction</h1>
                 </span>
-                <card gradient="success"
+                <card 
                     no-body
                     shadow-size="lg"
                     class="border-1"
-                    headerClasses="bg-gradient-success">  
-                    <div class="p-5 text-white">
-                        <h3 class="text-white">Submit a fasta sequence for TM Topology Prediction.</h3>
-                        <p class="lead text-white mt-3">Enter ONE fasta sequence in the textarea below or upload a fasta file then select the tools you want use for the prediction. Click 'SUBMIT' to start prediction job.</p>
+                    headerClasses="">  
+                    <div class="p-5">
+                        <h5 class="">Submit a fasta sequence for TM Topology Prediction.</h5>
+                        <p class="mt-3">Enter ONE fasta sequence in the textarea below or upload a fasta file then select the tools you want use for the prediction. Click 'SUBMIT' to start prediction job.</p>
                         <div class="row">
                             <div class="col-md-8 py-3 mr-2 border rounded">
                                 <form id="form_id" @submit="checkForm" method="post">
@@ -26,11 +26,11 @@
                                         <textarea :disabled="Boolean(file)" :class="{'is-invalid':errorSequence}" class="form-control" id="Textarea1" rows="5" v-model="sequence" placeholder="Enter an amino-acid sequence"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <div class="row">
-                                            <div v-if="!Boolean(file)" class="col-1 my-auto pr-0 text-center">
+                                        <div class="row px-2">
+                                            <div v-if="!Boolean(file)" class="col-sm-1 my-auto text-center">
                                                 <span>or</span>
                                             </div>
-                                            <div v-if="Boolean(file)" class="col-2 pr-0">
+                                            <div v-if="Boolean(file)" class="col-sm-2 pr-0">
                                                 <base-button class="col" type="danger" v-on:click="removeFile">Remove</base-button>
                                             </div>
                                             <div :class="Boolean(file) ? 'col-10' : 'col-11'" @click="clearSequence">
@@ -43,16 +43,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-danger invalid-Yedback" style="display: block;" v-show="errorSequence">
+                                    <div class="text-danger invalid-feedback" style="display: block;" v-show="errorSequence">
                                         {{ errorSequence }}
                                     </div>
-                                    <base-button class="col-md-3" type="primary" v-on:click="checkForm">Submit</base-button>
+                                    <base-button class="col-sm-3" type="primary" v-on:click="checkForm">Submit</base-button>
                                     <base-button size="sm" v-on:click="setExample" type="secondary">Example</base-button> 
                                     <base-button size="sm" @click="clearForm" type="secondary">Clear</base-button>
                                 </form>
                             </div>
                             <div class="col-md-3 py-3 mx-auto border rounded">
-                                <label for=""><h5 class="text-secondary">Select methods to use for prediction.</h5></label>
+                                <label for=""><h5 class="">Select methods to use for prediction.</h5></label>
                                  <div>
                                     <base-checkbox v-model="predictionMethodToggles[index]" :key=method.id v-for="(method, index) in predictionMethods">
                                         <span class="toggle-text">{{method.name}}</span>
@@ -86,7 +86,15 @@ export default {
             message: null,
             fasta: null,
             sequence: '',
-            example: '>Q9CQZ5 NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 6\nMAAAATGLRQAAAAAASTSVKPIFSRDLNEAKRRVRELYRAWYREVPNTVHLMQLDITVKQGRDKVREMFMKNAHVTDPRVVDLLVIKGKMELQETIKVWKQRTHVMRFFHETETPRPKDFLSKFYMGHDP'
+            example: '>Q9CQZ5 NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 6\nMAAAATGLRQAAAAAASTSVKPIFSRDLNEAKRRVRELYRAWYREVPNTVHLMQLDITVKQGRDKVREMFMKNAHVTDPRVVDLLVIKGKMELQETIKVWKQRTHVMRFFHETETPRPKDFLSKFYMGHDP',
+            fakeApiResults:[
+            {"id":"0", "name":"CCTOP"}, 
+            {"id":"1", "name":"HMMTOP"},
+            {"id":"2", "name":"Philius"},
+            {"id":"3", "name":"Topcons"},
+            {"id":"5", "name":"TMHMM"}
+            ],
+            
         };
     },
     components: {
@@ -240,17 +248,15 @@ export default {
                  this.predictionMethods = responseData
                 
             })
+            .catch(function (error) {
+            // handle error
+            console.log("erroredt");
+            this.predictionMethods = this.fakeApiResults
+            })
         },
     },
     mounted () {
-        var fakeApiResults ={
-            "methods":[
-            {"id":"0", "name":"CCTOP"}, 
-            {"id":"1", "name":"HMMTOP"},
-            {"id":"2", "name":"Philius"},
-            {"id":"3", "name":"Other prediction"}
-            ]
-        };
+        this.predictionMethods = this.fakeApiResults
         this.getTools();
         console.log(this.predictionMethodToggles.map(function(idx) { return str.length > 0; }))
         var i;

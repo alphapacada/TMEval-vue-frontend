@@ -27,6 +27,13 @@
                                                     </p>
                                                 </td>
                                             </tr>
+                                            <tr class="row col">
+                                                <td rowspan="2" class="file-description col">
+                                                    henlo
+                                                    <a :href="file.url"> {{file.name}}</a>
+                                    
+                                                </td>
+                                            </tr>
                                         </td>
                                     </tr>
                                 </td>
@@ -75,7 +82,8 @@ export default {
                 {
                     name: "tmeval_25.gz",
                     size: "5 KB",
-                    description: "TMeval dataset with 25% sequence identity."
+                    description: "TMeval dataset with 25% sequence identity.",
+                    url: "http://127.0.0.1:5000/25_A/classification_confusion_matrix_CCTOP_1560843152.png"
                 },
                 {
                     name:"tmeval_30.gz",
@@ -154,14 +162,6 @@ export default {
                 console.log($backend.getBaseURL());
                 this.$refs.download.href = $backend.getBaseURL() + 'files/datasets/prediction/' + filename;
                 this.$refs.download.click();
-                // console.log("Downloading: ", filename);
-                // $backend.getDownloadable(filename)
-                // .then(response => {
-                // console.log("NIGGA",response.headers['content-type']);
-                // let blob = new Blob([response.data], {type: response.headers['content-type']}),
-                // url=window.URL.createObjectURL(blob)
-                // window.open(url)
-            // })
             
         }
     }

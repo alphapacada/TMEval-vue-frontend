@@ -69,7 +69,7 @@
         </section>
 </template>
 <script>
-import BFormFile from 'bootstrap-vue/es/components/form-file/form-file'
+import {BFormFile} from 'bootstrap-vue/esm/components/form-file/form-file'
 import ToolsToggler from "@/views/components/ToolsToggler"
 import $backend from '@/api'
 export default {

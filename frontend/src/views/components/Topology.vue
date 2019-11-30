@@ -60,12 +60,12 @@
             
             }
             */
-import BPopover from "bootstrap-vue/es/directives/popover/popover";
+import {VBPopover} from "bootstrap-vue/esm/directives/popover/popover";
 import FeatureFactory from 'ProtVista/src/FeatureFactory';
 export default {
     name:'topology',
     directives: {
-        BPopover
+        VBPopover
     },
     props:{
         seq: String

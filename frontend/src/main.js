@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import Argon from "./plugins/argon-kit";
 import Vuetify from "./plugins/vuetify"; 
+import VueResizeText from 'vue-resize-text';
 // import Vuetify from 'vuetify/lib';
 // import 'vuetify/src/stylus/app.styl'
 // import Vuetify from 'vuetify'
@@ -36,6 +37,7 @@ import Vuetify from "./plugins/vuetify";
 Vue.config.productionTip = false;
 Vue.use(Argon);
 Vue.use(Vuetify);
+Vue.use(VueResizeText);
 new Vue({
     router,
     render: h => h(App)

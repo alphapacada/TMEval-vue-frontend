@@ -1,0 +1,20 @@
+.text-responsive {
+    font-size: calc(100% + 1vw + 1vh);
+  }
+
+
+@include media-breakpoint-down(md) {
+    div h3.display-1 {
+        font-size: 26px !important;
+        line-height: 30px !important;
+    }
+    
+}
+  
+@include media-breakpoint-up(md) {
+   
+}
+
+@include media-breakpoint-up(lg) {
+
+}

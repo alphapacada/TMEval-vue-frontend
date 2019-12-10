@@ -11,26 +11,29 @@ html {
 }
 
 html {
-    font-size: 1.1rem !important;
+    font-size: 1rem !important;
+  }
+
+
+
+  @include media-breakpoint-up(sm) {
+    html {
+      font-size: 1.1rem !important;
+    }
+ 
   }
   
-//   @include media-breakpoint-up(sm) {
-//     html {
-//       font-size: 1.2rem !important;
-//     }
-//   }
+  @include media-breakpoint-up(md) {
+    html {
+      font-size: 1.2rem !important;
+    }
+  }
   
-//   @include media-breakpoint-up(md) {
-//     html {
-//       font-size: 1.4rem !important;
-//     }
-//   }
-  
-//   @include media-breakpoint-up(lg) {
-//     html {
-//       font-size: 1.2rem !important;
-//     }
-//   }
+  @include media-breakpoint-up(lg) {
+    html {
+      font-size: 1.2rem !important;
+    }
+  }
 body {
     font-family: $font-family-base;
     font-size: $font-size-base;

@@ -1,23 +1,24 @@
 <template>
-
-<div id="assessment" class="row">
-    <div id="sidebar-container" class="col-3">
-        <v-navigation-drawer
-        app
-        width=300
-        
-    value="true" >  
-    <v-list class="pb-0">
-   
-      <v-list-tile to="/evaluation/table">
-        <v-list-tile-title class="pl-3">TMeval Dataset</v-list-tile-title>
-      </v-list-tile>
-      <v-list-group>
-        <template v-slot:activator>
-          <v-list-tile to="/evaluation/dataset-comparison#dc-header">
-            <v-list-tile-title class="pl-3">Prediction Methods vs. TMeval Dataset Comparison</v-list-tile-title>
+  <div id="assessment" class="row">
+    
+    <!-- <div id="sidebar-container" class="col-3"> -->
+    <div id="sidebar-container">
+     <v-app>
+      <v-navigation-drawer :expand-on-hover=true>
+             <!-- <v-navigation-drawer app expand-on-hover="true"  width="300" value="true"> -->
+        <v-list class="pb-0">
+          <v-list-tile to="/evaluation/table">
+            <v-list-tile-title class="pl-3">TMeval Dataset</v-list-tile-title>
           </v-list-tile>
-        </template>
+          <v-list-group>
+            <template v-slot:activator>
+              <v-list-tile to="/evaluation/dataset-comparison#dc-header">
+                <v-list-tile-title class="pl-3"
+                  >Prediction Methods vs. TMeval Dataset
+                  Comparison</v-list-tile-title
+                >
+              </v-list-tile>
+            </template>
             <v-list-tile to="/evaluation/dataset-comparison#dc-cctop">
               <v-list-tile-title class="pl-5">CCTOP</v-list-tile-title>
             </v-list-tile>
@@ -33,25 +34,29 @@
             <v-list-tile to="/evaluation/dataset-comparison#dc-topcons2">
               <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>
             </v-list-tile>
-      </v-list-group>
+          </v-list-group>
 
-      <v-list-tile to="/evaluation/perf-eval">
-        <v-list-tile-title class="pl-3">Performance Evaluation</v-list-tile-title>
-      </v-list-tile>
+          <v-list-tile to="/evaluation/perf-eval">
+            <v-list-tile-title class="pl-3"
+              >Performance Evaluation</v-list-tile-title
+            >
+          </v-list-tile>
 
-      <v-list-tile to="/evaluation/sov">
-        <v-list-tile-title class="pl-3">SOV analysis</v-list-tile-title>
-      </v-list-tile>
-      
-      <!-- <v-list-tile>
+          <v-list-tile to="/evaluation/sov">
+            <v-list-tile-title class="pl-3">SOV analysis</v-list-tile-title>
+          </v-list-tile>
+
+          <!-- <v-list-tile>
         <v-list-tile-title class="pl-3">Confusion Matrix</v-list-tile-title>
       </v-list-tile> -->
-       <v-list-group>
-        <template v-slot:activator>
-          <v-list-tile to="/evaluation/confusion-matrix">
-            <v-list-tile-title class="pl-3">Confusion Matrix</v-list-tile-title>
-          </v-list-tile>
-        </template>
+          <v-list-group>
+            <template v-slot:activator>
+              <v-list-tile to="/evaluation/confusion-matrix">
+                <v-list-tile-title class="pl-3"
+                  >Confusion Matrix</v-list-tile-title
+                >
+              </v-list-tile>
+            </template>
             <v-list-tile to="/evaluation/confusion-matrix#cf-cctop">
               <v-list-tile-title class="pl-5">CCTOP</v-list-tile-title>
             </v-list-tile>
@@ -67,73 +72,73 @@
             <v-list-tile to="/evaluation/confusion-matrix#cf-topcons2">
               <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>
             </v-list-tile>
-      </v-list-group>
-    </v-list>
-  </v-navigation-drawer>
+          </v-list-group>
+        </v-list>
+      </v-navigation-drawer>
+     </v-app>
     </div>
-    <div class="dummy col-3">
-    </div>
-    <div class="col-9">
-        <div id="page-content" class="col-11">
-           <fade-transition origin="center" mode="out-in" :duration="100">
-            <router-view></router-view>
-             </fade-transition>
-        </div>
+    <div class="dummy col-lg-3 col-1"></div>
+    <div class="col-lg-9 col-11">
+
+      <div id="page-content" class="col-11">
+        <fade-transition origin="center" mode="out-in" :duration="100">
+          <router-view></router-view>
+        </fade-transition>
+      </div>
     </div>
   </div>
-
 </template>
 <script>
 import { FadeTransition } from "vue2-transitions";
 
 export default {
-    components: {
-      FadeTransition
-    },
-    data: () => ({
-      admins: [
-        ['Management', 'people_outline'],
-        ['Settings', 'settings']
-      ],
-      cruds: [
-        ['Create', 'add'],
-        ['Read', 'insert_drive_file'],
-        ['Update', 'update'],
-        ['Delete', 'delete']
-      ]
-    })
+  components: {
+    FadeTransition
+  },
+  data: () => ({
+    admins: [
+      ["Management", "people_outline"],
+      ["Settings", "settings"]
+    ],
+    cruds: [
+      ["Create", "add"],
+      ["Read", "insert_drive_file"],
+      ["Update", "update"],
+      ["Delete", "delete"]
+    ]
+  })
 };
 </script>
 <style>
-
 .v-list .primary--text {
-  color:#2dce89 !important;
+  color: #2dce89 !important;
   caret-color: #2dce89 !important;
 }
-.v-list a:hover{
-  color:#2dce89 !important;
+.v-list a:hover {
+  color: #2dce89 !important;
 }
 .theme--light.application {
-  background-color: #ffffff
+  background-color: #ffffff;
 }
 #assessment {
+    text-align: center;
   padding: 60px 0px 0px 0px;
 }
-.v-navigation-drawer{
+.v-navigation-drawer {
   padding-top: 5em !important;
 }
- #sidebar-container{
-    display: inline-block;
-    padding-bottom: 10px;
-    position:fixed;
+#sidebar-container {
+  display: inline-block;
+  padding-bottom: 10px;
+  position: fixed;
+  /* z-index: 1 */
 }
-#page-content{
-    display: inline-block;
-    padding-bottom: 10px;
+#page-content {
+  display: inline-block;
+  padding-bottom: 10px;
 }
 
-
-.dummy{
+.dummy {
   z-index: -1 !important;
 }
 </style>

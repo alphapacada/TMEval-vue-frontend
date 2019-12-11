@@ -13,7 +13,7 @@ import About from "./views/About.vue";
 import PredictionResult from "./views/PredictionResult.vue"
 import Protvista from "./views/ProtvistaView.vue"
 import TableTest from "./views/TableTest.vue"
-import SideBar from "./views/Sidebar.vue"
+import SideBar2 from "./views/Sidebar2.vue"
 import Assessment from "./views/Assessment.vue"
 import TestResult from "./views/TestResult.vue"
 import Downloads from "./views/Downloads.vue"
@@ -124,7 +124,7 @@ export default new Router({
             name: "evaluation",
             components: {
                 header: tmHeader,
-                default: SideBar,
+                default: SideBar2,
                 footer: AppFooter
             },
             children: [

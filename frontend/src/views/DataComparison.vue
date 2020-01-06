@@ -2,165 +2,93 @@
     <div id="data-comparison-container" class="container">
         <div id="dc-header" class="row">
             <div class="col">
-                <h1 class="pt-3 pb-5">
+                <h2 class="pt-3 pb-5">
                     Dataset Comparison
-                </h1>
+                </h2>
             </div>
         </div>
-        <div id="dc-all" class="row pt-2">
+        <div :id="dc.hash" v-for="dc in dcs" :key="dc.id">
+            <div  class="row pt-2">
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <h3>
-                            Prediction tools vs TMeval
-                        </h3>
+                        <h4>
+                            {{ dc.title }}
+                        </h4>
                     </div>
                 </div>
-                <div class="row">
+                    <div class="row justify-content-center">
                     <div class="col-8">
-                        <img src="/img/figures/predtools.png" class="img-fluid" >
+                        <img :src="dc.img_src" class="img-fluid" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p>
-                            From 10494 proteins with no more than 25% pairwise sequence 
-                            similarity, only 8488 entries remained after 
-                            common entries from the dataset of Tmeval and the prediction tools were removed.
+                           {{ dc.desc }}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
         <v-divider></v-divider>
-        <div id="dc-cctop" class="row pt-2">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h3>
-                            CCTOP vs TMeval
-                        </h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <img src="/img/figures/CCTOP.png" class="img-fluid" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>
-                            There are only 29 common entries between the CCTOP and TMEval datasets. 
-                            Accession Ids in the 'CrossRef' section of a CCTOPItem  was used to find common entries.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <v-divider></v-divider>
-         <div id="dc-hmmtop" class="row pt-2">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h3>
-                            HMMTOP vs TMeval
-                        </h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <img src="/img/figures/hmmtop.png" class="img-fluid" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>
-                            Only 9 entries are common between HMMTOP and TMeval. The HMMTOP dataset contains Uniprot entry names.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <v-divider></v-divider>
-        <div id="dc-philius" class="row pt-2">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h3>
-                            Philius vs TMeval
-                        </h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <img src="/img/figures/philius.png" class="img-fluid" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>
-                             With 412 entries in common, Philius and TMeval have the second-most number of common entries . 
-                             Philius used the Phobius dataset for model development.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <v-divider></v-divider>
-        <div id="dc-tmhmm2" class="row pt-2">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h3>
-                            TMHMM2 vs TMeval
-                        </h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <img src="/img/figures/TMHMM2.png" class="img-fluid" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>
-                            Twenty percent of TMHMM2's dataset exists within the TMeval dataset.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <v-divider></v-divider>
-        <div id="dc-topcons2" class="row pt-2">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h3>
-                            TOPCONS2 vs TMeval
-                        </h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <img src="/img/figures/TOPCONS.png" class="img-fluid" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>
-                            The TOPCONS2 dataset, being the largest of all prediction tools, 
-                            has 1238 entries in common with the TMeval dataset.
-                        </p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+        
+    
+    
 </template>
 <script>
 export default {
     data(){
         return{
+            dcs: [
+                {
+                    hash:"dc-all",
+                    title:"Prediction Tools vs TMEval",
+                    img_src: "/img/figures/predtools.png",
+                    desc:   `From 10494 proteins with no more than 25% pairwise sequence 
+                            similarity, only 8488 entries remained after 
+                            common entries from the dataset of Tmeval and the prediction tools were removed.`
+                },
+                {
+                    hash: "dc-cctop",
+                    title: "CCTOP vs TMeval",
+                    img_src: "/img/figures/CCTOP.png",
+                    desc:   `There are only 29 common entries between the CCTOP and TMEval datasets. 
+                            Accession Ids in the 'CrossRef' section of a CCTOPItem  was used to find common entries.`
+                },
+                {
+                    hash: "dc-hmmtop",
+                    title: "HMMTOP vs TMeval",
+                    img_src: "/img/figures/hmmtop.png",
+                    desc: ' Only 9 entries are common between HMMTOP and TMeval. The HMMTOP dataset contains Uniprot entry names.',
+                },
+                {
+                    hash: "dc-philius",
+                    title: "Philius vs TMeval",
+                    img_src: "/img/figures/philius.png",
+                    desc:   ` With 412 entries in common, Philius and TMeval have the second-most number of common entries . 
+                             Philius used the Phobius dataset for model development.`,
+                },
+                {
+                    hash: "dc-tmhmm2",
+                    title: "TMHMM2 vs TMeval",
+                    img_src: "/img/figures/TMHMM2.png",
+                    desc: ` Twenty percent of TMHMM2's dataset exists within the TMeval dataset.`
+
+                },
+                {
+                    hash: "dc-topcons2",
+                    title: "TOPCONS2 vs TMeval",
+                    img_src: "/img/figures/TOPCONS.png",
+                    desc: `The TOPCONS2 dataset, being the largest of all prediction tools, 
+                            has 1238 entries in common with the TMeval dataset.`
+                }
+
+
+            ],
+
             predictionMethods:[],
             selectedMethod:'Method',
             selectedMethodIndex: 0,

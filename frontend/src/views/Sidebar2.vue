@@ -1,13 +1,35 @@
 <template>
   <section class="bg-white pt-3">
-    <v-app>
-      <div id="assessment" class="row mx-auto">
+    <v-app
+   >
+      <!-- <div id="assessment" class="row"> -->
+          <v-btn v-if="mini" class="sidebar-toggler mx-3" fixed dark fab small color="#2dce89">
+                <!-- <v-icon dark>ni-air-balloon</v-icon> -->
+                <i class="fa fa-chevron-right"></i>
+                
+          </v-btn>
+          <!-- <base-button type="success">Success</base-button> -->
+  
         <v-navigation-drawer
           id="sidebar-container"
           class="col-lg-3"
-          :expand-on-hover="true"
-         
+         :mobile-break-point="mobileBreakPoint"
+          v-resize-watcher="resizewatcher"
+
         >
+         <!-- <v-navigation-drawer
+          id="sidebar-container"
+          class="col-lg-3"
+          :expand-on-hover="true"
+         :mini-variant.sync="mini"
+         :mobile-break-point="mobileBreakPoint"
+          v-resize-watcher="resizewatcher"
+          :value="value"
+          permanent
+          
+        > -->
+         
+
           <v-list class="pb-0">
             <v-list-tile to="/evaluation/table">
               <v-list-tile-title class="pl-3">TMeval Dataset</v-list-tile-title>
@@ -74,11 +96,15 @@
           </v-list>
         </v-navigation-drawer>
 
-        <div id="page-content" class="">
+        <div id="page-content">
+            <div class="container">
+
           <fade-transition origin="center" mode="out-in" :duration="100">
             <router-view></router-view>
+           
           </fade-transition>
-        </div>
+           </div>
+   
       </div>
     </v-app>
   </section>
@@ -86,11 +112,15 @@
 <script>
 import { FadeTransition } from "vue2-transitions";
 
+
 export default {
   components: {
     FadeTransition
   },
   data: () => ({
+    mobileBreakPoint: 890,
+    mini: true,
+    value: true,
     admins: [
       ["Management", "people_outline"],
       ["Settings", "settings"]
@@ -101,7 +131,21 @@ export default {
       ["Update", "update"],
       ["Delete", "delete"]
     ]
-  })
+  }),
+    methods: {
+    resizewatcher() {
+        console.log("resize")
+        console.log(window.innerWidth)
+        console.log(this.mobileBreakPoint)
+     if(window.innerWidth < this.mobileBreakPoint) {
+         console.log("mini")
+        this.mini=true
+        this.value=true
+        
+    }else {
+        this.mini=false
+    }}
+  },
 };
 </script>
 <style>
@@ -123,17 +167,47 @@ export default {
   padding-top: 5em !important;
 }
 #sidebar-container {
+    position:fixed;
+}
+.sidebar-toggler{
+    margin-top: 60px;
+}
+/* #sidebar-container {
   display: inline-block;
   padding-bottom: 10px;
   position: fixed;
   /* z-index: 1 */
-}
+
 #page-content {
   display: inline-block;
   padding-bottom: 10px;
+  margin-top: 60px;
+  padding-left: 300px;
 }
-
+ 
+#page-content>.container {
+    padding-left:30px;
+    margin-left:0
+}
+@media only screen and (max-width: 890px) {
+    #page-content{
+        padding-left: unset;
+        
+    }
+    #page-content>.container {
+    padding-left:15px;
+    margin-left:auto;
+}
+ }
 .dummy {
   z-index: -1 !important;
+}
+.v-navigation-drawer > .v-list .v-list__tile {
+    font-weight: 600 !important;
+    font-size: 0.80rem !important;
+    
+}
+.application {
+    font-family: unset !important;
 }
 </style>

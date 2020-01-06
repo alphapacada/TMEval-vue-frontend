@@ -1,10 +1,10 @@
 <template>
     <section id="view_prediction-results" class="bg-white pt-3"> 
         <v-app>
-        <h1>
+        <h2>
             Evaluation Results
-        </h1>
-        <v-card class="mb-2">
+        </h2>
+        <v-card class="mb-2 p-2">
             <v-card-title class="pb-0">
                 <h5>
                     Currently viewing:
@@ -34,7 +34,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="success" @click="fetchResults"> {{ buttonText }} </v-btn>
+                <base-button type="success" @click="fetchResults"> {{ buttonText }} </base-button>
             </v-card-actions>
         </v-card>
     
@@ -42,9 +42,9 @@
         <!-- PREDICTION ACC -->
         <v-card class="mb-4">
             <v-card-title primary-title>
-                <h1>
+                <h3>
                 Topology Prediction Accuracies set {{ currentSet }}
-                </h1>
+                </h3>
                 <h5>Topology Prediction Accuracies on TMeval dataset with no more than {{ currentSeqId }}% sequence similarity BUT with common proteins with the Datasets used by the prediction tools</h5>
             </v-card-title>
             <v-card-text>
@@ -67,9 +67,9 @@
         <!-- PREDICTION ACC CLASSIFICATION -->
         <v-card class="mb-4">
             <v-card-title primary-title>
-                <h1>
+                <h3>
                     Topology Prediction Accuracies for each Classification of Proteins Set {{ currentSet }}
-                </h1>
+                </h3>
             </v-card-title>
             <v-card-text>
                 <div class="row">
@@ -86,9 +86,9 @@
         <!-- FN FP -->
         <v-card class="mb-4">
             <v-card-title primary-title>
-                <h1>
+                <h3>
                     TM Per-Segment FN-FP Set {{ currentSet }}
-                </h1>
+                </h3>
             </v-card-title>
             <v-card-text>
                 <div class="row">
@@ -104,9 +104,9 @@
         <!-- MCC -->
         <v-card class="mb-4">
             <v-card-title primary-title>
-                <h1>
+                <h3>
                     Matthew's Correlation Coefficient on Protein Orientation and Classification Set {{ currentSet }}
-                </h1>
+                </h3>
             </v-card-title>
             <v-card-text>
                 <div class="row">
@@ -121,9 +121,9 @@
         <!-- SOV -->
         <v-card class="mb-4">
             <v-card-title primary-title>
-                <h1>
+                <h3>
                    Segment Overlap Measure on Set {{ currentSet }}
-                </h1>
+                </h3>
             </v-card-title>
             <v-card-text>
                 <div class="row">

@@ -3,8 +3,8 @@
     id="predict_sequences"
     class="pt-5 bg-gradient-success section section-lg pt-0"
   >
-    <v-snackbar v-model="snackbar" :timeout="5000" :top="true">
-      Submit failed. Please check inputs.
+    <v-snackbar v-model="snackbar" :timeout="snackbarTimeout" :top="true">
+      {{snackbarText}}
       <v-icon class="pl-1" color="green" @click="snackbar = false">
         highlight_off
       </v-icon>
@@ -129,6 +129,8 @@ export default {
       message: null,
       fasta: null,
       sequence: "",
+      snackbarTimeout: 0,
+      snackbarText: "",
       example:
         ">Q9CQZ5 NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 6\nMAAAATGLRQAAAAAASTSVKPIFSRDLNEAKRRVRELYRAWYREVPNTVHLMQLDITVKQGRDKVREMFMKNAHVTDPRVVDLLVIKGKMELQETIKVWKQRTHVMRFFHETETPRPKDFLSKFYMGHDP",
       fakeApiResults: [
@@ -153,11 +155,13 @@ export default {
     },
     checkForm(e) {
       e.preventDefault();
-      var checkResults = [this.checkSequence(), this.checkToggles()];
+      let checkResults = [this.checkSequence(), this.checkToggles()];
       if (!checkResults.includes(false)) {
         this.submitForm();
       } else {
+        this.snackbarTimeout = 5000;
         this.snackbar = true;
+        this.snackbarText = "Invalid input. Please check the forms.";
       }
     },
     setExample() {
@@ -205,7 +209,7 @@ export default {
       fasta = fasta.trim();
 
       // split on newlines...
-      var lines = fasta.split("\n");
+      let lines = fasta.split("\n");
 
       // check for header
       if (fasta[0] == ">") {
@@ -226,17 +230,18 @@ export default {
     submitForm() {
       console.log(this.sequence);
       console.log(this.predictionMethodToggles);
+      console.log(this.predictionMethods)
 
-      var predictionData = [];
-      var data;
-      var i;
+      let predictionData = [];
+      let data;
+      let i;
       for (i = 0; i < this.predictionMethodToggles.length; i++) {
         if (this.predictionMethodToggles[i]) {
           predictionData.push(this.predictionMethods[i].name);
         }
       }
       console.log(predictionData);
-      var evaluationData = {
+      let evaluationData = {
         file: this.file,
         sequence: this.sequence,
         tools: predictionData
@@ -260,7 +265,7 @@ export default {
       this.errorSequence = "";
       this.errorToggle = "";
       this.file = null;
-      var i;
+      let i;
       for (i = 0; i < this.predictionMethods.length; i++) {
         this.predictionMethodToggles[i] = true;
       }
@@ -272,27 +277,34 @@ export default {
       this.sequence = "";
     },
     getTools() {
+        console.log("Retrieving tools.");
       $backend
         .getPredTools()
         .then(responseData => {
+        console.log("getTools ", responseData)
           this.predictionMethods = responseData;
         })
-        .catch(function(error) {
+        .catch(error=> {
           // handle error
-          console.log("erroredt");
-          this.predictionMethods = this.fakeApiResults;
+            this.snackbar = true;
+            this.snackbarTimeout = 0;
+            this.snackbarText = "Cannot connect to server.";
+            console.log("error bui");
+        //   this.predictionMethods = this.fakeApiResults;
         });
     }
   },
   mounted() {
-    this.predictionMethods = this.fakeApiResults;
+    //this.predictionMethods = this.fakeApiResults;
+    // get tools from database
     this.getTools();
-    console.log(
-      this.predictionMethodToggles.map(function(idx) {
-        return str.length > 0;
-      })
-    );
-    var i;
+
+    // console.log(
+    //   this.predictionMethodToggles.map(function(idx) {
+    //     return str.length > 0;
+    //   })
+    // );
+    let i;
     for (i = 0; i < this.predictionMethods.length; i++) {
       this.predictionMethodToggles[i] = true;
     }

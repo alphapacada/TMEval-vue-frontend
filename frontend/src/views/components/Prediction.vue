@@ -281,8 +281,7 @@ export default {
       $backend
         .getPredTools()
         .then(responseData => {
-        console.log("getTools ", responseData)
-          this.predictionMethods = responseData;
+            this.predictionMethods = responseData.data;
         })
         .catch(error=> {
           // handle error
@@ -295,9 +294,9 @@ export default {
     }
   },
   mounted() {
-    //this.predictionMethods = this.fakeApiResults;
     // get tools from database
     this.getTools();
+   
 
     // console.log(
     //   this.predictionMethodToggles.map(function(idx) {

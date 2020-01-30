@@ -18,3 +18,5 @@
 @include media-breakpoint-up(lg) {
 
 }
+
+html { scroll-behavior: smooth; }

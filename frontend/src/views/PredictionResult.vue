@@ -150,7 +150,7 @@ export default {
         setSelectedMethod(index){
             this.selectedMethod = this.predictionMethods[index];
             this.selectedMethodIndex = index;
-            this.rawResult = this.results[index].pred_tool_res[0];
+            this.rawResult = this.results[index].pred_tool_res;
             this.processedResult = JSON.stringify(this.results[index].parsed_res[0],null,2);
         }
     },

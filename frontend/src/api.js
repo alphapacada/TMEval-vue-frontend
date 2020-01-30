@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 let $axios = axios.create({
-        baseURL: 'http://202.92.153.69:5000/api/v1/',
-        timeout: 0,
+        baseURL: process.env.VUE_APP_API_URL || 'http://localhost:5000/api/v1/',
+        timeout: 5000,
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
         // credential: 'same-origin'
@@ -36,7 +36,6 @@ export default {
     },
     getPredTools() {
         return $axios.get('predict/tools')
-            .then(response => response.data)
     },
     postFasta(data) {
         return $axios.post('predict/', data, {
@@ -62,6 +61,21 @@ export default {
     getDownloadable(name) {
         return $axios.get(`files/datasets/prediction/${name}`)
             .then(response => response)
+    },
+    getDownloadableFasta(query) {
+        console.log(query.name)
+        console.log(query.parameters)
+        return $axios.get(`files/tmeval-datasets/${query.name}`, {
+            params: query.parameters,
+            timeout: 100000
+        })
+            .then(response => {
+                console.log("success")
+                let DOGGO = new Blob([response], { type: 'application/x-tar'}),
+                url = window.URL.createObjectURL(DOGGO)
+        
+                window.open(url)
+            })
     },
     getAssessment(seqId, set) {
         return $axios.get(`assessment/${seqId}/${set}`)

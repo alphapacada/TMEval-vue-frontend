@@ -9,10 +9,10 @@
                         </h3>
                         <table class="container">
                             <tr class="row" :key="index" v-for="(file, index) in tmevalDataset">
-                                <td @click="downloadFile(file.name)" v-ripple="true" class="table-entry col" >
+                                <td v-ripple="true" class="table-entry col" >
                                     <tr class="row">
                                         <td  class="col-1 pr-1 text-center align-items-center">
-                                            <span @click="downloadFile(file.name)" class="download-text">Download</span>
+                                            <span @click="downloadFasta(file)" class="download-text"><i class="fa fa-download"></i></span>
                                         </td>
                                         <td class="col-10">
                                             <tr class="row col pb-1">
@@ -27,13 +27,13 @@
                                                     </p>
                                                 </td>
                                             </tr>
-                                            <tr class="row col">
+                                            <!-- <tr class="row col">
                                                 <td rowspan="2" class="file-description col">
-                                                    henlo
+                                                    
                                                     <a :href="file.url"> {{file.name}}</a>
                                     
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                         </td>
                                     </tr>
                                 </td>
@@ -54,7 +54,7 @@
                                 <td v-ripple="true" class="table-entry col" >
                                     <tr class="row">
                                         <td class="col-1 pr-1 text-center align-items-center">
-                                            <span @click="downloadFile(file.name)" class="download-text">Download</span>
+                                            <span @click="downloadFile(file.name)" class="download-text"><i class="fa fa-download"></i></span>
                                         </td>
                                         <td class="col-10">
                                             <tr class="row col pb-1">
@@ -80,47 +80,74 @@ export default {
         return {
             tmevalDataset: [
                 {
-                    name: "tmeval_25.gz",
+                    name: "tmeval_25",
                     size: "5 KB",
                     description: "TMeval dataset with 25% sequence identity.",
-                    url: "http://127.0.0.1:5000/25_A/classification_confusion_matrix_CCTOP_1560843152.png"
+                    url: "http://127.0.0.1:5000/25_A/classification_confusion_matrix_CCTOP_1560843152.png",
+                    parameters: {reduced:25, tm:'', sp:''},
+        
                 },
                 {
-                    name:"tmeval_30.gz",
+                    name:"tmeval_30",
                     size: "1 GB",
-                    description: "TMeval dataset with 30% sequence identity."
+                    description: "TMeval dataset with 30% sequence identity.",
+                    parameters: {reduced:30, tm:'', sp:''}
                 },
 
                 {
-                    name:"tmeval_40.gz",
+                    name:"tmeval_40",
                     size: "1 GB",
-                    description: "TMeval dataset with 40% sequence identity."
+                    description: "TMeval dataset with 40% sequence identity.",
+                    parameters: {reduced:40, tm:'', sp:''}
+                    
                 },
                 {
-                    name:"tmeval_70.gz",
+                    name:"tmeval_70",
                     size: "1 GB",
-                    description: "TMeval dataset with 70% sequence identity."
+                    description: "TMeval dataset with 70% sequence identity.",
+                    parameters: {reduced:70, tm:'', sp:''}
                 },
                 {
-                    name:"tmeval_25_+TM-SP.gz",
+                    name:"tmeval_25_+TM-SP",
                     size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes but do not have signal peptides."
+                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes but do not have signal peptides.",
+                    parameters: {reduced:25, tm:true, sp:false}
                 },
                 {
-                    name:"tmeval_25_+TM+SP.gz",
+                    name:"tmeval_25_+TM+SP",
                     size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes and signal peptides."
+                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes and signal peptides.",
+                    parameters: {reduced:25, tm:true, sp:true}
                 },
                 {
-                    name:"tmeval_25_-TM-SP.gz",
+                    name:"tmeval_25_-TM-SP",
                     size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes and signal peptides."
+                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes and signal peptides.",
+                    parameters: {reduced:25, tm:false, sp:false}
                 },
                 {
-                    name:"tmeval_25_-TM+SP.gz",
+                    name:"tmeval_25_-TM+SP",
                     size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes but have signal peptides."
+                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes but have signal peptides.",
+                    parameters: {reduced:25, tm:false, sp:true}
                 },
+                {
+                    name:"tmeval_25_Eukaryotes",
+                    url: "",
+                    parameters: {reduced:25, tx: 'Eukaryotes', tm:true, sp:''}, 
+                },
+                {
+                    name:"tmeval_25_Bacteria",
+                    parameters: {reduced:25, tx: 'Bacteria', tm:true, sp:''},
+                },
+                {
+                    name:"tmeval_25_Archaea",
+                    parameters: {reduced:25, tx: 'Archaea', tm:true, sp:''},
+                },
+                {
+                    name:"tmeval_25_Viruses",
+                    parameters: {reduced:25, tx: 'Viruses', tm:true, sp:''}
+                }
 
             ],
             trainingDataset: [
@@ -159,10 +186,16 @@ export default {
     {
         downloadFile(filename)
         {
-                console.log($backend.getBaseURL());
-                this.$refs.download.href = $backend.getBaseURL() + 'files/datasets/prediction/' + filename;
+            console.log($backend.getBaseURL());
+            this.$refs.download.href = $backend.getBaseURL() + 'files/datasets/prediction/' + filename;
+            this.$refs.download.click();
+        },
+        downloadFasta(file) {
+            console.log("downloadFasta")
+            this.$refs.download.href = $backend.getBaseURL() + 'files/tmeval-datasets/' + file.name + '?' + new URLSearchParams(file.parameters).toString();;
                 this.$refs.download.click();
-            
+            // $backend.getDownloadableFasta(file)
+
         }
     }
 }

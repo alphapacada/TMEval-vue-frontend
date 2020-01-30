@@ -64,10 +64,10 @@
         <li class="nav-item d-none d-lg-block ml-lg-4">
           <router-link to="/downloads">
             <span class="btn btn-neutral btn-icon">
-              <span class="btn-inner--icon">
+              <span class="btn-inner--icon header-download-button">
                 <i class="fa fa-cloud-download mr-2"></i>
               </span>
-              <span class="nav-link-inner--text">Download Dataset</span>
+              <span class="nav-link-inner--text header-download-button">Download Dataset</span>
             </span>
           </router-link>
         </li>
@@ -108,6 +108,11 @@ export default {
 .img-fluid {
   max-height: 100%;
   width: auto;
+}
+
+.header-download-button
+{
+    color: black !important;
 }
 /* .navbar-collapse {
     background: blue !important

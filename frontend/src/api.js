@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let $axios = axios.create({
-        baseURL: process.env.VUE_APP_API_URL || 'http://localhost:5000/api/v1/',
+        // baseURL: process.env.VUE_APP_API_URL || 'http://localhost:5000/api/v1/',
         timeout: 5000,
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
@@ -9,6 +9,7 @@ let $axios = axios.create({
     })
     // https://github.com/gtalarico/flask-vuejs-template/blob/master/src/backend.js
 
+$axios.defaults.baseURL = process.env.VUE_APP_API_URL || 'http://localhost:5000/api/v1/'
 export default {
     getBaseURL() {
         return $axios.defaults.baseURL;
@@ -35,6 +36,9 @@ export default {
 
     },
     getPredTools() {
+        console.log("baseUrl", $axios.defaults.baseURL);
+        console.log("sample", process.env.VUE_APP_SAMPLE);
+        console.log("env", process.env.NODE_ENV)
         return $axios.get('predict/tools')
     },
     postFasta(data) {

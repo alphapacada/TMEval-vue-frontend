@@ -29,7 +29,7 @@ module.exports = {
         proxy: {
             '/api*': {
                 //Forward frontend dev server request for /api tp flask dev server
-                target: process.env.VUE_APP_API_URL
+                target: process.env.VUE_APP_API_URL || 'http://localhost:5000/api/v1'
             }
         },
         watchOptions: {

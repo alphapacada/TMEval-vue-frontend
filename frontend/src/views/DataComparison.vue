@@ -73,9 +73,9 @@ export default {
                 },
                 {
                     hash: "dc-tmhmm2",
-                    title: "TMHMM2 vs TMeval",
+                    title: "TMHMM2.0 vs TMeval",
                     img_src: "/img/figures/TMHMM2.png",
-                    desc: ` Twenty percent of TMHMM2's dataset exists within the TMeval dataset.`
+                    desc: ` About twenty percent (27 entries) of TMHMM2.0's dataset exists within the TMEval dataset.`
 
                 },
                 {

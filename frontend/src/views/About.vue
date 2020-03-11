@@ -144,7 +144,7 @@
                     <a
                       href="http://bioinf.cs.ucl.ac.uk/psipred/?memsatsvm=1"
                       target="_blank"
-                      >TMHMM</a
+                      >TMHMM2.0</a
                     >
                     <badge rounded type="success">HMM</badge>
                   </h4>

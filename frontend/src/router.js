@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import AppHeader from "./layout/AppHeader";
-import AppFooter from "./layout/AppFooter";
+import tmFooter from "./layout/tmFooter";
 import Components from "./views/Components.vue";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
@@ -34,7 +34,7 @@ export default new Router({
                 header: tmHeader,
                 // default: Components,
                 default: tmLanding,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -44,7 +44,7 @@ export default new Router({
                 header: tmHeader,
                 // default: Landing,
                 default: tmLanding,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -53,7 +53,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: Login,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -62,7 +62,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Register,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -71,7 +71,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Profile,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -80,7 +80,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: tmLanding,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -89,7 +89,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: About,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -98,7 +98,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: PredictionResult,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -107,7 +107,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: Protvista,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -116,7 +116,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: TableTest,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -125,7 +125,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: SideBar2,
-                footer: AppFooter
+                footer: tmFooter
             },
             children: [
                 { path: '/evaluation/', component: TableTest },
@@ -149,7 +149,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: TestResult,
-                footer: AppFooter
+                footer: tmFooter
             }
         },
         {
@@ -158,7 +158,7 @@ export default new Router({
             components: {
                 header: tmHeader,
                 default: Downloads,
-                footer: AppFooter
+                footer: tmFooter
             }
         }
 

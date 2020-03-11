@@ -142,7 +142,7 @@
                 <div class="row">
                     <div class="col">
                         <h3>
-                            TMHMM2
+                            TMHMM2.0
                         </h3>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                 <confusion-matrix 
                     lsrc="/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TMHMM2.png"
                     rsrc="/img/figures/cm_redundant/25_redundant_orientation_confusion_matrix_TMHMM2.png"
-                    text="TMHMM2's output is similar to HMMTOP. It cannot identify signal peptides and cannot discriminate between TM / nonTM proteins."
+                    text="TMHMM2.0's output is similar to HMMTOP. It cannot identify signal peptides and cannot discriminate between TM / nonTM proteins."
                     title="Redundant Dataset"
                     />
                 <!-- Non-redundant-->

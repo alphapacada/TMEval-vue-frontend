@@ -53,7 +53,7 @@
                 <v-list-tile-title class="pl-5">PHILIUS</v-list-tile-title>
               </v-list-tile>
               <v-list-tile to="/evaluation/dataset-comparison#dc-tmhmm2">
-                <v-list-tile-title class="pl-5">TMHMM2</v-list-tile-title>
+                <v-list-tile-title class="pl-5">TMHMM2.0</v-list-tile-title>
               </v-list-tile>
               <v-list-tile to="/evaluation/dataset-comparison#dc-topcons2">
                 <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>
@@ -87,7 +87,7 @@
                 <v-list-tile-title class="pl-5">PHILIUS</v-list-tile-title>
               </v-list-tile>
               <v-list-tile to="/evaluation/confusion-matrix#cf-tmhmm2">
-                <v-list-tile-title class="pl-5">TMHMM2</v-list-tile-title>
+                <v-list-tile-title class="pl-5">TMHMM2.0</v-list-tile-title>
               </v-list-tile>
               <v-list-tile to="/evaluation/confusion-matrix#cf-topcons2">
                 <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>

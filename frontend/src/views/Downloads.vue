@@ -84,61 +84,61 @@ export default {
                     size: "5 KB",
                     description: "TMeval dataset with 25% sequence identity.",
                     url: "http://127.0.0.1:5000/25_A/classification_confusion_matrix_CCTOP_1560843152.png",
-                    parameters: {reduced:25, tm:'', sp:''},
+                    parameters: {reduced:25, tm:'', sp:'',count:'', topo_type:'', tx:''},
         
                 },
                 {
                     name:"tmeval_30",
                     size: "1 GB",
                     description: "TMeval dataset with 30% sequence identity.",
-                    parameters: {reduced:30, tm:'', sp:''}
+                    parameters: {reduced:30, tm:'', sp:'',count:'', topo_type:'', tx:''}
                 },
 
                 {
                     name:"tmeval_40",
                     size: "1 GB",
                     description: "TMeval dataset with 40% sequence identity.",
-                    parameters: {reduced:40, tm:'', sp:''}
+                    parameters: {reduced:40, tm:'', sp:'',count:'', topo_type:'', tx:''}
                     
                 },
                 {
                     name:"tmeval_70",
                     size: "1 GB",
                     description: "TMeval dataset with 70% sequence identity.",
-                    parameters: {reduced:70, tm:'', sp:''}
+                    parameters: {reduced:70, tm:'', sp:'',count:'', topo_type:'', tx:''}
                 },
                 {
                     name:"tmeval_25_+TM-SP",
                     size: "1 GB",
                     description: "TMeval dataset with 25% sequence identity. Entries have transmembranes but do not have signal peptides.",
-                    parameters: {reduced:25, tm:true, sp:false}
+                    parameters: {reduced:25, tm:true, sp:false,count:'', topo_type:'', tx:''}
                 },
                 {
                     name:"tmeval_25_+TM+SP",
                     size: "1 GB",
                     description: "TMeval dataset with 25% sequence identity. Entries have transmembranes and signal peptides.",
-                    parameters: {reduced:25, tm:true, sp:true}
+                    parameters: {reduced:25, tm:true, sp:true,count:'', topo_type:'', tx:''}
                 },
                 {
                     name:"tmeval_25_-TM-SP",
                     size: "1 GB",
                     description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes and signal peptides.",
-                    parameters: {reduced:25, tm:false, sp:false}
+                    parameters: {reduced:25, tm:false, sp:false,count:'', topo_type:'', tx:''}
                 },
                 {
                     name:"tmeval_25_-TM+SP",
                     size: "1 GB",
                     description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes but have signal peptides.",
-                    parameters: {reduced:25, tm:false, sp:true}
+                    parameters: {reduced:25, tm:false, sp:true,count:'', topo_type:'', tx:''}
                 },
                 {
                     name:"tmeval_25_Eukaryotes",
                     url: "",
-                    parameters: {reduced:25, tx: 'Eukaryotes', tm:true, sp:''}, 
+                    parameters: {reduced:25, tx: 'Eukaryotes', tm:true, sp:'',count:'', topo_type:'', tx:''}, 
                 },
                 {
                     name:"tmeval_25_Bacteria",
-                    parameters: {reduced:25, tx: 'Bacteria', tm:true, sp:''},
+                    parameters: {reduced:25, tx: 'Bacteria', tm:true, sp:'',count:'', topo_type:'', tx:''},
                 },
                 {
                     name:"tmeval_25_Archaea",

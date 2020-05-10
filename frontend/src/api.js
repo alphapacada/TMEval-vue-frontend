@@ -62,6 +62,19 @@ export default {
             })
             .then(response => response.data)
     },
+    getDownloadableProteins(query) {
+        console.log('backend: ', query);
+        return $axios.get('proteins', {
+                params: query,
+                timeout: 100000
+            })
+            .then(response => {
+                console.log("success")
+                let DOGGO = new Blob([response], { type: 'application/x-tar'}),
+                url = window.URL.createObjectURL(DOGGO)
+                window.open(url)
+            })
+    },
     getDownloadable(name) {
         return $axios.get(`files/datasets/prediction/${name}`)
             .then(response => response)

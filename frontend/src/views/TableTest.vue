@@ -205,10 +205,11 @@
           <v-btn @click="appliedSearch = search">
             Search
           </v-btn>
-          <v-btn  class="ma-2" tile outline color="success">
+          <v-btn  @click="download" class="ma-2" tile outline color="success">
             Download
             <v-icon right>fa-cloud-download</v-icon>
           </v-btn>
+          <a style="display:none" ref="download"></a>
         </v-card-title>
         <v-data-table
           :headers="mainHeaders"
@@ -360,6 +361,12 @@ export default {
     };
   },
   methods: {
+    download(){
+        var parameters = JSON.parse(((JSON.stringify(this.parameters))))
+        console.log(parameters)
+        this.$refs.download.href = $backend.getBaseURL() + 'proteins/download?'  + new URLSearchParams(parameters).toString();
+        this.$refs.download.click();
+    },
     showTopology(text) {
       this.modalOn = true;
       this.modalText = text;

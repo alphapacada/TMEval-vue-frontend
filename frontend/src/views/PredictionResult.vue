@@ -7,10 +7,14 @@
                 <base-progress type="success" :value="progress_value" :label="job_status"></base-progress>
             </div>
          </div>
-
+       
          <!-- + PRED RES -->
-
+        
          <div class="mt-4 container shape-container align-items-center">
+             <div class="container">  <base-button type="danger" >
+                                Evaluate?
+            </base-button></div>
+            
             <v-card class="pt-0 pb-3" id="content-result">
                 <v-card-title primary-title>
                     <h1 class="col-md-9">
@@ -28,26 +32,45 @@
                 <v-card-text class="row mx-0">
                     <div class="col-6">
                         <h5>Raw results</h5>
-                        <textarea v-model="rawResult" class="form-control text-black col" rows="20" readonly></textarea>
+                        <textarea v-model="pred_tool_res" class="form-control text-black col" rows="20" readonly></textarea>
                     </div>
                     <div class="col-6">
                         <h5>Processed results</h5>
-                        <textarea v-model="processedResult" class="form-control text-black col" rows="20" readonly></textarea>
+                        <textarea v-model="parsed_res" class="form-control text-black col" rows="20" readonly></textarea>
                     </div>
                 </v-card-text> 
             </v-card>
              <!-- - PRED RES -->
             
             <!-- + TOPOLOGY  -->
+            <!-- <v-card class="p-2 mt-2">
+                <v-card-title primary-title>
+                    <h2>Topologies</h2>
+                </v-card-title>
+            </v-card>
+            <v-card v-for="seq in sequence_topo">
+                <v-card-title primary-title>
+                    seq.name
+                </v-card-title>
+                <div v-for="t in seq.topologies" :key="t.index">
+                    <h6>{{ t.name }}</h6>
+                    <topology :seq="t.topology"></topology>
+                </div>
+            </v-card> -->
+            <!-- + TOPOLOGY  -->
             <v-card class="p-2 mt-2">
                 <v-card-title primary-title>
                     <h2>Topologies</h2>
                 </v-card-title>
                 <div v-for="t in topologies" :key="t.index">
-                    <h6>{{ t.name }}</h6>
-                    <topology :seq="t.topology"></topology>
+                    <h5>{{ t.sequence.name }}</h5>
+                    <div v-for="res in t.sequence.results" :key="res.name">
+                        <h6>{{ res.toolname }}</h6>
+                        <topology :seq="res.annotation"></topology>
+                    </div>
                 </div>
             </v-card>
+            <!-- - TOPOLOGY -->
             <!-- - TOPOLOGY -->
         </div>
     </section>
@@ -73,9 +96,10 @@ export default {
         predictionMethods:[],
         selectedMethod:'Method',
         selectedMethodIndex: 0,
-        rawResult:'',
-        processedResult:'',
-        results: []
+        pred_tool_res:'',
+        parsed_res:'',
+        results: [],
+        sequence_topo : []
         }
     },
     components:{
@@ -125,33 +149,59 @@ export default {
         },
         //prediction_res -> a dict containing the results of the prediction 
         fetchPredictionResults(prediction_res) {
-            // this.rawResult = prediction_res[0][0];
-            // this.processedResult = prediction_res[0][1];
+            // this.pred_tool_res = prediction_res[0][0];
+            // this.parsed_res = prediction_res[0][1];
             console.log(prediction_res)
             this.results = prediction_res;
             console.log(this.results)
             let i = 0;
-            for(const predMethod of this.results)
-            {
-                console.log(predMethod);
-                this.predictionMethods.push(predMethod['tool']);
-                var topologyObj;
-                topologyObj = {
-                    'index': i,
-                    'topology': predMethod.parsed_res[0].topology.annotation,
-                    'name': predMethod.tool
-                };
-                this.topologies.push(topologyObj);
-                i++;
+
+            let sequences = this.results[0].parsed_res;
+            
+            for(i = 0; i < sequences.length; i++)
+            {      
+                this.topologies[i] = Object()
+                this.topologies[i].index = i;
+                this.topologies[i].sequence = Object()
+                this.topologies[i].sequence.name = sequences[i].name || 'Protein ['+(i+1)+']';
+                this.topologies[i].sequence.results = []
+                for(const predMethod of this.results)
+                {
+                    if(i == 0) //assign predMethods only on first run
+                        this.predictionMethods.push(predMethod['tool']);
+                   
+                    this.topologies[i].sequence.results.push({
+                        toolname: predMethod.tool,
+                        annotation:  predMethod.parsed_res[i].topology.annotation
+                    })
+               }
             }
+
+            // for(const predMethod of this.results)
+            // {
+            //     console.log(predMethod);
+            //     // for dropdown of method names used for prediction
+            //     this.predictionMethods.push(predMethod['tool']);
+            //     var topologyObj;
+            
+            //     topologyObj = {
+            //         'index': i,
+            //         'topology': predMethod.parsed_res[0].topology.annotation,
+            //         'name': predMethod.tool
+            //     };
+            //     this.topologies.push(topologyObj);
+            //     i++;
+            // }
             console.log(this.predictionMethods);
             this.setSelectedMethod(0);
         },
         setSelectedMethod(index){
+            console.log("selected method results", this.results[index])
             this.selectedMethod = this.predictionMethods[index];
             this.selectedMethodIndex = index;
-            this.rawResult = this.results[index].pred_tool_res;
-            this.processedResult = JSON.stringify(this.results[index].parsed_res[0],null,2);
+            this.pred_tool_res = this.results[index].pred_tool_res;
+            // this.parsed_res = JSON.stringify(this.results[index].parsed_res[0],null,2);
+            this.parsed_res = JSON.stringify(this.results[index].parsed_res,null,2)
         }
     },
 }

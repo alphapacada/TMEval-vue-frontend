@@ -9,7 +9,8 @@ module.exports = {
                 maxChunks: 6
             }),
             new VuetifyLoaderPlugin(),
-        ]
+        ],
+        devtool: 'source-map',
     },
     pwa: {
         name: 'Vue Argon Design',

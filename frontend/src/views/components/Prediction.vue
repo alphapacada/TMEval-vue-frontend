@@ -29,6 +29,7 @@
                                         placeholder="Enter an amino-acid sequence"
                                     ></textarea>
                                 </div>
+                                 
                                 <div class="form-group">
                                     <div class="row px-2">
                                         <div
@@ -57,6 +58,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                     <base-checkbox>Perform evaluation on tmeval_dataset?</base-checkbox>
+                                 </div>
                                 <div
                                     class="text-danger invalid-feedback"
                                     style="display: block;"
@@ -145,6 +149,7 @@ export default {
         },
         checkForm(e) {
             e.preventDefault();
+
             let checkResults = [this.checkSequence(), this.checkToggles()];
             if (!checkResults.includes(false)) {
                 console.log("correct form");
@@ -175,6 +180,10 @@ export default {
                   
 
                     let fastas = this.sequence.split(/(?=>)/);
+                    if (fastas.length > 10) {
+                        this.errorSequence = "Max of 10 FASTA sequences only per submission."
+                        return false
+                    }
 					// for (let i = 0; i < fastas.length; i++) {
 					fastas.forEach(element => {
                         // immediately remove trailing spaces
@@ -250,7 +259,7 @@ export default {
             };
             let formData = new FormData();
             formData.append("file", this.file);
-            formData.append("sequence", this.fastaArr);
+            formData.append("sequence", this.sequence);
             console.log(this.file, this.sequence, predictionData);
             console.log(formData);
             formData.append("tools", JSON.stringify(predictionData));

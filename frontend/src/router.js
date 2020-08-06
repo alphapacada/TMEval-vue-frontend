@@ -48,42 +48,6 @@ export default new Router({
             }
         },
         {
-            path: "/login",
-            name: "login",
-            components: {
-                header: tmHeader,
-                default: Login,
-                footer: tmFooter
-            }
-        },
-        {
-            path: "/register",
-            name: "register",
-            components: {
-                header: AppHeader,
-                default: Register,
-                footer: tmFooter
-            }
-        },
-        {
-            path: "/profile",
-            name: "profile",
-            components: {
-                header: AppHeader,
-                default: Profile,
-                footer: tmFooter
-            }
-        },
-        {
-            path: "/tmlanding",
-            name: "tmlanding",
-            components: {
-                header: tmHeader,
-                default: tmLanding,
-                footer: tmFooter
-            }
-        },
-        {
             path: "/About",
             name: "about",
             components: {

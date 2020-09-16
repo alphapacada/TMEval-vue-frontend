@@ -132,7 +132,8 @@ export default {
                 { id: "1", name: "HMMTOP" },
                 { id: "2", name: "Philius" },
                 { id: "3", name: "Topcons" },
-                { id: "5", name: "TMHMM" }
+                { id: "5", name: "TMHMM" },
+                { id: "7", name: "TMSEG"}
             ]
         };
     },

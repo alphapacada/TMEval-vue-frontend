@@ -32,10 +32,10 @@
         </div>
         <div class="row">
           <div class="col">
-            <v-card-text>
+            <v-card-subtitle>
               Use options below to narrow down results then click "Apply" at the
               lower left.
-            </v-card-text>
+            </v-card-subtitle>
           </div>
         </div>
 
@@ -205,7 +205,7 @@
           <v-btn @click="appliedSearch = search">
             Search
           </v-btn>
-          <v-btn  @click="download" class="ma-2" tile outline color="success">
+          <v-btn @click="download" class="ma-2" tile outline color="success">
             Download
             <v-icon right>fa-cloud-download</v-icon>
           </v-btn>
@@ -259,11 +259,11 @@
       </v-card-text>
     </v-card>
   </template> -->
-   <template v-slot:footer>
-      <td :colspan="12">
-        TM-Transmembrane,<span class="tab"></span>SP-Signal Peptide
-      </td>
-    </template>
+          <template v-slot:footer>
+            <td :colspan="12">
+              TM-Transmembrane,<span class="tab"></span>SP-Signal Peptide
+            </td>
+          </template>
         </v-data-table>
       </v-card>
     </v-app>
@@ -288,7 +288,7 @@ export default {
         tx: "",
         count: "",
         topo_type: "",
-        reduced: 30
+        reduced: 30,
       },
       selectedParameter1Text: "ALL",
       selectedParameter2Text: "ALL",
@@ -299,19 +299,19 @@ export default {
       parameter1Choices: [
         { text: "ALL", value: "" },
         { text: "TRUE", value: true },
-        { text: "FALSE", value: false }
+        { text: "FALSE", value: false },
       ],
       parameter2Choices: [
         { text: "ALL", value: "" },
         { text: "TRUE", value: true },
-        { text: "FALSE", value: false }
+        { text: "FALSE", value: false },
       ],
       parameter3Choices: [
         { text: "ALL", value: "" },
         { text: "BACTERIA", value: "Bacteria" },
         { text: "VIRUSES", value: "Viruses" },
         { text: "ARCHAEA", value: "Archaea" },
-        { text: "EUKARYOTES", value: "Eukaryotes" }
+        { text: "EUKARYOTES", value: "Eukaryotes" },
       ],
       parameter4Choices: [
         { text: "ANY", value: "" },
@@ -327,20 +327,20 @@ export default {
         { text: "10", value: "10" },
         { text: "11", value: "11" },
         { text: "12", value: "12" },
-        { text: "13+", value: "[13 TO *]" }
+        { text: "13+", value: "[13 TO *]" },
       ],
       parameter5Choices: [
         { text: "ANY", value: "" },
         { text: "I", value: "type I" },
         { text: "II", value: "type II" },
         { text: "III", value: "type III" },
-        { text: "IV", value: "type IV" }
+        { text: "IV", value: "type IV" },
       ],
       parameter6Choices: [
         { text: "25", value: 25 },
         { text: "30", value: 30 },
         { text: "40", value: 40 },
-        { text: "70", value: 70 }
+        { text: "70", value: 70 },
       ],
       search: "",
       mainHeaders: [
@@ -353,19 +353,22 @@ export default {
         { text: "SP", value: "sp" },
         { text: "Topology", value: "topology" },
         { text: "Topology Type", value: "topo_type" },
-        { text: "TM Count", value: "count" }
+        { text: "TM Count", value: "count" },
       ],
       rows: [10],
       mainItems: [],
-      defaultParams: []
+      defaultParams: [],
     };
   },
   methods: {
-    download(){
-        var parameters = JSON.parse(((JSON.stringify(this.parameters))))
-        console.log(parameters)
-        this.$refs.download.href = $backend.getBaseURL() + 'proteins/download?'  + new URLSearchParams(parameters).toString();
-        this.$refs.download.click();
+    download() {
+      var parameters = JSON.parse(JSON.stringify(this.parameters));
+      console.log(parameters);
+      this.$refs.download.href =
+        $backend.getBaseURL() +
+        "proteins/download?" +
+        new URLSearchParams(parameters).toString();
+      this.$refs.download.click();
     },
     showTopology(text) {
       this.modalOn = true;
@@ -379,7 +382,7 @@ export default {
       console.log(parameters);
       $backend
         .getProteins(parameters)
-        .then(responseData => {
+        .then((responseData) => {
           console.log("Download complete");
           console.log(responseData);
           this.tableText = "";
@@ -388,7 +391,7 @@ export default {
           if (this.mainItems.length == 0) this.tableText = "No matches.";
           console.log("mainitems: ", this.mainItems);
         })
-        .catch(responseData => {
+        .catch((responseData) => {
           this.loadInProgress = false;
           this.tableText = "Download failed!";
           console.log("Download failed!");
@@ -427,7 +430,7 @@ export default {
             { text: "I", value: "type I" },
             { text: "II", value: "type II" },
             { text: "III", value: "type III" },
-            { text: "IV", value: "type IV" }
+            { text: "IV", value: "type IV" },
           ];
           this.selectedParameter5Text = "ALL";
           this.parameters.topo_type = "";
@@ -453,7 +456,7 @@ export default {
     setParameter6(index) {
       this.selectedParameter6Text = this.parameter6Choices[index].text;
       this.parameters.reduced = this.parameter6Choices[index].value;
-    }
+    },
   },
   mounted() {
     var parameters = JSON.parse(JSON.stringify(this.parameters));
@@ -461,7 +464,7 @@ export default {
     this.loadProteins(parameters);
     this.loadInProgress = true;
     this.tableText = LOADING_MSG;
-  }
+  },
 };
 </script>
 <style>
@@ -478,10 +481,16 @@ export default {
 #filter-card {
   margin-top: 10px;
 }
-tfoot {
-	font-weight: 500;
-	font-size: 12px;
+#filter-card > * .v-card__title {
+  font-size: 1rem;
 }
-.tab {display:inline-block; width:30px;}
+tfoot {
+  font-weight: 500;
+  font-size: 12px;
+}
+.tab {
+  display: inline-block;
+  width: 30px;
+}
 /* @import 'vuetify/dist/vuetify.min.css' */
 </style>

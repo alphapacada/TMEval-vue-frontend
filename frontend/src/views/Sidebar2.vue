@@ -1,110 +1,101 @@
 <template>
   <section class="bg-white pt-3">
-    <v-app
-   >
+    <v-app>
       <!-- <div id="assessment" class="row"> -->
-          <v-btn v-if="mini" class="sidebar-toggler mx-3" fixed dark fab small color="#2dce89">
-                <!-- <v-icon dark>ni-air-balloon</v-icon> -->
-                <i class="fa fa-chevron-right"></i>
-                
-          </v-btn>
-          <!-- <base-button type="success">Success</base-button> -->
-  
-        <v-navigation-drawer
-          id="sidebar-container"
-          class="col-lg-3"
-         :mobile-break-point="mobileBreakPoint"
-          v-resize-watcher="resizewatcher"
-
-        >
-         <!-- <v-navigation-drawer
-          id="sidebar-container"
-          class="col-lg-3"
-          :expand-on-hover="true"
-         :mini-variant.sync="mini"
-         :mobile-break-point="mobileBreakPoint"
-          v-resize-watcher="resizewatcher"
-          :value="value"
-          permanent
-          
-        > -->
-         
-
-          <v-list class="pb-0">
-            <v-list-tile to="/evaluation/table">
-              <v-list-tile-title class="pl-3">TMeval Dataset</v-list-tile-title>
+      <v-btn
+        v-if="mini"
+        class="sidebar-toggler mx-3"
+        fixed
+        dark
+        fab
+        small
+        color="#2dce89"
+      >
+        <!-- <v-icon dark>ni-air-balloon</v-icon> -->
+        <i class="fa fa-chevron-right"></i>
+      </v-btn>
+      <!-- <base-button type="success">Success</base-button> -->
+      <v-navigation-drawer
+        id="sidebar-container"
+        class="col-lg-3"
+        :mobile-break-point="mobileBreakPoint"
+        v-resize-watcher="resizewatcher"
+      >
+        <v-list class="pb-0">
+          <v-list-tile to="/evaluation/table">
+            <v-list-tile-title class="pl-3">TMeval Dataset</v-list-tile-title>
+          </v-list-tile>
+          <v-list-group>
+            <template v-slot:activator>
+              <v-list-tile to="/evaluation/dataset-comparison#dc-header">
+                <v-list-tile-title class="pl-3"
+                  >Prediction Methods vs. TMeval Dataset
+                  Comparison</v-list-tile-title
+                >
+              </v-list-tile>
+            </template>
+            <v-list-tile to="/evaluation/dataset-comparison#dc-cctop">
+              <v-list-tile-title class="pl-5">CCTOP</v-list-tile-title>
             </v-list-tile>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-tile to="/evaluation/dataset-comparison#dc-header">
-                  <v-list-tile-title class="pl-3"
-                    >Prediction Methods vs. TMeval Dataset
-                    Comparison</v-list-tile-title
-                  >
-                </v-list-tile>
-              </template>
-              <v-list-tile to="/evaluation/dataset-comparison#dc-cctop">
-                <v-list-tile-title class="pl-5">CCTOP</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/dataset-comparison#dc-hmmtop">
-                <v-list-tile-title class="pl-5">HMMTOP</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/dataset-comparison#dc-philius">
-                <v-list-tile-title class="pl-5">PHILIUS</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/dataset-comparison#dc-tmhmm2">
-                <v-list-tile-title class="pl-5">TMHMM2.0</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/dataset-comparison#dc-topcons2">
-                <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>
-              </v-list-tile>
-            </v-list-group>
-
-            <v-list-tile to="/evaluation/perf-eval">
-              <v-list-tile-title class="pl-3"
-                >Performance Evaluation</v-list-tile-title
-              >
+            <v-list-tile to="/evaluation/dataset-comparison#dc-hmmtop">
+              <v-list-tile-title class="pl-5">HMMTOP</v-list-tile-title>
             </v-list-tile>
-
-            <v-list-tile to="/evaluation/sov">
-              <v-list-tile-title class="pl-3">SOV analysis</v-list-tile-title>
+            <v-list-tile to="/evaluation/dataset-comparison#dc-philius">
+              <v-list-tile-title class="pl-5">PHILIUS</v-list-tile-title>
             </v-list-tile>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-tile to="/evaluation/confusion-matrix">
-                  <v-list-tile-title class="pl-3"
-                    >Confusion Matrix</v-list-tile-title
-                  >
-                </v-list-tile>
-              </template>
-              <v-list-tile to="/evaluation/confusion-matrix#cf-cctop">
-                <v-list-tile-title class="pl-5">CCTOP</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/confusion-matrix#cf-hmmtop">
-                <v-list-tile-title class="pl-5">HMMTOP</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/confusion-matrix#cf-philius">
-                <v-list-tile-title class="pl-5">PHILIUS</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/confusion-matrix#cf-tmhmm2">
-                <v-list-tile-title class="pl-5">TMHMM2.0</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile to="/evaluation/confusion-matrix#cf-topcons2">
-                <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>
-              </v-list-tile>
-            </v-list-group>
-          </v-list>
-        </v-navigation-drawer>
+            <v-list-tile to="/evaluation/dataset-comparison#dc-tmhmm2">
+              <v-list-tile-title class="pl-5">TMHMM2.0</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile to="/evaluation/dataset-comparison#dc-topcons2">
+              <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>
+            </v-list-tile>
+          </v-list-group>
 
-        <div id="page-content">
-            <div class="container">
+          <v-list-tile to="/evaluation/perf-eval">
+            <v-list-tile-title class="pl-3"
+              >Performance Evaluation</v-list-tile-title
+            >
+          </v-list-tile>
 
-          <fade-transition origin="center" mode="out-in" :duration="100">
-            <router-view></router-view>
-           
-          </fade-transition>
-           </div>
-   
+          <v-list-tile to="/evaluation/sov">
+            <v-list-tile-title class="pl-3">SOV analysis</v-list-tile-title>
+          </v-list-tile>
+          <v-list-group>
+            <template v-slot:activator>
+              <v-list-tile to="/evaluation/confusion-matrix">
+                <v-list-tile-title class="pl-3"
+                  >Confusion Matrix</v-list-tile-title
+                >
+              </v-list-tile>
+            </template>
+            <v-list-tile to="/evaluation/confusion-matrix#cf-cctop">
+              <v-list-tile-title class="pl-5">CCTOP</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile to="/evaluation/confusion-matrix#cf-hmmtop">
+              <v-list-tile-title class="pl-5">HMMTOP</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile to="/evaluation/confusion-matrix#cf-philius">
+              <v-list-tile-title class="pl-5">PHILIUS</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile to="/evaluation/confusion-matrix#cf-tmhmm2">
+              <v-list-tile-title class="pl-5">TMHMM2.0</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile to="/evaluation/confusion-matrix#cf-topcons2">
+              <v-list-tile-title class="pl-5">TOPCONS2</v-list-tile-title>
+            </v-list-tile>
+          </v-list-group>
+        </v-list>
+      </v-navigation-drawer>
+
+      <!-- <div id="page-content"> 
+        <div class="container">-->
+      <div class="main-content">
+        <div class="w-100 px-5">
+        <!-- <div> -->
+        <fade-transition origin="center" mode="out-in" :duration="100">
+          <router-view></router-view>
+        </fade-transition>
+        </div>
       </div>
     </v-app>
   </section>
@@ -112,10 +103,9 @@
 <script>
 import { FadeTransition } from "vue2-transitions";
 
-
 export default {
   components: {
-    FadeTransition
+    FadeTransition,
   },
   data: () => ({
     mobileBreakPoint: 890,
@@ -123,28 +113,28 @@ export default {
     value: true,
     admins: [
       ["Management", "people_outline"],
-      ["Settings", "settings"]
+      ["Settings", "settings"],
     ],
     cruds: [
       ["Create", "add"],
       ["Read", "insert_drive_file"],
       ["Update", "update"],
-      ["Delete", "delete"]
-    ]
+      ["Delete", "delete"],
+    ],
   }),
-    methods: {
+  methods: {
     resizewatcher() {
-        console.log("resize")
-        console.log(window.innerWidth)
-        console.log(this.mobileBreakPoint)
-     if(window.innerWidth < this.mobileBreakPoint) {
-         console.log("mini")
-        this.mini=true
-        this.value=true
-        
-    }else {
-        this.mini=false
-    }}
+      console.log("resize");
+      console.log(window.innerWidth);
+      console.log(this.mobileBreakPoint);
+      if (window.innerWidth < this.mobileBreakPoint) {
+        console.log("mini");
+        this.mini = true;
+        this.value = true;
+      } else {
+        this.mini = false;
+      }
+    },
   },
 };
 </script>
@@ -167,47 +157,52 @@ export default {
   padding-top: 5em !important;
 }
 #sidebar-container {
-    position:fixed;
+  position: fixed;
 }
-.sidebar-toggler{
-    margin-top: 60px;
+.sidebar-toggler {
+  margin-top: 60px;
 }
 /* #sidebar-container {
   display: inline-block;
   padding-bottom: 10px;
   position: fixed;
   /* z-index: 1 */
-
+.main-content {
+  margin-top: 60px;
+  padding-left: 15rem;
+}
 #page-content {
   display: inline-block;
   padding-bottom: 10px;
   margin-top: 60px;
   padding-left: 300px;
 }
- 
-#page-content>.container {
-    padding-left:30px;
-    margin-left:0
+
+#page-content > .container {
+  padding-left: 30px;
+  margin-left: 0;
 }
 @media only screen and (max-width: 890px) {
-    #page-content{
-        padding-left: unset;
-        
-    }
-    #page-content>.container {
-    padding-left:15px;
-    margin-left:auto;
+  #page-content {
+    padding-left: unset;
+    
+  }
+  .main-content {
+    padding-left:0;
+  }
+  #page-content > .container {
+    padding-left: 15px;
+    margin-left: auto;
+  }
 }
- }
 .dummy {
   z-index: -1 !important;
 }
 .v-navigation-drawer > .v-list .v-list__tile {
-    font-weight: 600 !important;
-    font-size: 0.80rem !important;
-    
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
 }
 .application {
-    font-family: unset !important;
+  font-family: unset !important;
 }
 </style>

@@ -1,13 +1,14 @@
 <template>
     <component :is="tag"
                class="badge"
+              
                :class="
                [`badge-${type}`,
                 rounded ? `badge-pill` : '',
                 circle && 'badge-circle'
                ]">
         <slot>
-            <i v-if="icon" :class="icon"></i>
+            <i  @click="handleClick" v-if="icon" :class="icon"></i>
         </slot>
     </component>
 </template>
@@ -39,6 +40,12 @@ export default {
       type: String,
       default: "default",
       description: "Badge type (primary|info|danger|default|warning|success)"
+    }
+  },
+  methods: {
+    handleClick(evt) {
+      console.log('click na pls')
+      this.$emit("click", evt);
     }
   }
 };

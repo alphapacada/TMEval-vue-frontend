@@ -49,10 +49,12 @@ export default {
                 }
             })
             .then(response => response.data)
-            .catch(error => {
-                console.log("error")
-                console.log(error)
-            })
+            // .catch(error => error.response)
+            //     { 
+            //     // 
+            //     console.log("error")
+            //     console.log(error)
+            // })
     },
     getProteins(query) {
         console.log('backend: ', query);

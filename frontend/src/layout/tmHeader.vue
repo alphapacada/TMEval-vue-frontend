@@ -88,12 +88,12 @@ export default {
   }
 };
 </script>
-<style>
-.navbar-main {
+<style scoped>
+/* .navbar-main {
   position: fixed !important;
   padding: 0px !important;
   height: 60px !important;
-  /* line-height: 1 !important; */
+  line-height: 1 !important;
 }
 .navbar
 .container {
@@ -113,7 +113,7 @@ export default {
 .header-download-button
 {
     color: black !important;
-}
+} */
 /* .navbar-collapse {
     background: blue !important
 } */

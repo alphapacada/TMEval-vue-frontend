@@ -200,7 +200,7 @@ export default {
   },
   methods: {
     myEventHandler(e) {
-      console.log(window.innerWidth);
+      // console.log(window.innerWidth);
 
       this.vertical = window.innerWidth <= 767 ? true : false;
     },

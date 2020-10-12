@@ -13,6 +13,7 @@ import About from "./views/About.vue";
 import PredictionResult from "./views/PredictionResult.vue"
 import Protvista from "./views/ProtvistaView.vue"
 import TableTest from "./views/TableTest.vue"
+import TableTest2 from "./views/TableTest2.vue"
 import SideBar2 from "./views/Sidebar2.vue"
 import Assessment from "./views/Assessment.vue"
 import TestResult from "./views/TestResult.vue"
@@ -79,7 +80,7 @@ export default new Router({
             name: "testpage",
             components: {
                 header: tmHeader,
-                default: TableTest,
+                default: TableTest2,
                 footer: tmFooter
             }
         },
@@ -92,14 +93,14 @@ export default new Router({
                 footer: tmFooter
             },
             children: [
-                { path: '/evaluation/', component: TableTest },
+                { path: '/evaluation/', component: TableTest2 },
                 // UserProfile will be rendered inside User's <router-view>
                 // when /user/:id/profile is matched
                 { path: '/evaluation/assessment', component: Assessment },
 
                 // UserPosts will be rendered inside User's <router-view>
                 // when /user/:id/posts is matched
-                { path: '/evaluation/table', component: TableTest },
+                { path: '/evaluation/table', component: TableTest2 },
 
                 { path: '/evaluation/dataset-comparison', component: DataComparison },
                 { path: '/evaluation/perf-eval', component: PerformanceEvaluation },

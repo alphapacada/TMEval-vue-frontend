@@ -1,0 +1,33 @@
+
+@import "bootstrap/functions";
+@import "custom/functions";
+
+@import "custom/variables";
+@import "bootstrap/variables";
+
+// @debug map-get($theme-colors, "danger"); // 500
+
+// @debug $theme-colors;
+:export {
+    @each $color, $value in $theme-colors {
+        @debug $color;
+        @debug $value;
+        #{unquote($color)}: $value;
+        }
+}
+// :export {
+//     danger:  map-get($theme-colors, "danger");
+// }
+// $theme-colours: (
+//   some-color: rgb(75, 47, 47),
+//   another-color: #000,
+//   third-color: #000,
+//   fourth-color: #000
+// );
+
+// @debug map-get($theme-colours, some-color);
+
+// @each $color,$value in $theme-colours {
+//   @debug #{$color};
+//   @debug $value;
+// }

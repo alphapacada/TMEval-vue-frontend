@@ -5,7 +5,7 @@
             <tbody></tbody>
             <tr>
                 <td>Job ID:</td>
-                <td>{{ id }}</td>
+                <td>{{ job_id }}</td>
             </tr>
             <tr><td>Time of Submission: </td>
                 <td> {{ date }}</td>
@@ -30,7 +30,11 @@ export default {
     },
     name: "job-section",
     props:{
-        id:String,
+        job_id:{
+            type: String,
+            default: "---",
+            description: "Prediction job id"
+        },
         url:String
     },
     created(){

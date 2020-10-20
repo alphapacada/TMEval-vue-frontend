@@ -22,6 +22,10 @@
 export default {
   name: "base-button",
   props: {
+    fab: {
+      type: Boolean,
+      default: false,
+    },
     tag: {
       type: String,
       default: "button",
@@ -84,6 +88,7 @@ export default {
         { "btn-block": this.block },
         { "rounded-circle": this.rounded },
         { "btn-icon-only": this.iconOnly },
+        { "btn-fab": this.fab},
         { [`text-${this.textColor}`]: this.textColor },
         { "btn-icon": this.icon || this.$slots.icon },
         this.type && !this.outline ? `btn-${this.type}` : "",

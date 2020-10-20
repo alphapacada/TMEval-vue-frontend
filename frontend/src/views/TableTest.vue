@@ -219,7 +219,7 @@
           item-key="name"
           expand
           :disable-initial-sort="true"
-          :rows-per-page-items="rows"
+          :items-per-page="rows"
           :search="appliedSearch"
           class="elevation-1"
         >

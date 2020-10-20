@@ -3,7 +3,7 @@
   }
 
 
-@include media-breakpoint-down(md) {
+/* @include media-breakpoint-down(md) {
     div h3.display-1 {
         font-size: 26px !important;
         line-height: 30px !important;
@@ -17,6 +17,7 @@
 
 @include media-breakpoint-up(lg) {
 
-}
+} */
 
 html { scroll-behavior: smooth; }
+body {font-family: "Open Sans", sans-serif !important}

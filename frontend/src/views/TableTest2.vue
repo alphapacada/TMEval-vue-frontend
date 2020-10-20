@@ -1,24 +1,95 @@
 <template>
   <div id="topdiv">
     <v-app>
-      <v-dialog v-model="modalOn" width="700"></v-dialog>
-      <card>
-        <template slot="header">
-          <h2>Filters</h2>
-          <p class="card-subtitle">
-            Use options below to narrow down results then click "Apply" at the
-            lower left.
-          </p>
-        </template>
+      <v-dialog v-model="modalOn" width="700">
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>
+            Topology
+          </v-card-title>
+
+          <v-card-text style="word-wrap:break-word">
+            {{ modalText }}
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="modalOn = false">
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-card id="filter-card">
+        <div class="row">
+          <div class="col">
+            <v-card-title primary-title class="mb-0 pb-0">
+              <h2 class="mb-0 pb-0">Filters</h2>
+            </v-card-title>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col"> -->
+            <v-card-subtitle>
+              Use options below to narrow down results then click "Apply" at the
+              lower left.
+            </v-card-subtitle>
+          <!-- </div>
+        </div> -->
+
         <div id="parameter-container" class="container">
           <div class="row">
-            <div class="col">
+            <v-card outlined>
+              <v-card-title>Filters</v-card-title>
+              <v-card-text>
+                <v-list>
+                  <v-list-item
+                    ><v-checkbox
+                      indeterminate
+                      v-model="filters.tm"
+                      label="Transmembrane"
+                    ></v-checkbox
+                  ></v-list-item>
+                  <v-list-item
+                    ><v-checkbox
+                      indeterminate
+                      v-model="filters.sp"
+                      label="Signal Peptide"
+                    ></v-checkbox
+                  ></v-list-item>
+                  <v-list-item
+                    ><v-checkbox
+                      v-model="filters.tx"
+                      label="Taxonomy"
+                    ></v-checkbox
+                  ></v-list-item>
+                </v-list>
+              </v-card-text>
+            </v-card>
+            <div class="col-4">
               <span>
-                Transmembrane:
-                <base-dropdown>
+                <!-- <label>Transmembrane:</label> -->
+                <v-switch
+                  :disabled="!filters.tm"
+                  label="Transmembrane"
+                  inset
+                  v-model="parameters.tm"
+                ></v-switch>
+                <v-switch
+                  :disabled="!filters.sp"
+                  label="Signal Peptide"
+                  inset
+                  v-model="parameters.sp"
+                ></v-switch>
+
+                <!-- <v-checkbox value indeterminate></v-checkbox> -->
+
+                <!-- <bas-dropdown>
                   <base-button
+                    outline
+                    block
                     slot="title"
-                    type="secondary"
                     class="dropdown-toggle"
                   >
                     {{ selectedParameter1Text }}
@@ -32,104 +103,95 @@
                   >
                     {{ choice.text }}
                   </li>
+                </base-dropdown> -->
+              </span>
+            </div>
+            <div class="col">
+              <span>
+                Signal Peptide:
+                <base-dropdown>
+                  <base-button
+                    slot="title"
+                    type="secondary"
+                    class="dropdown-toggle"
+                  >
+                    {{ selectedParameter2Text }}
+                  </base-button>
+                  <li
+                    style="cursor:pointer"
+                    @click="setParameter2(index)"
+                    class="dropdown-item"
+                    :key="choice.value"
+                    v-for="(choice, index) in parameter2Choices"
+                  >
+                    {{ choice.text }}
+                  </li>
                 </base-dropdown>
               </span>
             </div>
             <div class="col">
               <span>
-                
-                  Signal Peptide:
-                  <base-dropdown>
-                    <base-button
-                      slot="title"
-                      type="secondary"
-                      class="dropdown-toggle"
-                    >
-                      {{ selectedParameter2Text }}
-                    </base-button>
-                    <li
-                      style="cursor:pointer"
-                      @click="setParameter2(index)"
-                      class="dropdown-item"
-                      :key="choice.value"
-                      v-for="(choice, index) in parameter2Choices"
-                    >
-                      {{ choice.text }}
-                    </li>
-                  </base-dropdown>
-                
+                Taxonomy:
+                <base-dropdown disabled="!parameters.tx">
+                  <base-button slot="title" class="dropdown-toggle">
+                    {{ selectedParameter3Text }}
+                  </base-button>
+                  <li
+                    style="cursor:pointer"
+                    @click="setParameter3(index)"
+                    class="dropdown-item"
+                    :key="choice.value"
+                    v-for="(choice, index) in parameter3Choices"
+                  >
+                    {{ choice.text }}
+                  </li>
+                </base-dropdown>
               </span>
             </div>
             <div class="col">
               <span>
-                
-                  Taxonomy:
-                  <base-dropdown>
-                    <base-button
-                      slot="title"
-                      type="secondary"
-                      class="dropdown-toggle"
-                    >
-                      {{ selectedParameter3Text }}
-                    </base-button>
-                    <li
-                      style="cursor:pointer"
-                      @click="setParameter3(index)"
-                      class="dropdown-item"
-                      :key="choice.value"
-                      v-for="(choice, index) in parameter3Choices"
-                    >
-                      {{ choice.text }}
-                    </li>
-                  </base-dropdown>
-                </span
+                # of TM Helices:
+                <base-dropdown disabled="!parameters.tm">
+                  <base-button
+                    slot="title"
+                    type="secondary"
+                    class="dropdown-toggle"
+                  >
+                    {{ selectedParameter4Text }}
+                  </base-button>
+                  <li
+                    style="cursor:pointer"
+                    @click="setParameter4(index)"
+                    class="dropdown-item"
+                    :key="choice.value"
+                    v-for="(choice, index) in parameter4Choices"
+                  >
+                    {{ choice.text }}
+                  </li>
+                </base-dropdown></span
               >
-            </div>
-            <div class="col">
-                <span> # of TM Helices:
-              <base-dropdown>
-                <base-button
-                  slot="title"
-                  type="secondary"
-                  class="dropdown-toggle"
-                >
-                  {{ selectedParameter4Text }}
-                </base-button>
-                <li
-                  style="cursor:pointer"
-                  @click="setParameter4(index)"
-                  class="dropdown-item"
-                  :key="choice.value"
-                  v-for="(choice, index) in parameter4Choices"
-                >
-                  {{ choice.text }}
-                </li>
-              </base-dropdown></span>
             </div>
           </div>
         </div>
-      </card>
-      <!-- <v-card-title class="headline grey lighten-2" primary-title>
-            Topology
-          </v-card-title> -->
+        <v-card-actions>
+          <v-btn
+            text
+            color="error"
+            style="font-weight:bold"
+            @click="sendParameters"
+            >APPLY</v-btn
+          >
+          <v-btn
+            text
+            color="success"
+            style="font-weight:bold"
+            @click="resetParameters"
+            >RESET</v-btn
+          >
+        </v-card-actions>
+      </v-card>
 
-      <!-- <v-card-text style="word-wrap:break-word">
-            {{ modalText }}
-          </v-card-text>
-
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn color="primary" flat @click="modalOn = false">
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-      <v-card id="filter-card">
+      <!-- <v-card id="filter-card">
         <div class="row">
           <div class="col">
             <v-card-title primary-title class="mb-0 pb-0">
@@ -280,21 +342,22 @@
         </div>
         <v-card-actions>
           <v-btn
-            flat
-            color="green"
+            text
+            color="red"
             style="font-weight:bold"
             @click="sendParameters"
             >APPLY</v-btn
           >
           <v-btn
-            flat
-            color="red"
+            text
+            color="error"
             style="font-weight:bold"
             @click="resetParameters"
             >RESET</v-btn
           >
         </v-card-actions>
       </v-card> -->
+      -->
       <v-card class="mt-4">
         <v-card-title primary-title class="align-middle">
           <h2 class="pb-0 mb-0">
@@ -312,7 +375,7 @@
           <v-btn @click="appliedSearch = search">
             Search
           </v-btn>
-          <v-btn @click="download" class="ma-2" tile outline color="success">
+          <v-btn @click="download" class="ma-2" tile outlined color="success">
             Download
             <v-icon right>fa-cloud-download</v-icon>
           </v-btn>
@@ -324,9 +387,8 @@
           :loading="loadInProgress"
           :no-data-text="tableText"
           item-key="name"
-          expand
-          :disable-initial-sort="true"
-          :rows-per-page-items="rows"
+          sort_by="[]"
+          :items-per-page="itemPerPage"
           :search="appliedSearch"
           class="elevation-1"
         >
@@ -389,6 +451,11 @@ export default {
       itemPerPage: 10,
       tableText: "",
       loadInProgress: false,
+      filters: {
+        tm: false,
+        sp: false,
+        tx: true,
+      },
       parameters: {
         tm: "",
         sp: "",
@@ -575,6 +642,8 @@ export default {
 };
 </script>
 <style>
+.dropdown .btn {
+}
 .v-card__title .primary--text {
   color: #2dce89 !important;
   caret-color: #2dce89 !important;
@@ -599,14 +668,19 @@ tfoot {
   display: inline-block;
   width: 30px;
 }
-#parameter-container > * .col span {
-  display: block;
-  padding: 0.75rem;
-  /* box-shadow: antiquewhite; */
-  border-radius: 0.25rem;
-  color: #393f49c2;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px,
-    rgba(0, 0, 0, 0.1) 0 4px 4px;
+.custom-toggle-slider {
+  border-radius: 34px !important;
 }
+
 /* @import 'vuetify/dist/vuetify.min.css' */
 </style>
+<style scoped>
+.v-application >>> .rounded-circle {
+  border-radius: 34px !important;
+}
+</style>
+
+// #parameter-container > * .col span { // display: block; // padding: 0.75rem;
+// /* box-shadow: antiquewhite; */ // border-radius: 0.25rem; // color:
+#393f49c2; // -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, // rgba(0, 0, 0,
+0.1) 0 4px 4px; // }

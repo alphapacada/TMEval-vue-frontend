@@ -1,7 +1,7 @@
 <template>
   <header class="header-global">
     <base-nav
-      class="navbar-main"
+      class="navbar-main sticky-top"
       transparent
       title="Random titmle"
       type="success"
@@ -12,7 +12,7 @@
         <img src="/img/brand/tmbrand.png" alt="logo" class="img-fluid" />
       </router-link>
 
-      <div class="row" slot="content-header" slot-scope="{closeMenu}">
+      <div class="row" slot="content-header" slot-scope="{ closeMenu }">
         <div class="col-6 collapse-brand">
           <a href>
             <img src="/img/brand/tmbrand_blk.png" />
@@ -38,16 +38,53 @@
       </ul>
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
         <base-dropdown tag="li" class="nav-item">
-          <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+          <a
+            slot="title"
+            href="#"
+            class="nav-link"
+            data-toggle="dropdown"
+            role="button"
+          >
             <i class="ni ni-collection d-lg-none"></i>
             <span class="nav-link-inner--text">Browse</span>
           </a>
-          <router-link to="/evaluation" class="dropdown-item">View Assessment</router-link>
-          <router-link to="/evaluation/table" class="dropdown-item">View Dataset</router-link>
-          <router-link to="/#predict_sequences" class="dropdown-item">Predict Topology</router-link>
+          <router-link to="/evaluation" class="dropdown-item"
+            >View Assessment</router-link
+          >
+          <router-link to="/evaluation/table" class="dropdown-item"
+            >View Dataset</router-link
+          >
+          <router-link to="/#predict_sequences" class="dropdown-item"
+            >Predict Topology</router-link
+          >
         </base-dropdown>
       </ul>
+
       <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+        <li class="nav-item">
+          <base-dropdown tag="li" class="nav-item">
+            <a
+              slot="title"
+              class="nav-link nav-link-icon"
+              target="_blank"
+              rel="noopener"
+              data-toggle="tooltip"
+              title="Notifications"
+            >
+              <span> <i class="fa fa-bell"></i> </span>
+              <span
+                class="badge badge-md badge-circle badge-floating badge-danger border-white"
+                >4</span
+              >
+
+              <!-- <span class="nav-link-inner--text d-lg-none"></span> -->
+            </a>
+
+            <a class="dropdown-item" >Action</a>
+            <a class="dropdown-item" >Another action</a>
+            <a class="dropdown-item" >Something else here</a>
+          </base-dropdown>
+        </li>
         <li class="nav-item">
           <a
             class="nav-link nav-link-icon"
@@ -67,7 +104,9 @@
               <span class="btn-inner--icon header-download-button">
                 <i class="fa fa-cloud-download mr-2"></i>
               </span>
-              <span class="nav-link-inner--text header-download-button">Download Dataset</span>
+              <span class="nav-link-inner--text header-download-button"
+                >Download Dataset</span
+              >
             </span>
           </router-link>
         </li>
@@ -84,19 +123,21 @@ export default {
   components: {
     BaseNav,
     CloseButton,
-    BaseDropdown
-  }
+    BaseDropdown,
+  },
 };
 </script>
 <style scoped>
-/* .navbar-main {
+.navbar >>> .container {
+  padding: 0px;
+}
+.navbar-main {
   position: fixed !important;
   padding: 0px !important;
   height: 60px !important;
   line-height: 1 !important;
 }
-.navbar
-.container {
+.navbar .container {
   padding: 0px 24px 0px 24px !important;
 }
 
@@ -110,10 +151,9 @@ export default {
   width: auto;
 }
 
-.header-download-button
-{
-    color: black !important;
-} */
+.header-download-button {
+  color: black !important;
+}
 /* .navbar-collapse {
     background: blue !important
 } */

@@ -158,3 +158,13 @@ $value in $brand-colors {
         @include button-variant($value, $value);
     }
 }
+
+// added by Alpha
+.btn-fab {
+    height: 64px;
+    width: 64px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    box-shadow: $btn-box-shadow
+}

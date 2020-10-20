@@ -72,7 +72,7 @@ export default {
                              Philius used the Phobius dataset for model development.`,
                 },
                 {
-                    hash: "dc-tmhmm2",
+                    hash: "dc-tmhmm2.0",
                     title: "TMHMM2.0 vs TMeval",
                     img_src: "/img/figures/TMHMM2.png",
                     desc: ` About twenty percent (27 entries) of TMHMM2.0's dataset exists within the TMEval dataset.`

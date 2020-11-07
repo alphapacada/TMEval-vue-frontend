@@ -324,9 +324,6 @@ export default {
       return /^[GALMFWKQESPVICYHRNDT\s]{1,20000}$/i.test(fasta);
     },
     submitForm() {
-      console.log(this.sequence);
-      console.log(this.predictionMethodToggles);
-      console.log(this.predictionMethods);
       this.errorAlert = null;
       let predictionData = [];
       let data;
@@ -348,11 +345,7 @@ export default {
       for (let file of this.pssmFiles) {
         formData.append("pssm_files", file, file.name); // note, no square-brackets
       }
-      //   formData.append("pssm_files", this.pssmFiles);
       formData.append("sequence", this.sequence);
-      //   console.log(this.file, this.sequence, predictionData);
-      //   console.log(formData);
-      // JSON.stringify(
       formData.append("tools", JSON.stringify(predictionData));
       $backend
         .postFasta(formData)
@@ -365,6 +358,9 @@ export default {
         .catch((error) => {
           if (error.response) {
             this.errorAlert = error.response.data.message;
+            this.snackbar = true;
+            this.snackbarTimeout = 0;
+            this.snackbarText = error.response.data.message;
           }
         });
       console.log("Form submitted!");
@@ -397,7 +393,7 @@ export default {
           this.snackbar = true;
           this.snackbarTimeout = 0;
           this.snackbarText = "Cannot connect to server.";
-          console.log("error bui");
+          // console.log("error bui");
           //   this.predictionMethods = this.fakeApiResults;
         });
     },

@@ -27,7 +27,7 @@ import DataComparison from "./views/DataComparison.vue";
 import PerformanceEvaluation from "./views/PerformanceEvaluation.vue";
 import SOV from "./views/SOVAnalysis.vue";
 import ConfusionMatrix from "./views/ConfusionMatrix.vue";
-
+import NotFound from "./views/404.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -182,6 +182,11 @@ export default new Router({
         footer: tmFooter,
       },
     },
+    { path: '*', name: "notFound", components: {
+      header: tmHeader,
+      default: NotFound,
+      footer: tmFooter,
+    }}
   ],
   // scrollBehavior: to => {
   //     if (to.hash) {

@@ -1,7 +1,7 @@
 <template>
   <section class="section bg-secondary section-lg">
     <div class="container">
-        <!-- v-on:scroll.native="handleScroll" -->
+      <!-- v-on:scroll.native="handleScroll" -->
 
       <job-section
         v-intersect.quiet="handleIntersect"
@@ -22,12 +22,19 @@
 
     <div class="mt-4 container shape-container align-items-center">
       <div class="container">
-        <base-button type="danger">
+        <v-alert v-if="Boolean(errorAlert)" text type="danger">
+          {{ errorAlert }}</v-alert
+        >
+        <!-- <base-button type="danger">
           Evaluate?
-        </base-button>
+        </base-button> -->
       </div>
 
-      <v-card class="pt-0 pb-3" id="content-result" v-intersect.quiet="handleIntersect">
+      <v-card
+        class="pt-0 pb-3"
+        id="content-result"
+        v-intersect.quiet="handleIntersect"
+      >
         <v-card-title primary-title>
           <h1 class="col-md-9">
             Prediction Results
@@ -88,7 +95,11 @@
                 </div>
             </v-card> -->
       <!-- + TOPOLOGY  -->
-      <v-card id="res_topo" class="p-2 mt-2"  v-intersect.quiet="handleIntersect">
+      <v-card
+        id="res_topo"
+        class="p-2 mt-2"
+        v-intersect.quiet="handleIntersect"
+      >
         <v-card-title primary-title>
           <h2>Topologies</h2>
         </v-card-title>
@@ -114,13 +125,15 @@ export default {
   name: "PredictionResult",
   data() {
     return {
-      handleIntersect : {
-            handler: this.onIntersect,
-            options: {
-              threshold: 0.75,
-              rootMargin: '0px 0px -200px 0px',
-            }
-          },
+      isConnected: false,
+      errorAlert: null,
+      handleIntersect: {
+        handler: this.onIntersect,
+        options: {
+          threshold: 0.75,
+          rootMargin: "0px 0px -200px 0px",
+        },
+      },
       topologies: [],
       job_status: "",
       job_id: "---",
@@ -142,7 +155,11 @@ export default {
     JobSection,
     Topology,
   },
-  created() {
+  created() {},
+  mounted() {
+    console.log("mounted");
+    console.log(process.env.SOCKETIO_CONNECTION_URL);
+
     // console.log("woof woof predictionResult");
     this.fetchData();
     // console.log(this.$route.params.id, this.$route.query.page);
@@ -150,20 +167,53 @@ export default {
     this.job_url = this.$route.path;
   },
   methods: {
-    onIntersect (entries, observer) {
-      console.log(entries)
-       this.$nextTick(() => {
-        
+    handleThis(responseData) {
+      console.log(responseData.data);
+      console.log("Received GET response");
+      let percent =
+        (responseData.data["current"] * 100) / responseData.data["total"];
+      this.progress_value = percent;
+      this.percent = percent;
+      this.status = responseData.data["status"];
+      this.job_status = "Prediction Job: " + responseData.data["state"];
+      if (
+        responseData.data["state"] != "PENDING" &&
+        responseData.data["state"] != "PROGRESS"
+      ) {
+        // if Job completed
+        if ("result" in responseData.data) {
+          this.result = "Result" + responseData.data["result"];
+          this.fetchPredictionResults(responseData.data["result"]);
+        } else {
+          // check if job failed. e.g. result == 'FAILURE'
+          this.result = "Result" + responseData.data["state"];
+        }
+      } else {
+        // setTimeout(() => {
+        //   this.getLongTask(task_id);
+        // }, 10000);
+      }
+    },
+    onIntersect(entries, observer) {
+      console.log(entries);
+      this.$nextTick(() => {
         // More information about these options
         // is located here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
-        this.isIntersecting = entries[0].isIntersecting
-        let elem = entries[0].target
-        const newpath = this.$route.path + '#' +elem.id
+        this.isIntersecting = entries[0].isIntersecting;
+        let elem = entries[0].target;
+        const newpath = this.$route.path + "#" + elem.id;
         // observer.unobserve(elem);
-        // if (this.$route.path !== newpath) 
-        if (this.isIntersecting) this.$router.push({name: 'pred-results', hash: '#' +elem.id,  params: {preventScroll: true}}).catch(err => {})
-       })
-      },
+        // if (this.$route.path !== newpath)
+        if (this.isIntersecting)
+          this.$router
+            .push({
+              name: "pred-results",
+              hash: "#" + elem.id,
+              params: { preventScroll: true },
+            })
+            .catch((err) => {});
+      });
+    },
     handleScroll(event) {
       console.log("uv scroll here");
     },
@@ -181,32 +231,17 @@ export default {
     },
     getLongTask(task_id) {
       console.log(task_id);
-      $backend.getPredResults(task_id).then((responseData) => {
-        console.log(responseData);
-        let percent =
-          (responseData.data["current"] * 100) / responseData.data["total"];
-        this.progress_value = percent;
-        this.percent = percent;
-        this.status = responseData.data["status"];
-        this.job_status = "Prediction Job: " + responseData.data["state"];
-        if (
-          responseData.data["state"] != "PENDING" &&
-          responseData.data["state"] != "PROGRESS"
-        ) {
-          // if Job completed
-          if ("result" in responseData.data) {
-            this.result = "Result" + responseData.data["result"];
-            this.fetchPredictionResults(responseData.data["result"]);
-          } else {
-            // check if job failed. e.g. result == 'FAILURE'
-            this.result = "Result" + responseData.data["state"];
+      $backend
+        .getPredResults(task_id)
+        .then(this.handleThis)
+        .catch((error) => {
+          if (error.response) {
+            if (error.response.status == 404) {
+              this.$router.push({ name: "notFound" });
+            }
+            this.errorAlert = error.response.data.message;
           }
-        } else {
-          setTimeout(() => {
-            this.getLongTask(task_id);
-          }, 5000);
-        }
-      });
+        });
     },
     //prediction_res -> a dict containing the results of the prediction
     fetchPredictionResults(prediction_res) {
@@ -265,11 +300,31 @@ export default {
       this.parsed_res = JSON.stringify(this.results[index].parsed_res, null, 2);
     },
   },
+  sockets: {
+    connect() {
+      this.isConnected = true;
+      console.log("connected to socket");
+    },
+    disconnect() {
+      this.isConnected = false;
+    },
+    progress(data) {
+      this.total = data["total"];
+      if (data["current"]) {
+        this.percent = (data["current"] * 100) / data["total"];
+        this.status = data["status"];
+      } else {
+        this.percent = this.percent + 1 / data["total"];
+        this.status = data["status"];
+      }
+      // this.status = data['status'];
+    },
+  },
 };
 </script>
 <style scoped>
 #res_topo {
-  height:480px;
+  height: 480px;
 }
 .text-black {
   color: black !important;

@@ -48,17 +48,12 @@ export default {
   },
   methods: {
     resizewatcher() {
-      console.log("resizedt", window.innerWidth);
-
       this.topologyWidth = this.$refs.topologyContainer.clientWidth;
-      console.log("Topology Width: ", this.topologyWidth);
     },
     loadPaths() {
       this.paths = [];
-      console.log("+loadPaths()");
       this.sequence = this.seq;
       var length = this.sequence.length;
-      console.log("length: " + length);
       var newPath = {};
       var tOffset = 0,
         pathCount = 0,
@@ -133,12 +128,10 @@ export default {
       } else {
         this.paths = [];
       }
-      console.log("-loadPaths()");
     }
   },
   mounted() {
     this.resizewatcher();
-    console.log("Mounted!");
     this.loadPaths();
   }
 };

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        
+        <card v-if="isConnected">Connected to socket</card>
         <router-view name="header"></router-view>
         
         <main v-on:scroll.passive="handleScroll">
@@ -22,6 +22,7 @@ export default {
     FadeTransition
   },
   data: () => ({
+    isConnected:false,
     isUserScrolling: false
   }),
   methods: {
@@ -32,6 +33,12 @@ export default {
       console.log('calling handleScroll');
     }
   },
+  sockets: {
+     connect() {
+      this.isConnected = true;
+      console.log("connected to socket");
+    },
+  }
 };
 </script>
 <style scoped>

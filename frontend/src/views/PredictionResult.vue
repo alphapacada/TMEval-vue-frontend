@@ -2,7 +2,7 @@
   <section class="section bg-secondary section-lg">
     <div class="container">
       <!-- v-on:scroll.native="handleScroll" -->
-
+      <div v-if=isConnected><h1>Connected to socket</h1></div>
       <job-section
         v-intersect.quiet="handleIntersect"
         id="job_status"
@@ -157,12 +157,7 @@ export default {
   },
   created() {},
   mounted() {
-    console.log("mounted");
-    console.log(process.env.SOCKETIO_CONNECTION_URL);
-
-    // console.log("woof woof predictionResult");
     this.fetchData();
-    // console.log(this.$route.params.id, this.$route.query.page);
     this.job_id = this.$route.params.id;
     this.job_url = this.$route.path;
   },
@@ -195,7 +190,6 @@ export default {
       }
     },
     onIntersect(entries, observer) {
-      console.log(entries);
       this.$nextTick(() => {
         // More information about these options
         // is located here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
@@ -309,6 +303,7 @@ export default {
       this.isConnected = false;
     },
     progress(data) {
+      console.log('received progress socket')
       this.total = data["total"];
       if (data["current"]) {
         this.percent = (data["current"] * 100) / data["total"];

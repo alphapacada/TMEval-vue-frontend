@@ -200,8 +200,6 @@ export default new Router({
     // console.log(to, from)
     // if ( to.name === from.name && to.matched.some(routeDef => routeDef.meta.preventScroll) ){
     if (to.meta.preventScroll || to.params.preventScroll){
-
-      console.log("prevent scroll")
       return false;
     }
     if (to.hash) {

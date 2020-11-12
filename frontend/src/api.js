@@ -46,9 +46,6 @@ export default {
     return $axios.post("longtask/").then((response) => response.data);
   },
   getPredTools() {
-    console.log("baseUrl", $axios.defaults.baseURL);
-    console.log("sample", process.env.VUE_APP_SAMPLE);
-    console.log("env", process.env.NODE_ENV);
     return $axios.get("predict/tools");
   },
   postFasta(data) {
@@ -59,15 +56,8 @@ export default {
         },
       })
       .then((response) => response.data);
-    // .catch(error => error.response)
-    //     {
-    //     //
-    //     console.log("error")
-    //     console.log(error)
-    // })
   },
   getProteins(query) {
-    console.log("backend: ", query);
     return $axios
       .get("proteins", {
         params: query,
@@ -76,7 +66,6 @@ export default {
       .then((response) => response.data);
   },
   getDownloadableProteins(query) {
-    console.log("backend: ", query);
     return $axios
       .get("proteins", {
         params: query,

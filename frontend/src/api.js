@@ -59,7 +59,7 @@ export default {
   },
   getProteins(query) {
     return $axios
-      .get("proteins", {
+      .get("proteins/", {
         params: query,
         timeout: 100000,
       })

@@ -1,12 +1,11 @@
 <template>
   <section class="section bg-secondary section-lg">
     <div class="container">
-      <!-- v-on:scroll.native="handleScroll" -->
-      <div v-if=isConnected><h1>Connected to socket</h1></div>
       <job-section
         v-intersect.quiet="handleIntersect"
         id="job_status"
-        job_id="job id"
+        :job_id="job_id"
+        :numSeq="numSeq"
         :url="job_url"
       ></job-section>
       <div id="progress">
@@ -77,24 +76,6 @@
           </div>
         </v-card-text>
       </v-card>
-      <!-- - PRED RES -->
-
-      <!-- + TOPOLOGY  -->
-      <!-- <v-card class="p-2 mt-2">
-                <v-card-title primary-title>
-                    <h2>Topologies</h2>
-                </v-card-title>
-            </v-card>
-            <v-card v-for="seq in sequence_topo">
-                <v-card-title primary-title>
-                    seq.name
-                </v-card-title>
-                <div v-for="t in seq.topologies" :key="t.index">
-                    <h6>{{ t.name }}</h6>
-                    <topology :seq="t.topology"></topology>
-                </div>
-            </v-card> -->
-      <!-- + TOPOLOGY  -->
       <v-card
         id="res_topo"
         class="p-2 mt-2"
@@ -138,6 +119,7 @@ export default {
       job_status: "",
       job_id: "---",
       job_url: "",
+      numSeq: 0,
       progress_value: 0,
       percent: 0,
       status: "",
@@ -162,33 +144,6 @@ export default {
     this.job_url = this.$route.path;
   },
   methods: {
-    handleThis(responseData) {
-      console.log(responseData.data);
-      console.log("Received GET response");
-      let percent =
-        (responseData.data["current"] * 100) / responseData.data["total"];
-      this.progress_value = percent;
-      this.percent = percent;
-      this.status = responseData.data["status"];
-      this.job_status = "Prediction Job: " + responseData.data["state"];
-      if (
-        responseData.data["state"] != "PENDING" &&
-        responseData.data["state"] != "PROGRESS"
-      ) {
-        // if Job completed
-        if ("result" in responseData.data) {
-          this.result = "Result" + responseData.data["result"];
-          this.fetchPredictionResults(responseData.data["result"]);
-        } else {
-          // check if job failed. e.g. result == 'FAILURE'
-          this.result = "Result" + responseData.data["state"];
-        }
-      } else {
-        // setTimeout(() => {
-        //   this.getLongTask(task_id);
-        // }, 10000);
-      }
-    },
     onIntersect(entries, observer) {
       this.$nextTick(() => {
         // More information about these options
@@ -196,8 +151,7 @@ export default {
         this.isIntersecting = entries[0].isIntersecting;
         let elem = entries[0].target;
         const newpath = this.$route.path + "#" + elem.id;
-        // observer.unobserve(elem);
-        // if (this.$route.path !== newpath)
+
         if (this.isIntersecting)
           this.$router
             .push({
@@ -207,9 +161,6 @@ export default {
             })
             .catch((err) => {});
       });
-    },
-    handleScroll(event) {
-      console.log("uv scroll here");
     },
     toggleSidebar() {
       if (this.$sidebar.showSidebar) {
@@ -223,11 +174,29 @@ export default {
         this.getLongTask(this.$route.params.id);
       }
     },
+    handlePredResults(responseData) {
+      console.log("Received GET response");
+      this.percent =
+        (responseData.data["current"] * 100) / responseData.data["total"];
+      this.progress_value = this.percent;
+      this.job_status =
+        "Prediction Job: " +
+        (responseData.data["state"] || responseData.data["status"]);
+      this.dateDone = responseData.data["date_done"];
+      if (responseData.data["state"] == "SUCCESS") {
+        if ("result" in responseData.data) {
+          this.fetchPredictionResults(responseData.data["result"]);
+        }
+      } else {
+        setTimeout(() => {
+          this.getLongTask(this.job_id);
+        }, 10000);
+      }
+    },
     getLongTask(task_id) {
-      console.log(task_id);
       $backend
         .getPredResults(task_id)
-        .then(this.handleThis)
+        .then(this.handlePredResults)
         .catch((error) => {
           if (error.response) {
             if (error.response.status == 404) {
@@ -239,16 +208,10 @@ export default {
     },
     //prediction_res -> a dict containing the results of the prediction
     fetchPredictionResults(prediction_res) {
-      // this.pred_tool_res = prediction_res[0][0];
-      // this.parsed_res = prediction_res[0][1];
-      console.log(prediction_res);
       this.results = prediction_res;
-      console.log(this.results);
-      let i = 0;
-
       let sequences = this.results[0].parsed_res;
 
-      for (i = 0; i < sequences.length; i++) {
+      for (let i = 0; i < sequences.length; i++) {
         this.topologies[i] = Object();
         this.topologies[i].index = i;
         this.topologies[i].sequence = Object();
@@ -266,52 +229,30 @@ export default {
           });
         }
       }
-
-      // for(const predMethod of this.results)
-      // {
-      //     console.log(predMethod);
-      //     // for dropdown of method names used for prediction
-      //     this.predictionMethods.push(predMethod['tool']);
-      //     var topologyObj;
-
-      //     topologyObj = {
-      //         'index': i,
-      //         'topology': predMethod.parsed_res[0].topology.annotation,
-      //         'name': predMethod.tool
-      //     };
-      //     this.topologies.push(topologyObj);
-      //     i++;
-      // }
-      console.log(this.predictionMethods);
       this.setSelectedMethod(0);
     },
     setSelectedMethod(index) {
-      console.log("selected method results", this.results[index]);
       this.selectedMethod = this.predictionMethods[index];
       this.selectedMethodIndex = index;
       this.pred_tool_res = this.results[index].pred_tool_res;
-      // this.parsed_res = JSON.stringify(this.results[index].parsed_res[0],null,2);
       this.parsed_res = JSON.stringify(this.results[index].parsed_res, null, 2);
     },
   },
   sockets: {
-    connect() {
-      this.isConnected = true;
-      console.log("connected to socket");
-    },
-    disconnect() {
-      this.isConnected = false;
+    initial_progress(data) {
+      console.log("received initial progress socket");
+
+      this.total = data["total"];
+      this.percent = (data["current"] * 100) / data["total"];
+      this.job_status = data["status"] || data["state"];
     },
     progress(data) {
-      console.log('received progress socket')
-      this.total = data["total"];
-      if (data["current"]) {
-        this.percent = (data["current"] * 100) / data["total"];
-        this.status = data["status"];
-      } else {
-        this.percent = this.percent + 1 / data["total"];
-        this.status = data["status"];
-      }
+
+      console.log("received progress socket");
+      // this.total = data["total"];
+      // this.percent = this.percent + 1 / data["total"];
+      this.job_status = data["status"];
+
       // this.status = data['status'];
     },
   },

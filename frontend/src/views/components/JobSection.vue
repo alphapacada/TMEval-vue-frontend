@@ -10,14 +10,18 @@
             <tr><td>Time of Submission: </td>
                 <td> {{ date }}</td>
             </tr>
+            <tr><td>Time of Completion: </td>
+                <td> {{ dateDone }}</td>
+            </tr>
             <tr>
                 <td>Number of sequences read in:</td>
-                <td>1 </td>
+                <td>{{ numSeq}} </td>
             </tr>
             <tr>
                 <td>Results url:</td>
                 <td>{{ url }}</td>
             </tr>
+
         </table>
     </div>
 </template>
@@ -35,7 +39,15 @@ export default {
             default: "---",
             description: "Prediction job id"
         },
-        url:String
+        url:String,
+        numSeq: {
+            type: Number,
+            description: "Number of submitted sequences"
+        },
+        dateDone: {
+            type: Date,
+            description: "Date Done"
+        }
     },
     created(){
         var today = new Date();

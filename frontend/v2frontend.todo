@@ -1,0 +1,11 @@
+UI:
+☐ download buttion in View dataset
+☐ change vuetify theme color (i.e. success)
+☐ 
+☐
+Frontend:
+
+ISSUES:
+☐  NavigationDuplicated: Avoided redundant navigation to current location: "/#predict_sequences"
+☐  Error in v-on handler (Promise/async): "NavigationDuplicated: Avoided redundant navigation to current location: "/#predict_sequences"."
+

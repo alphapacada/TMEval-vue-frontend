@@ -642,8 +642,8 @@ export default {
 };
 </script>
 <style>
-.dropdown .btn {
-}
+/* .dropdown .btn {
+} */
 .v-card__title .primary--text {
   color: #2dce89 !important;
   caret-color: #2dce89 !important;

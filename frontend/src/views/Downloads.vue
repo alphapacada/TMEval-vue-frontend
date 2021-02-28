@@ -7,38 +7,44 @@
                         <h3>
                             TMeval Dataset
                         </h3>
-                        <table class="container">
-                            <tr class="row" :key="index" v-for="(file, index) in tmevalDataset">
-                                <td v-ripple="true" class="table-entry col" >
-                                    <tr class="row">
-                                        <td  class="col-1 pr-1 text-center align-items-center">
-                                            <span @click="downloadFasta(file)" class="download-text"><i class="fa fa-download"></i></span>
-                                        </td>
-                                        <td class="col-10">
-                                            <tr class="row col pb-1">
-                                                <td class="file-name col">
-                                                    {{ file.name }} <!--({{ file.size }})-->
-                                                </td>
-                                            </tr>
-                                            <tr class="row col">
-                                                <td rowspan="2" class="file-description col">
-                                                    <p class="ml-2">
-                                                        {{ file.description }}
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <!-- <tr class="row col">
-                                                <td rowspan="2" class="file-description col">
-                                                    
-                                                    <a :href="file.url"> {{file.name}}</a>
-                                    
-                                                </td>
-                                            </tr> -->
-                                        </td>
-                                    </tr>
-                                </td>
-                            </tr>    
-                        </table>
+                        <v-expansion-panels v-model="panel" popout>
+                            <v-expansion-panel :v-model="panel"
+                                expand
+                                v-for="(item,i) in 4"
+                                :key="i">
+                                <v-expansion-panel-header>
+                                    {{$options.tmevalDataset[i].similarity.text}}% Similarity
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content class="dataset-panel">
+                                    <div class="row dataset-row border border-bottom-0 border-dark dataset-table mt-1">
+                                        <div class=" col dataset-row-content border-bottom border-dark">
+                                            <span>{{$options.tmevalDataset[i].similarity.text}}</span>&nbsp;<span @click="downloadFasta($options.tmevalDataset[i].similarity)" class="download-text"> <i class="fa fa-download"></i></span>
+                                        </div>
+                                        <div class=" col">
+                                            <div v-for="organism_row in $options.tmevalDataset[i].organism" :key="organism_row.$index" class="row organism-row" >
+                                                <div class="dataset-row-content border-left border-bottom border-dark">
+                                                    <span>{{organism_row.text}}</span>&nbsp;<span @click="downloadFasta(organism_row)" class="download-text"> <i class="fa fa-download"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div v-for="protein_type_row in $options.tmevalDataset[i].protein_type" :key="protein_type_row.$index" class="row protein-type-row">
+                                                <div class="dataset-row-content border-left border-bottom border-dark">
+                                                    <span>{{protein_type_row.text}}</span>&nbsp;<span @click="downloadFasta(protein_type_row)" class="download-text"> <i class="fa fa-download"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" col">
+                                            <div v-for="sp_presence_row in $options.tmevalDataset[i].sp_presence" :key="sp_presence_row.$index" class="row">
+                                                <div class="dataset-row-content border-left border-bottom border-dark sp-presence-row">
+                                                    <span>{{sp_presence_row.text}}</span>&nbsp;<span @click="downloadFasta(sp_presence_row)" class="download-text"> <i class="fa fa-download"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
                     </div>
                 </div>
                 <a style="display:none" ref="download">
@@ -75,81 +81,12 @@
 </template>
 <script>
 import $backend from '../api'
+import Datasets from '../Datasets.json'
 export default {
+    tmevalDataset: Datasets,
     data() {
         return {
-            tmevalDataset: [
-                {
-                    name: "tmeval_25",
-                    size: "5 KB",
-                    description: "TMeval dataset with 25% sequence identity.",
-                    url: "http://127.0.0.1:5000/25_A/classification_confusion_matrix_CCTOP_1560843152.png",
-                    parameters: {reduced:25, tm:'', sp:'',count:'', topo_type:'', tx:''},
-        
-                },
-                {
-                    name:"tmeval_30",
-                    size: "1 GB",
-                    description: "TMeval dataset with 30% sequence identity.",
-                    parameters: {reduced:30, tm:'', sp:'',count:'', topo_type:'', tx:''}
-                },
-
-                {
-                    name:"tmeval_40",
-                    size: "1 GB",
-                    description: "TMeval dataset with 40% sequence identity.",
-                    parameters: {reduced:40, tm:'', sp:'',count:'', topo_type:'', tx:''}
-                    
-                },
-                {
-                    name:"tmeval_70",
-                    size: "1 GB",
-                    description: "TMeval dataset with 70% sequence identity.",
-                    parameters: {reduced:70, tm:'', sp:'',count:'', topo_type:'', tx:''}
-                },
-                {
-                    name:"tmeval_25_+TM-SP",
-                    size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes but do not have signal peptides.",
-                    parameters: {reduced:25, tm:true, sp:false,count:'', topo_type:'', tx:''}
-                },
-                {
-                    name:"tmeval_25_+TM+SP",
-                    size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries have transmembranes and signal peptides.",
-                    parameters: {reduced:25, tm:true, sp:true,count:'', topo_type:'', tx:''}
-                },
-                {
-                    name:"tmeval_25_-TM-SP",
-                    size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes and signal peptides.",
-                    parameters: {reduced:25, tm:false, sp:false,count:'', topo_type:'', tx:''}
-                },
-                {
-                    name:"tmeval_25_-TM+SP",
-                    size: "1 GB",
-                    description: "TMeval dataset with 25% sequence identity. Entries do not have transmembranes but have signal peptides.",
-                    parameters: {reduced:25, tm:false, sp:true,count:'', topo_type:'', tx:''}
-                },
-                {
-                    name:"tmeval_25_Eukaryotes",
-                    url: "",
-                    parameters: {reduced:25, tx: 'Eukaryotes', tm:true, sp:'',count:'', topo_type:'', tx:''}, 
-                },
-                {
-                    name:"tmeval_25_Bacteria",
-                    parameters: {reduced:25, tx: 'Bacteria', tm:true, sp:'',count:'', topo_type:'', tx:''},
-                },
-                {
-                    name:"tmeval_25_Archaea",
-                    parameters: {reduced:25, tx: 'Archaea', tm:true, sp:''},
-                },
-                {
-                    name:"tmeval_25_Viruses",
-                    parameters: {reduced:25, tx: 'Viruses', tm:true, sp:''}
-                }
-
-            ],
+            panel: 0,
             trainingDataset: [
                 {
                     name: "CCTOP.tar.xz",
@@ -192,7 +129,7 @@ export default {
         },
         downloadFasta(file) {
             console.log("downloadFasta")
-            this.$refs.download.href = $backend.getBaseURL() + 'files/tmeval-datasets/' + file.name + '?' + new URLSearchParams(file.parameters).toString();;
+            this.$refs.download.href = $backend.getBaseURL() + 'files/tmeval-datasets/' + file.file_name + '?' + new URLSearchParams(file.parameters).toString();;
                 this.$refs.download.click();
             // $backend.getDownloadableFasta(file)
 
@@ -201,11 +138,57 @@ export default {
 }
 </script>
 <style>
-    .table-entry :hover{
+    .table-entry :hover
+    {
         background-color:rgb(188, 248, 188);
     }
-    .download-text{
+    .download-text
+    {
         color:blue;
         cursor:pointer;
+    }
+    .dataset-row-content
+    {
+        width:100%;
+        padding: 12px 15px;
+        position:relative;
+    }
+    .organism-row
+    {
+        height:216px;
+        
+    }
+    .protein-type-row
+    {
+        height:108px;
+    }
+    .sp-presence-row
+    {
+        height:54px;
+    }
+    .dataset-row-content>span
+    {
+        width:100%;
+        line-height: 2;
+    }
+    .dataset-table
+    {
+        min-width: 720px;
+    }
+    .dataset-panel
+    {
+        overflow-x: auto;
+        min-width: 320px;
+    }
+    #tmeval-dataset
+    {
+        overflow-x: auto;
+        min-width: 320px;
+    }
+    .dataset-header-content
+    {
+        width:100%;
+        line-height: 2;
+        text-align: center;
     }
 </style>

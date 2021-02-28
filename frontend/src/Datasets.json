@@ -1,0 +1,618 @@
+[
+    {
+        "similarity":{
+            "text": "25",
+            "file_name":"tmeval_25",
+            "parameters": {"reduced":25, "tx":"", "tm":"", "sp":"", "count":"", "topo_type":""}
+        },
+        "organism": [
+            {
+                "text": "Eukaryotes",
+                "file_name":"tmeval_25_Eukaryotes",
+                "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Bacteria",
+                "file_name":"tmeval_25_Bacteria",
+                "parameters": {"reduced":25, "tx":"Bacteria", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Archaea",
+                "file_name":"tmeval_25_Archaea",
+                "parameters": {"reduced":25, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }, 
+            {
+                "text": "Viruses",
+                "file_name":"tmeval_25_Viruses",
+                "parameters": {"reduced":25, "tx":"Viruses", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "protein_type": [
+            {
+                "text": "TM",
+                "file_name":"tmeval_25_Eukaryotes_+TM",
+                "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_25_Eukaryotes_-TM",
+                "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_25_Bacteria_+TM",
+                "parameters": {"reduced":25, "tx":"Bacteria", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_25_Bacteria_-TM",
+                "parameters": {"reduced":25, "tx":"Bacteria", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_25_Archaea_+TM",
+                "parameters": {"reduced":25, "tx":"Archaea", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_25_Archaea-TM",
+                "parameters": {"reduced":25, "tx":"Archaea", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_25_Viruses_+TM",
+                "parameters": {"reduced":25, "tx":"Viruses", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_25_Viruses+-TM",
+                "parameters": {"reduced":25, "tx":"Viruses", "tm":false, "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "sp_presence": [
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Eukaryotes_+TM+SP",
+                "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Eukaryotes_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Eukaryotes_+TM+SP",
+                "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Eukaryotes_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Bacteria_+TM+SP",
+                "parameters": {"reduced":25, "tx":"Bacteria", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Bacteria_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Bacteria", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Bacteria_+TM+SP",
+                "parameters": {"reduced":25, "tx":"Bacteria", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Bacteria_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Bacteria", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Archaea_+TM+SP",
+                "parameters": {"reduced":25, "tx":"Archaea", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Archaea_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Archaea", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Archaea_+TM+SP",
+                "parameters": {"reduced":25, "tx":"Archaea", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Archaea_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Archaea", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Viruses_+TM+SP",
+                "parameters": {"reduced":25, "tx":"Viruses", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Viruses_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Viruses", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_25_Viruses_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Viruses", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_25_Viruses_+TM-SP",
+                "parameters": {"reduced":25, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
+            }
+        ]
+        
+    },
+    {
+        "similarity":{
+            "text": "30",
+            "file_name":"tmeval_30",
+            "parameters": {"reduced":30, "tx":"", "tm":"", "sp":"", "count":"", "topo_type":""}
+        },
+        "organism": [
+            {
+                "text": "Eukaryotes",
+                "file_name":"tmeval_30_Eukaryotes",
+                "parameters": {"reduced":30, "tx":"Eukaryotes", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Bacteria",
+                "file_name":"tmeval_30_Bacteria",
+                "parameters": {"reduced":30, "tx":"Bacteria", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Archaea",
+                "file_name":"tmeval_30_Archaea",
+                "parameters": {"reduced":30, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }, 
+            {
+                "text": "Viruses",
+                "file_name":"tmeval_30_Viruses",
+                "parameters": {"reduced":30, "tx":"Viruses", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "protein_type": [
+            {
+                "text": "TM",
+                "file_name":"tmeval_30_Eukaryotes_+TM",
+                "parameters": {"reduced":30, "tx":"Eukaryotes", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_30_Eukaryotes_-TM",
+                "parameters": {"reduced":30, "tx":"Eukaryotes", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_30_Bacteria_+TM",
+                "parameters": {"reduced":30, "tx":"Bacteria", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_30_Bacteria_-TM",
+                "parameters": {"reduced":30, "tx":"Bacteria", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_30_Archaea_+TM",
+                "parameters": {"reduced":30, "tx":"Archaea", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_30_Archaea_-TM",
+                "parameters": {"reduced":30, "tx":"Archaea", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_30_Viruses_+TM",
+                "parameters": {"reduced":30, "tx":"Viruses", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_30_Viruses_-TM",
+                "parameters": {"reduced":30, "tx":"Viruses", "tm":false, "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "sp_presence": [
+            {
+                "text": "With SP",
+                "file_name":"tmeval_30_Eukaryotes_+TM+SP",
+                "parameters": {"reduced":30, "tx":"Eukaryotes", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Eukaryotes_+TM-SP",
+                "parameters": {"reduced":30, "tx":"Eukaryotes", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "WithSP",
+                "file_name":"tmeval_30_Eukaryotes_-TM+SP",
+                "parameters": {"reduced":30, "tx":"Eukaryotes", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Eukaryotes_-TM-SP",
+                "parameters": {"reduced":30, "tx":"Eukaryotes", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_30_Bacteria_+TM+SP",
+                "parameters": {"reduced":30, "tx":"Bacteria", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Bacteria_+TM-SP",
+                "parameters": {"reduced":30, "tx":"Bacteria", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_30_Bacteria_-TM+SP",
+                "parameters": {"reduced":30, "tx":"Bacteria", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Bacteria_-TM-SP",
+                "parameters": {"reduced":30, "tx":"Bacteria", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_30_Archaea_+TM+SP",
+                "parameters": {"reduced":30, "tx":"Archaea", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Archaea_+TM-SP",
+                "parameters": {"reduced":30, "tx":"Archaea", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_30_Archaea_-TM+SP",
+                "parameters": {"reduced":30, "tx":"Archaea", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Archaea_-TM-SP",
+                "parameters": {"reduced":30, "tx":"Archaea", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_30_Viruses_+TM+SP",
+                "parameters": {"reduced":30, "tx":"Viruses", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Viruses_+TM-SP",
+                "parameters": {"reduced":30, "tx":"Viruses", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_30_Viruses_-TM+SP",
+                "parameters": {"reduced":30, "tx":"Viruses", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_30_Viruses_-TM-SP",
+                "parameters": {"reduced":30, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
+            }
+        ]
+        
+    },
+    {
+        "similarity":{
+            "text": "40",
+            "file_name":"tmeval_40",
+            "parameters": {"reduced":40, "tx":"", "tm":"", "sp":"", "count":"", "topo_type":""}
+        },
+        "organism": [
+            {
+                "text": "Eukaryotes",
+                "file_name":"tmeval_40_Eukaryotes",
+                "parameters": {"reduced":40, "tx":"Eukaryotes", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Bacteria",
+                "file_name":"tmeval_40_Bacteria",
+                "parameters": {"reduced":40, "tx":"Bacteria", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Archaea",
+                "file_name":"tmeval_40_Archaea",
+                "parameters": {"reduced":40, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }, 
+            {
+                "text": "Viruses",
+                "file_name":"tmeval_40_Viruses",
+                "parameters": {"reduced":40, "tx":"Viruses", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "protein_type": [
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Eukaryotes_+TM",
+                "parameters": {"reduced":40, "tx":"Eukaryotes", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Eukaryotes_-TM",
+                "parameters": {"reduced":40, "tx":"Eukaryotes", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Bacteria_+TM",
+                "parameters": {"reduced":40, "tx":"Bacteria", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Bacteria_-TM",
+                "parameters": {"reduced":40, "tx":"Bacteria", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Archaea_+TM",
+                "parameters": {"reduced":40, "tx":"Archaea", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Archaea_-TM",
+                "parameters": {"reduced":40, "tx":"Archaea", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Viruses_+TM",
+                "parameters": {"reduced":40, "tx":"Viruses", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Viruses_-TM",
+                "parameters": {"reduced":40, "tx":"Viruses", "tm":false, "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "sp_presence": [
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Eukaryotes_+TM+SP",
+                "parameters": {"reduced":40, "tx":"Eukaryotes", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Eukaryotes_+TM-SP",
+                "parameters": {"reduced":40, "tx":"Eukaryotes", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Eukaryotes_-TM+SP",
+                "parameters": {"reduced":40, "tx":"Eukaryotes", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Eukaryotes_-TM-SP",
+                "parameters": {"reduced":40, "tx":"Eukaryotes", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Bacteria_+TM+SP",
+                "parameters": {"reduced":40, "tx":"Bacteria", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Bacteria_+TM-SP",
+                "parameters": {"reduced":40, "tx":"Bacteria", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Bacteria_-TM+SP",
+                "parameters": {"reduced":40, "tx":"Bacteria", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Bacteria_-TM-SP",
+                "parameters": {"reduced":40, "tx":"Bacteria", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Archaea_+TM+SP",
+                "parameters": {"reduced":40, "tx":"Archaea", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Archaea_+TM-SP",
+                "parameters": {"reduced":40, "tx":"Archaea", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Archaea_-TM+SP",
+                "parameters": {"reduced":40, "tx":"Archaea", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Archaea_-TM-SP",
+                "parameters": {"reduced":40, "tx":"Archaea", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Viruses_+TM+SP",
+                "parameters": {"reduced":40, "tx":"Viruses", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Viruses_+TM-SP",
+                "parameters": {"reduced":40, "tx":"Viruses", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Viruses_-TM+SP",
+                "parameters": {"reduced":40, "tx":"Viruses", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Viruses_-TM-SP",
+                "parameters": {"reduced":40, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
+            }
+        ]
+        
+    },
+    {
+        "similarity":{
+            "text": "70",
+            "file_name":"tmeval_40",
+            "parameters": {"reduced":70, "tx":"", "tm":"", "sp":"", "count":"", "topo_type":""}
+        },
+        "organism": [
+            {
+                "text": "Eukaryotes",
+                "file_name":"tmeval_40_Eukaryotes",
+                "parameters": {"reduced":70, "tx":"Eukaryotes", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Bacteria",
+                "file_name":"tmeval_40_Bacteria",
+                "parameters": {"reduced":70, "tx":"Bacteria", "tm":"", "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Archaea",
+                "file_name":"tmeval_40_Archaea",
+                "parameters": {"reduced":70, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }, 
+            {
+                "text": "Viruses",
+                "file_name":"tmeval_40_Viruses",
+                "parameters": {"reduced":70, "tx":"Viruses", "tm":"", "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "protein_type": [
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Eukaryotes_+TM",
+                "parameters": {"reduced":70, "tx":"Eukaryotes", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Eukaryotes_-TM",
+                "parameters": {"reduced":70, "tx":"Eukaryotes", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Bacteria_+TM",
+                "parameters": {"reduced":70, "tx":"Bacteria", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Bacteria_-TM",
+                "parameters": {"reduced":70, "tx":"Bacteria", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Archaea_+TM",
+                "parameters": {"reduced":70, "tx":"Archaea", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Archaea_-TM",
+                "parameters": {"reduced":70, "tx":"Archaea", "tm":false, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "TM",
+                "file_name":"tmeval_40_Viruses_+TM",
+                "parameters": {"reduced":70, "tx":"Viruses", "tm":true, "sp":"", "count":"", "topo_type":""}
+            },
+            {
+                "text": "Non-TM",
+                "file_name":"tmeval_40_Viruses_-TM",
+                "parameters": {"reduced":70, "tx":"Viruses", "tm":false, "sp":"", "count":"", "topo_type":""}
+            }
+        ],
+        "sp_presence": [
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Eukaryotes_+TM+SP",
+                "parameters": {"reduced":70, "tx":"Eukaryotes", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Eukaryotes_+TM-SP",
+                "parameters": {"reduced":70, "tx":"Eukaryotes", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Eukaryotes_-TM+SP",
+                "parameters": {"reduced":70, "tx":"Eukaryotes", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Eukaryotes_-TM-SP",
+                "parameters": {"reduced":70, "tx":"Eukaryotes", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Bacteria_+TM+SP",
+                "parameters": {"reduced":70, "tx":"Bacteria", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Bacteria_+TM-SP",
+                "parameters": {"reduced":70, "tx":"Bacteria", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Bacteria_-TM+SP",
+                "parameters": {"reduced":70, "tx":"Bacteria", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Bacteria_-TM-SP",
+                "parameters": {"reduced":70, "tx":"Bacteria", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Archaea_+TM+SP",
+                "parameters": {"reduced":70, "tx":"Archaea", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Archaea_+TM-SP",
+                "parameters": {"reduced":70, "tx":"Archaea", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Archaea_-TM+SP",
+                "parameters": {"reduced":70, "tx":"Archaea", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Archaea_-TM-SP",
+                "parameters": {"reduced":70, "tx":"Archaea", "tm":false, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Viruses_+TM+SP",
+                "parameters": {"reduced":70, "tx":"Viruses", "tm":true, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Viruses_+TM-SP",
+                "parameters": {"reduced":70, "tx":"Viruses", "tm":true, "sp":false, "count":"", "topo_type":""}
+            },
+            {
+                "text": "With SP",
+                "file_name":"tmeval_40_Viruses_-TM+SP",
+                "parameters": {"reduced":70, "tx":"Viruses", "tm":false, "sp":true, "count":"", "topo_type":""}
+            },
+            {
+                "text": "Without SP",
+                "file_name":"tmeval_40_Viruses_-TM-SP",
+                "parameters": {"reduced":70, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
+            }
+        ]
+        
+    }
+]

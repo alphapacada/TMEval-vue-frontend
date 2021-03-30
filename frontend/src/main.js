@@ -45,16 +45,16 @@ Vue.config.productionTip = false;
 // export const SocketInstance = socketio('http://localhost:3000');
 
 // export const SocketInstance = socketio(process.env.VUE_APP_SOCKETIO_CONNECTION_URL);
-Vue.use(new VueSocketIO({
-    debug: true,
-    connection: process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
-    // vuex: {
-    //     store,
-    //     actionPrefix: 'SOCKET_',
-    //     mutationPrefix: 'SOCKET_'
-    // },
-    // options: { path: "/my-app/" } //Optional options
-}))
+// Vue.use(new VueSocketIO({
+//     debug: true,
+//     connection: process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
+//     // vuex: {
+//     //     store,
+//     //     actionPrefix: 'SOCKET_',
+//     //     mutationPrefix: 'SOCKET_'
+//     // },
+//     // options: { path: "/my-app/" } //Optional options
+// }))
 
 
 Vue.use(VueResizeText);

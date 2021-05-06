@@ -104,6 +104,9 @@ export default {
       .get(`assessment/${seqId}/${set}`)
       .then((response) => response.data);
   },
+  getJobs() {
+    return $axios.get("jobs/").then((response) => response.data);
+  },
 
   // headers: { 'Access-Control-Allow-Origin': true }
   //github.com/axios/axios#handling-errors

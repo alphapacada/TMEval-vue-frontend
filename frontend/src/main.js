@@ -1,14 +1,10 @@
 import Vue from "vue";
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+import VueResizeText from "vue-resize-text";
 import App from "./App.vue";
-import router from "./router";
 import Argon from "./plugins/argon-kit";
-import VueResizeText from 'vue-resize-text';
-import vuetify from './plugins/vuetify';
-import VueSocketIO from 'vue-socket.io';
-import socketio from 'socket.io';
-
+import vuetify from "./plugins/vuetify";
+import router from "./router";
+import store from "./store";
 // import Socketio from 'socket.io-client';
 
 // import Vuetify from 'vuetify/lib';
@@ -39,8 +35,8 @@ import socketio from 'socket.io';
 // import './registerServiceWorker'
 // Vue.use(VueAxios, axios)
 // Vue.prototype.$http = axios
-console.log(process.env.VUE_APP_SOCKETIO_CONNECTION_URL)
-console.log(process.env.VUE_APP_API_URL)
+console.log(process.env.VUE_APP_SOCKETIO_CONNECTION_URL);
+console.log(process.env.VUE_APP_API_URL);
 Vue.config.productionTip = false;
 // export const SocketInstance = socketio('http://localhost:3000');
 
@@ -56,12 +52,9 @@ Vue.config.productionTip = false;
 //     // options: { path: "/my-app/" } //Optional options
 // }))
 
-
 Vue.use(VueResizeText);
 Vue.use(Argon);
 // Vue.use(VueSocketIO, SocketInstance)
-
-
 
 // Vue.use(new VueSocketIO({
 //     debug: false,
@@ -69,7 +62,8 @@ Vue.use(Argon);
 //   }));
 
 new Vue({
-    router,
-    vuetify,
-    render: h => h(App)
+  router,
+  store,
+  vuetify,
+  render: (h) => h(App),
 }).$mount("#app");

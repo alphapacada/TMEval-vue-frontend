@@ -80,9 +80,11 @@
               <!-- <span class="nav-link-inner--text d-lg-none"></span> -->
             </a>
 
-            <a class="dropdown-item" >Action</a>
-            <a class="dropdown-item" >Another action</a>
-            <a class="dropdown-item" >Something else here</a>
+            <a class="dropdown-item">Job id: {{ get_stats.id }}</a>
+            <a class="dropdown-item"
+              >Running jobs: {{ get_stats.jobs_count }}</a
+            >
+            <a class="dropdown-item">Something else here</a>
           </base-dropdown>
         </li>
         <li class="nav-item">
@@ -120,10 +122,23 @@ import BaseDropdown from "@/components/BaseDropdown";
 import CloseButton from "@/components/CloseButton";
 
 export default {
+  data() {
+    return {
+      job_stats: null,
+    };
+  },
   components: {
     BaseNav,
     CloseButton,
     BaseDropdown,
+  },
+  computed: {
+    get_stats() {
+      return this.$store.state.job_stats;
+    },
+  },
+  mounted() {
+    this.$store.commit("update_stats");
   },
 };
 </script>

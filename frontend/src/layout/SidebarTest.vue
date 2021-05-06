@@ -2,8 +2,6 @@
   <v-app>
     <v-navigation-drawer app right fixed v-model="drawer">
       <v-list>
-
-
         <v-list-item :to="'/sidebartest/evaluate/' + job_id">
           <v-list-item-title>Evaluation</v-list-item-title>
         </v-list-item>
@@ -17,6 +15,9 @@
             :to="'/sidebartest/prediction/' + job_id + '#job_status'"
           >
             <v-list-item-title>Job Status</v-list-item-title>
+          </v-list-item>
+          <v-list-item :to="'/sidebartest/prediction/' + job_id + '#cdhit'">
+            <v-list-item-title>CDHIT-reduced Fasta</v-list-item-title>
           </v-list-item>
           <v-list-item
             :to="'/sidebartest/prediction/' + job_id + '#content-result'"

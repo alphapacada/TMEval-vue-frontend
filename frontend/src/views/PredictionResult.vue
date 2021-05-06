@@ -30,7 +30,18 @@
       </div>
 
       <v-card
-        class="pt-0 pb-3"
+        class="pt-0 pb-3 mt-2"
+        id="cdhit"
+        v-intersect.quiet="handleIntersect"
+      >
+        <v-card-title primary-title>
+          <h2 class="col-md-9">
+            CDHIT-reduced Fasta Sequences
+          </h2>
+        </v-card-title>
+      </v-card>
+      <v-card
+        class="pt-0 pb-3 mt-2"
         id="content-result"
         v-intersect.quiet="handleIntersect"
       >

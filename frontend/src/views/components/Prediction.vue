@@ -132,8 +132,8 @@
                                             <span :key=pssmfile.id v-for="pssmfile in pssmFile">{{ pssmfile.name }}</span></div> -->
                 <!-- </div> -->
                 <div class="form-group">
-                  <base-checkbox
-                    >Perform evaluation on <a href="/evaluation/table">TMEval dataset</a>?</base-checkbox
+                  <base-checkbox v-model="use_cdhit"
+                    >Remove redundancies using CDHIT</base-checkbox
                   >
                 </div>
                 <div
@@ -195,6 +195,7 @@ export default {
       errorAlert: null,
       snackbar: false,
       file: null,
+      use_cdhit: false,
       pssmFiles: [],
       predictionMethods: [],
       predictionMethodToggles: [],
@@ -347,6 +348,8 @@ export default {
       }
       formData.append("sequence", this.sequence);
       formData.append("tools", JSON.stringify(predictionData));
+      formData.append("cdhit", this.use_cdhit);
+      console.log("cdhit" + this.use_cdhit);
       $backend
         .postFasta(formData)
         .then((responseData) => {

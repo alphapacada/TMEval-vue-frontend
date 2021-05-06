@@ -1,5 +1,5 @@
 <template>
-  <section class="section bg-secondary section-lg">
+  <section id="about" class="section bg-secondary">
     <v-app class="bg-secondary">
       <div class="container">
         <div class="py-5 container">
@@ -166,13 +166,16 @@
 import JobSection from "@/views/components/JobSection.vue";
 export default {
   components: {
-    JobSection
+    JobSection,
   },
   props: {
-    msg: String
-  }
+    msg: String,
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.v-application >>> .v-application--wrap {
+  min-height: 0;
+}
 </style>

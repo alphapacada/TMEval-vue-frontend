@@ -30,7 +30,7 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/about" class="nav-link" role="button">
+          <router-link to="/#about" class="nav-link" role="button">
             <i class="fa fa-info-circle d-lg-none"></i>
             <span class="nav-link-inner--text">About</span>
           </router-link>

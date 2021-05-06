@@ -7,6 +7,8 @@
         :job_id="job_id"
         :numSeq="numSeq"
         :url="job_url"
+        :date="date"
+        :dateDone="dateDone"
       ></job-section>
       <div id="progress">
         <base-progress
@@ -28,7 +30,15 @@
           Evaluate?
         </base-button> -->
       </div>
-
+      <v-card class="p-3">
+        <v-card-title primary-title>Download</v-card-title>
+        <v-card-text
+          >Download job results and related files in a zip folder:
+          <a class="ml-2" :href="'/predictions/' + job_id + '.zip'">
+            ({{ job_id + ".zip" }})
+          </a></v-card-text
+        ></v-card
+      >
       <v-card
         class="pt-0 pb-3 mt-2"
         id="cdhit"
@@ -46,24 +56,48 @@
         v-intersect.quiet="handleIntersect"
       >
         <v-card-title primary-title>
-          <h1 class="col-md-9">
+          <h2 class="col-md-9">
             Prediction Results
-          </h1>
+          </h2>
           <div class="col-md-3 align-items-right">
-            <base-dropdown>
-              <base-button slot="title" type="success" class="dropdown-toggle">
-                {{ selectedMethod }}
-              </base-button>
-              <li
-                style="cursor:pointer"
-                @click="setSelectedMethod(index)"
-                class="dropdown-item"
-                :key="index"
-                v-for="(method, index) in predictionMethods"
-              >
-                {{ method }}
-              </li>
-            </base-dropdown>
+            <div class="row">
+              <base-dropdown>
+                <base-button
+                  slot="title"
+                  type="success"
+                  class="dropdown-toggle"
+                >
+                  {{ selectedMethod }}
+                </base-button>
+                <li
+                  style="cursor:pointer"
+                  @click="setSelectedMethod(index)"
+                  class="dropdown-item"
+                  :key="index"
+                  v-for="(method, index) in predictionMethods"
+                >
+                  {{ method }}
+                </li>
+              </base-dropdown>
+              <base-dropdown>
+                <base-button
+                  slot="title"
+                  type="success"
+                  class="dropdown-toggle"
+                >
+                  {{ selectedSequence }}
+                </base-button>
+                <li
+                  style="cursor:pointer"
+                  @click="setSelectedSequence(index)"
+                  class="dropdown-item"
+                  :key="index"
+                  v-for="(seq, index) in topologies"
+                >
+                  {{ seq.sequence.name }}
+                </li>
+              </base-dropdown>
+            </div>
           </div>
         </v-card-title>
         <v-card-text class="row mx-0">
@@ -95,11 +129,14 @@
         <v-card-title primary-title>
           <h2>Topologies</h2>
         </v-card-title>
-        <div v-for="t in topologies" :key="t.index">
+        <div v-for="t in selectedTopology" :key="t.index">
           <h5>{{ t.sequence.name }}</h5>
-          <div v-for="res in t.sequence.results" :key="res.name">
-            <h6>{{ res.toolname }}</h6>
-            <topology :seq="res.annotation"></topology>
+          <div v-for="(res, index) in t.sequence.results" :key="res.name">
+            <div v-if="index == selectedMethodIndex">
+              <h6>{{ res.toolname }}</h6>
+
+              <topology :seq="res.annotation"></topology>
+            </div>
           </div>
         </div>
       </v-card>
@@ -131,11 +168,15 @@ export default {
       job_id: "---",
       job_url: "",
       numSeq: 0,
+      date: new Date(),
+      dateDone: new Date(),
       progress_value: 0,
       percent: 0,
       status: "",
       result: "",
       predictionMethods: [],
+      selectedTopology: [],
+      selectedSequence: "Sequence",
       selectedMethod: "Method",
       selectedMethodIndex: 0,
       pred_tool_res: "",
@@ -187,6 +228,7 @@ export default {
     },
     handlePredResults(responseData) {
       console.log("Received GET response");
+      console.log(responseData.data);
       this.percent =
         (responseData.data["current"] * 100) / responseData.data["total"];
       this.progress_value = this.percent;
@@ -195,6 +237,9 @@ export default {
         (responseData.data["state"] || responseData.data["status"]);
       this.dateDone = responseData.data["date_done"];
       if (responseData.data["state"] == "SUCCESS") {
+        this.numSeq = responseData.data["numSeq"];
+        this.date = Date(responseData.data["date"]);
+        this.dateDone = Date(responseData.data["dateDone"]);
         if ("result" in responseData.data) {
           this.fetchPredictionResults(responseData.data["result"]);
         }
@@ -220,33 +265,69 @@ export default {
     //prediction_res -> a dict containing the results of the prediction
     fetchPredictionResults(prediction_res) {
       this.results = prediction_res;
-      let sequences = this.results[0].parsed_res;
+      let sequenceIndex = 0;
+      let nextSequenceIndex = 1;
+      let isFirstIteration = true;
+      let isNewSequence = true;
 
-      for (let i = 0; i < sequences.length; i++) {
-        this.topologies[i] = Object();
-        this.topologies[i].index = i;
-        this.topologies[i].sequence = Object();
-        this.topologies[i].sequence.name =
-          sequences[i].name || "Protein [" + (i + 1) + "]";
-        this.topologies[i].sequence.results = [];
-        for (const predMethod of this.results) {
-          if (i == 0)
-            //assign predMethods only on first run
-            this.predictionMethods.push(predMethod["tool"]);
+      for (const result of this.results) {
+        isNewSequence = true;
 
-          this.topologies[i].sequence.results.push({
-            toolname: predMethod.tool,
-            annotation: predMethod.parsed_res[i].topology.annotation,
+        //Add prediction tool used as the results are being processed
+        if (!this.predictionMethods.includes(result["tool"]))
+          this.predictionMethods.push(result["tool"]);
+        if (isFirstIteration) {
+          //Assign index 0 to first sequence
+          this.topologies[sequenceIndex] = Object();
+          this.topologies[sequenceIndex].index = sequenceIndex;
+        } else {
+          //If sequence already exists, get the existing index
+          for (const topology of this.topologies) {
+            if (topology.sequence.name == result.parsed_res.name) {
+              isNewSequence = false;
+              sequenceIndex = topology.index;
+              break;
+            }
+          }
+          if (isNewSequence) {
+            sequenceIndex = nextSequenceIndex;
+            nextSequenceIndex++;
+          }
+        }
+        if (isNewSequence) {
+          this.topologies[sequenceIndex] = Object();
+          this.topologies[sequenceIndex].sequence = Object();
+          this.topologies[sequenceIndex].index = sequenceIndex;
+          this.topologies[sequenceIndex].sequence.name =
+            result.parsed_res.name || "Protein [" + (i + 1) + "]";
+          this.topologies[sequenceIndex].sequence.results = [];
+          this.topologies[sequenceIndex].sequence.results.push({
+            toolname: result.tool,
+            annotation: result.parsed_res.topology.annotation,
+          });
+        } else if (!isNewSequence) {
+          //If sequence already exists, push only the prediction result
+          this.topologies[sequenceIndex].sequence.results.push({
+            toolname: result.tool,
+            annotation: result.parsed_res.topology.annotation,
           });
         }
+
+        if (isFirstIteration) isFirstIteration = false;
       }
       this.setSelectedMethod(0);
+      this.selectedTopology = this.topologies;
     },
     setSelectedMethod(index) {
       this.selectedMethod = this.predictionMethods[index];
       this.selectedMethodIndex = index;
       this.pred_tool_res = this.results[index].pred_tool_res;
       this.parsed_res = JSON.stringify(this.results[index].parsed_res, null, 2);
+    },
+    setSelectedSequence(index) {
+      this.selectedSequence = this.topologies[index].sequence.name;
+      this.selectedSequenceIndex = index;
+      this.selectedTopology = [this.topologies[index]];
     },
   },
   sockets: {
@@ -258,7 +339,6 @@ export default {
       this.job_status = data["status"] || data["state"];
     },
     progress(data) {
-
       console.log("received progress socket");
       // this.total = data["total"];
       // this.percent = this.percent + 1 / data["total"];

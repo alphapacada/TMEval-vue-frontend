@@ -392,22 +392,25 @@
           :search="appliedSearch"
           class="elevation-1"
         >
-          <template slot="items" slot-scope="props">
-            <tr @click="props.expanded = !props.expanded">
-              <td class="text-xs">{{ props.item.name }}</td>
-              <td class="text-xs">{{ props.item.length }}</td>
-              <td class="text-xs">{{ props.item.organism }}</td>
-              <td class="text-xs">{{ props.item.orientation }}</td>
-              <td class="text-xs">{{ props.item.taxonomy }}</td>
-              <td class="text-xs">{{ props.item.tm }}</td>
-              <td class="text-xs">{{ props.item.sp }}</td>
+          <template v-slot:item="{ item }">
+            <tr @click="item.expanded = !item.expanded">
+              <td class="text-xs">{{ item.name }}</td>
+              <td class="text-xs">{{ item.length }}</td>
+              <td class="text-xs">{{ item.organism }}</td>
+              <td class="text-xs">{{ item.orientation }}</td>
+              <td class="text-xs">{{ item.taxonomy }}</td>
+              <td class="text-xs">{{ item.tm }}</td>
+              <td class="text-xs">{{ item.sp }}</td>
               <td class="text-xs">
-                <base-button @click="showTopology(props.item.topology)"
-                  >Show</base-button
+                <v-btn
+                  depressed
+                  color="success"
+                  @click="showTopology(item.topology)"
+                  >Show</v-btn
                 >
               </td>
-              <td class="text-xs">{{ props.item.topo_type }}</td>
-              <td class="text-xs">{{ props.item.count }}</td>
+              <td class="text-xs">{{ item.topo_type }}</td>
+              <td class="text-xs">{{ item.count }}</td>
             </tr>
           </template>
           <!-- <template slot="expand" slot-scope="props">

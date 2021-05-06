@@ -1,35 +1,41 @@
 import Vue from "vue";
 import Router from "vue-router";
-import AppHeader from "./layout/AppHeader";
-import tmFooter from "./layout/tmFooter";
-import Components from "./views/Components.vue";
-import Landing from "./views/Landing.vue";
-import Login from "./views/Login.vue";
-import Register from "./views/Register.vue";
-import Profile from "./views/Profile.vue";
-import tmLanding from "./views/tmLanding.vue";
-import tmHeader from "./layout/tmHeader.vue";
 import SidebarTest from "./layout/SidebarTest.vue";
+import tmFooter from "./layout/tmFooter";
+import tmHeader from "./layout/tmHeader.vue";
+import NotFound from "./views/404.vue";
 import About from "./views/About.vue";
-import PredictionResult from "./views/PredictionResult.vue";
+import Assessment from "./views/Assessment.vue";
+import ConfusionMatrix from "./views/ConfusionMatrix.vue";
+import DataComparison from "./views/DataComparison.vue";
+import Downloads from "./views/Downloads.vue";
 import EvaluationResult from "./views/EvaluationResult.vue";
 import IntersectSample from "./views/IntersectSample.vue";
-import Protvista from "./views/ProtvistaView.vue";
-import TableTest from "./views/TableTest.vue";
-import TableTest2 from "./views/TableTest2.vue";
-import SideBar2 from "./views/Sidebar2.vue";
-import SideBar3 from "./views/Sidebar3.vue";
-
-import Assessment from "./views/Assessment.vue";
-import TestResult from "./views/TestResult.vue";
-import Downloads from "./views/Downloads.vue";
-import DataComparison from "./views/DataComparison.vue";
 import PerformanceEvaluation from "./views/PerformanceEvaluation.vue";
+import PredictionResult from "./views/PredictionResult.vue";
+import Protvista from "./views/ProtvistaView.vue";
+import SideBar3 from "./views/Sidebar3.vue";
 import SOV from "./views/SOVAnalysis.vue";
-import ConfusionMatrix from "./views/ConfusionMatrix.vue";
-import NotFound from "./views/404.vue";
+import TableTest2 from "./views/TableTest2.vue";
+import TestResult from "./views/TestResult.vue";
+import tmLanding from "./views/tmLanding.vue";
+
 Vue.use(Router);
 
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((error) => {
+    if (error.name == "NavigationDuplicated") {
+      // console.log(this);
+      console.log(location);
+      location.hash = "";
+      return originalPush.call(this, location);
+    }
+
+    // avoid NavigationDuplicated
+    if (error.name !== "NavigationDuplicated") throw error;
+  });
+};
 export default new Router({
   mode: "history",
   linkExactActiveClass: "active",
@@ -43,12 +49,15 @@ export default new Router({
         footer: tmFooter,
       },
       children: [
-          {path: "/sidebartest/prediction/:id", name: 'pred-results', component: PredictionResult,
+        {
+          path: "/sidebartest/prediction/:id",
+          name: "pred-results",
+          component: PredictionResult,
           // meta: { preventScroll: true }
         },
-          {path: "/sidebartest/evaluate/:id", component: EvaluationResult},
-          {path: "/sidebartest/intersect", component: IntersectSample}
-      ]
+        { path: "/sidebartest/evaluate/:id", component: EvaluationResult },
+        { path: "/sidebartest/intersect", component: IntersectSample },
+      ],
     },
     {
       path: "/intersect",
@@ -182,11 +191,15 @@ export default new Router({
         footer: tmFooter,
       },
     },
-    { path: '*', name: "notFound", components: {
-      header: tmHeader,
-      default: NotFound,
-      footer: tmFooter,
-    }}
+    {
+      path: "*",
+      name: "notFound",
+      components: {
+        header: tmHeader,
+        default: NotFound,
+        footer: tmFooter,
+      },
+    },
   ],
   // scrollBehavior: to => {
   //     if (to.hash) {
@@ -195,11 +208,10 @@ export default new Router({
   //         return { x: 0, y: 0 };
   //     }
   // }
-  scrollBehavior: (to, from) => {
-    // return false;
-    // console.log(to, from)
+  scrollBehavior: (to, from, savedPosition) => {
+    console.log(to, from, savedPosition);
     // if ( to.name === from.name && to.matched.some(routeDef => routeDef.meta.preventScroll) ){
-    if (to.meta.preventScroll || to.params.preventScroll){
+    if (to.meta.preventScroll || to.params.preventScroll) {
       return false;
     }
     if (to.hash) {

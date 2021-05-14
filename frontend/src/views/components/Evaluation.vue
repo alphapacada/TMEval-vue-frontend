@@ -49,14 +49,13 @@
               </div>
             </b-tab>
             <b-tab class="eval-tab" title="Topology Prediction Accuracy">
-              <caption-table :src="predAcc"></caption-table>
-              <caption-table :src="predAccClassification"></caption-table>
+              <caption-table :src="tables['pred_acc']"></caption-table>
             </b-tab>
             <b-tab class="eval-tab" title="FN-FP of TM Segment">
-              <caption-table :src="fnfp"></caption-table>
+              <caption-table :src="tables['per_segment_fn_fp']"></caption-table>
             </b-tab>
             <b-tab class="eval-tab" title="SOV">
-              <caption-table :src="sov"></caption-table>
+              <caption-table :src="tables['sov']"></caption-table>
             </b-tab>
             <b-tab class="eval-tab" title="Protein Classification Accuracy">
               <div class="mx-auto col-md-8">
@@ -110,7 +109,7 @@ import { BImg } from "bootstrap-vue/esm/components/image/img";
 import { BCarousel } from "bootstrap-vue/esm/components/carousel/carousel";
 import { BCarouselSlide } from "bootstrap-vue/esm/components/carousel/carousel-slide";
 import Modal from "@/components/Modal.vue";
-
+import $backend from "@/api";
 export default {
   components: {
     ImageFigure,
@@ -158,40 +157,38 @@ export default {
             src:
               "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TOPCONS2.png",
           },
-          CCTOP: {
-            src:
-              "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_CCTOP.png"
-          },
-          HMMTOP: {
-            src:
-              "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_HMMTOP.png"
-          },
-          PHILIUS: {
-            src:
-              "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_PHILIUS.png"
-          },
-          TMHMM2: {
-            src:
-              "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TMHMM2.png"
-          }
-        }
-      },
-
+      mainHeaders: [
+        { text: "Prediction Method", value: "Prediction Method" },
+        { text: "CCTOP", value: "CCTOP" },
+        { text: "HMMTOP", value: "HMMTOP" },
+        { text: "Philius", value: "Philius" },
+        { text: "TMHMM2.0", value: "TMHMM2.0" },
+        { text: "TMSEG", value: "TMSEG" },
+        { text: "TOPCONS2", value: "TOPCONS2" },
+      ],
       modal0: false,
       vertical: false,
-      predAcc:
-        '<table  border="1" class="dataframe table table-responsive-sm table-sm table-striped table-bordered table-hover table-condensed" id="e_25_reduced_resampled_df_pred_acc">\n  <thead>\n    <tr style="text-align: right;">\n      <th>Prediction Method</th>\n      <th>Correct TM Count</th>\n      <th>Correct Segment Location</th>\n      <th>N Location Success Rate</th>\n      <th>Correct Topology</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>86.075949</td>\n      <td>90.596745</td>\n      <td>89.692586</td>\n      <td>82.278481</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>64.376130</td>\n      <td>81.193490</td>\n      <td>32.188065</td>\n      <td>57.685353</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>80.831826</td>\n      <td>90.415913</td>\n      <td>75.226040</td>\n      <td>72.332731</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>83.182640</td>\n      <td>89.150090</td>\n      <td>35.081374</td>\n      <td>75.226040</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>84.448463</td>\n      <td>92.224231</td>\n      <td>39.783002</td>\n      <td>78.481013</td>\n    </tr>\n  </tbody>\n</table>',
-      fnfp:
-        '<table  border="1" class="dataframe table table-responsive-sm table-sm table-striped table-bordered table-hover table-condensed" id="e_25_reduced_resampled_df_fn_fp">\n  <thead>\n    <tr style="text-align: right;">\n      <th>Prediction Method</th>\n      <th>FN Per-segment</th>\n      <th>FP Per-segment</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>4.701627</td>\n      <td>9.222423</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>6.329114</td>\n      <td>29.294756</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>10.307414</td>\n      <td>8.860759</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>7.956600</td>\n      <td>8.860759</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>6.148282</td>\n      <td>9.403255</td>\n    </tr>\n  </tbody>\n</table>',
-      sov:
-        '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_reduced_resampled_df_sov_tm_helix">\n  <thead>\n    <tr style="text-align: right;">\n      <th>Prediction Method</th>\n      <th>SOV</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.838591</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.792257</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.774152</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>0.806455</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.813444</td>\n    </tr>\n  </tbody>\n</table>',
-      predAccClassification:
-        '<table table-nonfluid border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_reduced_resampled_df_pred_acc_classification">\n  <thead>\n    <tr style="text-align: right;">\n      <th>Prediction Method</th>\n      <th>+TM-SP</th>\n      <th>+TM+SP</th>\n      <th>-TM-SP</th>\n      <th>-TM+SP</th>\n      <th>Overall</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>67.777778</td>\n      <td>74.226804</td>\n      <td>97.083333</td>\n      <td>77.777778</td>\n      <td>82.278481</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>42.777778</td>\n      <td>37.113402</td>\n      <td>79.583333</td>\n      <td>41.666667</td>\n      <td>57.685353</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>45.555556</td>\n      <td>74.226804</td>\n      <td>89.166667</td>\n      <td>88.888889</td>\n      <td>72.332731</td>\n    </tr>\n    <tr>\n      <th>TMHMM2</th>\n      <td>54.444444</td>\n      <td>61.855670</td>\n      <td>98.333333</td>\n      <td>61.111111</td>\n      <td>75.226040</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>56.111111</td>\n      <td>75.257732</td>\n      <td>95.416667</td>\n      <td>86.111111</td>\n      <td>78.481013</td>\n    </tr>\n  </tbody>\n</table>',
-      images: null
+      assessment: {},
+      tables: {
+        pred_acc: { items: [], headers: [] },
+        pred_acc_classification: { items: [], headers: [] },
+        sov: { items: [], headers: [] },
+        per_segment_fn_fp: { items: [], headers: [] },
+      },
+      images: null,
     };
   },
   created() {
     window.addEventListener("resize", this.myEventHandler);
+  },
+  mounted() {
+    $backend.getAssessment(25, "A").then((response) => {
+      this.assessment = response;
+      this.figures.pca = JSON.parse(this.assessment.plot_cm_classification);
+      Object.keys(response).forEach((key) => {
+        if (!this.figure_names.includes(key)) this.json_to_datatable_item(key);
+      });
+    });
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
@@ -200,6 +197,29 @@ export default {
     // images() { return this.figures.tda}
   },
   methods: {
+    json_to_datatable_item(name) {
+      this.tables[name].items = this.roundOffNumbers(
+        JSON.parse(this.assessment[name])
+      );
+
+      this.tables[name].headers = Object.keys(this.tables[name].items[0]).map(
+        (key) => {
+          return { text: key, value: key };
+        }
+      );
+    },
+
+    roundOffNumbers(obj) {
+      console.log(obj);
+      return obj.map((e) => {
+        Object.keys(e).forEach((key) => {
+          if (key != "Prediction Method") {
+            e[key] = Math.round(e[key] * 100) / 100;
+          }
+        });
+        return e;
+      });
+    },
     myEventHandler(e) {
       // console.log(window.innerWidth);
 
@@ -211,8 +231,8 @@ export default {
       this.images = tab_images;
       this.$refs.carousel1.setSlide(src);
       this.modal0 = true;
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

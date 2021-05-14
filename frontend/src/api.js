@@ -25,6 +25,7 @@ let $axios = axios.create({
 
 $axios.defaults.baseURL =
   process.env.VUE_APP_API_URL || "http://localhost:5000/api/v1/";
+$axios.defaults.baseStaticURL = process.env.VUE_APP_STATIC_URL;
 export default {
   getBaseURL() {
     return $axios.defaults.baseURL;
@@ -101,7 +102,7 @@ export default {
   },
   getAssessment(seqId, set) {
     return $axios
-      .get(`assessment/${seqId}/${set}`)
+      .get(`assessment/${seqId}/${set}/`)
       .then((response) => response.data);
   },
   getJobs() {

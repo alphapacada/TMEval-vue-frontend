@@ -127,8 +127,8 @@
                 <!-- <span>{{this.pssmFiles}}</span> -->
                 <!-- <span>Nananana{{ pssm_tools_my-autoused }}</span> -->
 
-                <!-- <div class="mt-3">Selected file(s): 
-                                          
+                <!-- <div class="mt-3">Selected file(s):
+
                                             <span :key=pssmfile.id v-for="pssmfile in pssmFile">{{ pssmfile.name }}</span></div> -->
                 <!-- </div> -->
                 <div class="form-group">
@@ -354,6 +354,8 @@ export default {
         .postFasta(formData)
         .then((responseData) => {
           console.log(responseData["task_id"]);
+          this.$store.commit("update_stats");
+
           this.$router.push({
             path: `/prediction/${responseData["task_id"]}`,
           });

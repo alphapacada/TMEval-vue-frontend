@@ -72,19 +72,9 @@
               title="Notifications"
             >
               <span> <i class="fa fa-bell"></i> </span>
-              <span
-                class="badge badge-md badge-circle badge-floating badge-danger border-white"
-                >4</span
-              >
-
-              <!-- <span class="nav-link-inner--text d-lg-none"></span> -->
-            </a>
-
-            <a class="dropdown-item">Job id: {{ get_stats.id }}</a>
-            <a class="dropdown-item"
-              >Running jobs: {{ get_stats.jobs_count }}</a
-            >
-            <a class="dropdown-item">Something else here</a>
+            <a class="dropdown-item">Total jobs: {{ get_stats.jobs_count }}</a>
+            <a class="dropdown-item">Running: {{ get_stats.jobs_count }}</a>
+            <a class="dropdown-item">Completed: {{ get_stats.jobs_count }}</a>
           </base-dropdown>
         </li>
         <li class="nav-item">

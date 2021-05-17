@@ -55,7 +55,7 @@ export default new Router({
           component: PredictionResult,
           // meta: { preventScroll: true }
         },
-        { path: "/sidebartest/evaluate/:id", component: EvaluationResult },
+        // { path: "/sidebartest/evaluate/:id", component: EvaluationResult },
         { path: "/sidebartest/intersect", component: IntersectSample },
       ],
     },
@@ -114,6 +114,7 @@ export default new Router({
         // UserPosts will be rendered inside User's <router-view>
         // when /user/:id/posts is matched
         { path: "/evaluation/table", component: TableTest2 },
+        { path: "/evaluation/overview", component: EvaluationResult },
 
         { path: "/evaluation/dataset-comparison", component: DataComparison },
         { path: "/evaluation/perf-eval", component: PerformanceEvaluation },

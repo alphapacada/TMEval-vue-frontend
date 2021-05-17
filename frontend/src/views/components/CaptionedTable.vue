@@ -9,8 +9,18 @@
             :headers="src.headers"
             :items="src.items"
           >
-            ></v-data-table
-          >
+            <template v-slot:item="{ item }">
+              <tr>
+                <td :key="header.id" v-for="(header, index) in src.headers">
+                  {{
+                    index > 0
+                      ? Math.round(item[header.value] * 100) / 100
+                      : item[header.value]
+                  }}
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
         </div>
       </div>
       <div v-if="Boolean(text)" class="row">
@@ -33,10 +43,13 @@ export default {
   name: "caption-table",
   props: {
     //Image source
-    src: Object,
+    src: [Object, Array],
     //Text below image
     text: String,
   },
+  // mounted() {
+  //   this.getHeaders();
+  // },
   methods: {
     handleClick(evt) {
       console.log("evt", evt);

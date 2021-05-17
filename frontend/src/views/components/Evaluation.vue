@@ -1,6 +1,5 @@
 <template>
-  
-  <section id="view_assessment" class="section bg-secondary section-lg">
+  <section id="view_assessment" class="section bg-secondary">
     <div class="container">
       <div id="yourDiv"></div>
       <span>
@@ -14,7 +13,7 @@
 
             <b-carousel-slide
               v-for="(value, name) in images"
-              :img-src="value.src"
+              :img-src="path + value"
               :key="name"
               :caption="value.desc"
             ></b-carousel-slide>
@@ -29,7 +28,12 @@
                 </div>
               </div>
               <div class="border-top mx-auto col-md-8"></div>
-              <image-figure v-for="(value, index) in figures.tda" @clicked="showImg(index, figures.tda)" :src="value.src"   :key="`image-${index}`"></image-figure>
+              <image-figure
+                v-for="(value, index) in figures.tda"
+                @clicked="showImg(index, figures.tda)"
+                :src="value.src"
+                :key="`image-${index}`"
+              ></image-figure>
               <div class="row my-3 ">
                 <div class="border-top mx-auto pt-5 col-md-8">
                   <h4 class="">Summary of performance metrics</h4>
@@ -62,7 +66,7 @@
                 <base-dropdown>
                   <base-button slot="title" type="" class="dropdown-toggle">
                     {{
-                      pca_pred_method!=null
+                      pca_pred_method != null
                         ? Object.keys(figures.pca)[pca_pred_method]
                         : "Prediction Method"
                     }}
@@ -88,8 +92,9 @@
                 v-for="(figure, name, index) in figures.pca"
                 @clicked="showImg(index, figures.pca)"
                 :key="index"
-                :src="figure.src"
+                :src="path + figure"
               ></image-figure>
+              <!-- :src="figure.src" -->
             </b-tab>
           </card>
         </b-tabs>
@@ -119,44 +124,70 @@ export default {
     Modal,
     BCarousel,
     BCarouselSlide,
-    "caption-table": CaptionedTable
+    "caption-table": CaptionedTable,
   },
   name: "evaluation",
   data() {
     return {
+      path: process.env.VUE_APP_STATIC_URL,
       pca_pred_method: null,
+      figure_names: [
+        "bar_mode_organisms",
+        "bar_protein_count",
+        "bar_tm_helix_length",
+        "bar_tm_length",
+        "plot_cm_classification",
+      ],
       figures: {
         tda: [
           {
             src: "/img/figures/bar_mode_organisms_25.png",
             desc: `The bar graph above shows the top 20 most common organisms
                             in the test set. H. sapiens is the most common organism with a count
-                            more than double of S. cerevisiae, the second most common.`
+                            more than double of S. cerevisiae, the second most common.`,
           },
           {
             src: "/img/figures/bar_protein_count_tx_all.png",
-            desc: `The bar graph above shows the number of proteins within each 
+            desc: `The bar graph above shows the number of proteins within each
                             sequence similarity levels. It can be observed that the number of proteins
                             at 70% sequence similarity is almost double of the proteins at 25% sequence similarity.
-                            This is because there are many similar proteins in the dataset.`
+                            This is because there are many similar proteins in the dataset.`,
           },
           {
             src: "/img/figures/bar_tm_helix_length_25.png",
-            desc: `The bar graph above shows the different TM segments length in the non-redundant 
+            desc: `The bar graph above shows the different TM segments length in the non-redundant
                             dataset and the frequency of each. The dataset comprises mostly of proteins of segment length
-                             20 with a count of more than 500.`
+                             20 with a count of more than 500.`,
           },
           {
             src: "/img/figures/bar_tm_length_25.png",
-            desc: `The figure shows that single-pass membranes dominate in the test set, followed by multi-pass tm proteins that span the membrane three and seven times respectively`
-          }
-        ],
-
-        pca: {
-          TOPCONS2: {
-            src:
-              "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TOPCONS2.png",
+            desc: `The figure shows that single-pass membranes dominate in the test set, followed by multi-pass tm proteins that span the membrane three and seven times respectively`,
           },
+        ],
+        pca: {},
+        //   pca: {
+        //     TOPCONS2: {
+        //       src:
+        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TOPCONS2.png",
+        //     },
+        //     CCTOP: {
+        //       src:
+        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_CCTOP.png",
+        //     },
+        //     HMMTOP: {
+        //       src:
+        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_HMMTOP.png",
+        //     },
+        //     PHILIUS: {
+        //       src:
+        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_PHILIUS.png",
+        //     },
+        //     TMHMM2: {
+        //       src:
+        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TMHMM2.png",
+        //     },
+        //   },
+      },
       mainHeaders: [
         { text: "Prediction Method", value: "Prediction Method" },
         { text: "CCTOP", value: "CCTOP" },
@@ -186,7 +217,11 @@ export default {
       this.assessment = response;
       this.figures.pca = JSON.parse(this.assessment.plot_cm_classification);
       Object.keys(response).forEach((key) => {
-        if (!this.figure_names.includes(key)) this.json_to_datatable_item(key);
+        if (
+          !this.figure_names.includes(key) &&
+          Object.keys(this.tables).includes(key)
+        )
+          this.json_to_datatable_item(key);
       });
     });
   },
@@ -226,8 +261,8 @@ export default {
       this.vertical = window.innerWidth <= 767 ? true : false;
     },
     showImg(src, tab_images) {
-      console.log("src", src);
-      console.log("tab_images", tab_images);
+      // console.log("src", src);
+      // console.log("tab_images", tab_images);
       this.images = tab_images;
       this.$refs.carousel1.setSlide(src);
       this.modal0 = true;
@@ -274,7 +309,7 @@ ul.nav::-webkit-scrollbar {
 }
 .carousel-control-prev-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
-} 
+}
 .carousel-caption {
   position: inherit !important;
   right: 0 !important;

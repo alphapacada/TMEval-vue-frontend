@@ -72,6 +72,7 @@
               title="Notifications"
             >
               <span> <i class="fa fa-bell"></i> </span>
+            </a>
             <a class="dropdown-item">Total jobs: {{ get_stats.jobs_count }}</a>
             <a class="dropdown-item">Running: {{ get_stats.jobs_count }}</a>
             <a class="dropdown-item">Completed: {{ get_stats.jobs_count }}</a>

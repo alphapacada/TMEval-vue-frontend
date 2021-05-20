@@ -101,9 +101,17 @@ export default {
       });
   },
   getAssessment(seqId, set) {
-    return $axios
-      .get(`assessment/${seqId}/${set}/`)
-      .then((response) => response.data);
+    if (set) {
+      // console.log("set");
+      return $axios
+        .get(`assessment/${seqId}/${set}/`)
+        .then((response) => response.data);
+    } else {
+      // console.log("only seqid");
+      return $axios
+        .get(`assessment/${seqId}`)
+        .then((response) => response.data);
+    }
   },
   getJobs() {
     return $axios.get("jobs/").then((response) => response.data);

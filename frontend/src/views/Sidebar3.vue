@@ -46,14 +46,30 @@
                 >
               </v-list-item-content>
             </template>
-            <v-list-item
-              v-for="(tool, key) in predictionMethods"
-              :key="key"
-              :to="'/evaluation/confusion-matrix#cf-' + tool.id"
-            >
-              <v-list-item-title class="pl-5">{{
-                tool.name
-              }}</v-list-item-title>
+            <v-list-item to="/evaluation/perf-eval/#topo_pred_acc">
+              <v-list-item-title class="pl-5"
+                >Topology Prediction Accuracy</v-list-item-title
+              >
+            </v-list-item>
+            <v-list-item to="/evaluation/perf-eval/#topo_pred_acc_class">
+              <v-list-item-title class="text-wrap pl-10"
+                >Prediction Accuracy for each Classification</v-list-item-title
+              >
+            </v-list-item>
+            <v-list-item to="/evaluation/perf-eval/#fn-fp">
+              <v-list-item-title class="text-wrap pl-5"
+                >Per-Segment False Negatives and False
+                Positives</v-list-item-title
+              >
+            </v-list-item>
+            <v-list-item to="/evaluation/perf-eval/#mcc">
+              <v-list-item-title class="text-wrap pl-5"
+                >MCC on Protein Classification and
+                Orientation</v-list-item-title
+              >
+            </v-list-item>
+            <v-list-item to="/evaluation/perf-eval/#sov">
+              <v-list-item-title class="text-wrap pl-5">SOV</v-list-item-title>
             </v-list-item>
           </v-list-group>
           <v-list-group>
@@ -134,9 +150,17 @@ export default {
       { id: "philius", name: "PHILIUS" },
       { id: "tmhmm2", name: "TMHMM2.0" },
       { id: "topcons2", name: "TOPCONS2" },
+      { id: "tmseg", name: "TMSEG" },
     ],
     drawer: true,
   }),
+  methods: {},
+  created() {
+    this.$store.dispatch("instantiateAssessRes");
+  },
+  mounted() {
+    // this.$store.dispatch("instantiateAssessRes");
+  },
 };
 </script>
 <style scoped>

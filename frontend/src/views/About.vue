@@ -91,21 +91,22 @@
                 :ripple="{ class: 'primary--text' }"
                 class="mb-4"
               >
-                <!-- <a href="http://bioinf.cs.ucl.ac.uk/psipred/?memsatsvm=1" target="_blank"> -->
                 <v-card-title primary-title>
                   <h4>
                     <a
-                      href="http://bioinf.cs.ucl.ac.uk/psipred/?memsatsvm=1"
+                      href="https://rostlab.org/owiki/index.php/Tmseg"
                       target="_blank"
-                      >MEMSAT-SVM</a
+                      >TMSEG</a
                     >
-                    <badge rounded type="primary">SVM</badge>
-                    <badge rounded type="warning">Unavailable</badge>
+                    <badge rounded type="primary">Random Forest</badge>
+                    <badge rounded type="primary">NN</badge>
+
+                    <!-- <badge rounded type="warning">Unavailable</badge> -->
                   </h4>
                 </v-card-title>
                 <v-card-text>
-                  Improved using SVMs. This method is capable of differentiating
-                  signal peptides from transmembrane helices.
+                  Uses PSSMs and physico-chemical properties of AAs in the
+                  prediction consisting of 3 stages: RF > NN > RF
                 </v-card-text>
                 <!-- </a> -->
               </v-card>
@@ -122,7 +123,7 @@
                   <h4>
                     <a href="http://topcons.net/" target="_blank">TOPCONS</a>
                     <badge rounded type="default">Consensus</badge>
-                    <badge rounded type="warning">Unavailable</badge>
+                    <!-- <badge rounded type="warning">Unavailable</badge> -->
                   </h4>
                 </v-card-title>
                 <v-card-text>

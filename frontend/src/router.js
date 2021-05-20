@@ -27,7 +27,7 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((error) => {
     if (error.name == "NavigationDuplicated") {
       // console.log(this);
-      console.log(location);
+      // console.log(location);
       location.hash = "";
       return originalPush.call(this, location);
     }

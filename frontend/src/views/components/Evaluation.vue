@@ -1,6 +1,25 @@
 <template>
   <section id="view_assessment" class="section bg-secondary">
     <div class="container">
+      <card>
+        <h4 class="display-3">Summary of performance metrics</h4>
+        <div>
+          <p class="">
+            The test data used in the assessment result summary below has
+            already been reduced to 25% sequence identity and has no common
+            entries with the training sets of the prediction tools. Furthermore,
+            it is a balanced set of TM proteins and non TM proteins.
+          </p>
+          <div class="pl-3">
+            <ul>
+              <li>Topology Prediction Accuracy</li>
+              <li>FN-FP of TM Segment</li>
+              <li>SOV</li>
+              <li>Protein Classification Accuracy</li>
+            </ul>
+          </div>
+        </div>
+      </card>
       <div id="yourDiv"></div>
       <span>
         <h1 class="display-1">Assessment Results</h1>
@@ -35,21 +54,7 @@
                 :key="`image-${index}`"
               ></image-figure>
               <div class="row my-3 ">
-                <div class="border-top mx-auto pt-5 col-md-8">
-                  <h4 class="">Summary of performance metrics</h4>
-                  <p>
-                    The test data used in this summary has already been reduced
-                    to 25% sequence identity and has no common entries with the
-                    training sets of the prediction tools. Furthermore, it is a
-                    balanced set of TM proteins and non TM proteins.
-                  </p>
-                  <ul>
-                    <li>Topology Prediction Accuracy</li>
-                    <li>FN-FP of TM Segment</li>
-                    <li>SOV</li>
-                    <li>Protein Classification Accuracy</li>
-                  </ul>
-                </div>
+                <div class="border-top mx-auto pt-5 col-md-8"></div>
               </div>
             </b-tab>
             <b-tab class="eval-tab" title="Topology Prediction Accuracy">

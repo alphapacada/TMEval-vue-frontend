@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <card v-if="isConnected">Connected to socket</card>
+    <!-- <card v-if="isConnected">Connected to socket</card> -->
     <router-view name="header"></router-view>
     <main v-on:scroll.passive="handleScroll">
       <fade-transition origin="center" mode="out-in" :duration="250">

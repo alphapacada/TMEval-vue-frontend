@@ -210,7 +210,7 @@ export default new Router({
   //     }
   // }
   scrollBehavior: (to, from, savedPosition) => {
-    console.log(to, from, savedPosition);
+    // console.log(to, from, savedPosition);
     // if ( to.name === from.name && to.matched.some(routeDef => routeDef.meta.preventScroll) ){
     if (to.meta.preventScroll || to.params.preventScroll) {
       return false;

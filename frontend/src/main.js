@@ -1,10 +1,12 @@
 import Vue from "vue";
 import VueResizeText from "vue-resize-text";
+import VueSocketIO from "vue-socket.io";
 import App from "./App.vue";
 import Argon from "./plugins/argon-kit";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
 import store from "./store";
+
 // import Socketio from 'socket.io-client';
 
 // import Vuetify from 'vuetify/lib';
@@ -56,10 +58,12 @@ Vue.use(VueResizeText);
 Vue.use(Argon);
 // Vue.use(VueSocketIO, SocketInstance)
 
-// Vue.use(new VueSocketIO({
-//     debug: false,
-//     connection: process.env.SOCKETIO_CONNECTION_URL
-//   }));
+Vue.use(
+  new VueSocketIO({
+    debug: false,
+    connection: process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
+  })
+);
 
 new Vue({
   router,

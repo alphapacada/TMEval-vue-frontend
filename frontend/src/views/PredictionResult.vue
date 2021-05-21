@@ -12,10 +12,13 @@
       ></job-section>
       <div id="progress">
         <base-progress
+          striped
           type="success"
           :value="progress_value"
-          :label="job_status"
+          :label="job_state"
+          :label2="job_status"
         ></base-progress>
+        <span></span>
       </div>
     </div>
 
@@ -24,11 +27,8 @@
     <div class="mt-4 container shape-container align-items-center">
       <div class="container">
         <v-alert v-if="Boolean(errorAlert)" text type="danger">
-          {{ errorAlert }}</v-alert
-        >
-        <!-- <base-button type="danger">
-          Evaluate?
-        </base-button> -->
+          {{ errorAlert }}
+        </v-alert>
       </div>
       <v-card class="p-3">
         <v-card-title primary-title>Download</v-card-title>
@@ -127,20 +127,34 @@
         v-intersect.quiet="handleIntersect"
       >
         <v-card-title primary-title>
-          <h2>Topologies</h2>
-        </v-card-title>
-        <div v-for="t in selectedTopology" :key="t.index">
-          <h5>{{ t.sequence.name }}</h5>
-          <div v-for="(res, index) in t.sequence.results" :key="res.name">
-            <div v-if="index == selectedMethodIndex">
-              <h6>{{ res.toolname }}</h6>
-
-              <topology :seq="res.annotation"></topology>
+          <h2 class="col pl-0">Topologies</h2>
+          <div class="col-md-3">
+            <div class="row float-right">
+              <base-button @click="setSelectedSequence(-1)" type="primary">
+                View All
+              </base-button>
             </div>
           </div>
-        </div>
+        </v-card-title>
+        <v-card-text>
+          <div
+            class=""
+            v-for="(t, seq_index) in selectedTopology"
+            :key="t.index"
+          >
+            <div v-if="seq_index == selectedSequenceIndex">
+              <h5>{{ t.sequence.name }}</h5>
+              <div v-for="(res, index) in t.sequence.results" :key="res.name">
+                <div v-if="index == selectedMethodIndex || viewAll == true">
+                  <h6>{{ res.toolname }}</h6>
+
+                  <topology :seq="res.annotation"></topology>
+                </div>
+              </div>
+            </div>
+          </div>
+        </v-card-text>
       </v-card>
-      <!-- - TOPOLOGY -->
       <!-- - TOPOLOGY -->
     </div>
   </section>
@@ -154,6 +168,7 @@ export default {
   name: "PredictionResult",
   data() {
     return {
+      page: 1,
       isConnected: false,
       errorAlert: null,
       handleIntersect: {
@@ -164,6 +179,7 @@ export default {
         },
       },
       topologies: [],
+      job_state: "",
       job_status: "",
       job_id: "---",
       job_url: "",
@@ -179,6 +195,8 @@ export default {
       selectedSequence: "Sequence",
       selectedMethod: "Method",
       selectedMethodIndex: 0,
+      selectedSequenceIndex: 0,
+      viewAll: false,
       pred_tool_res: "",
       parsed_res: "",
       results: [],
@@ -232,9 +250,8 @@ export default {
       this.percent =
         (responseData.data["current"] * 100) / responseData.data["total"];
       this.progress_value = this.percent;
-      this.job_status =
-        "Prediction Job: " +
-        (responseData.data["state"] || responseData.data["status"]);
+      this.job_state = "Prediction Job: " + responseData.data["state"];
+
       this.dateDone = responseData.data["date_done"];
       if (responseData.data["state"] == "SUCCESS") {
         this.numSeq = responseData.data["numSeq"];
@@ -304,12 +321,16 @@ export default {
           this.topologies[sequenceIndex].sequence.results.push({
             toolname: result.tool,
             annotation: result.parsed_res.topology.annotation,
+            pred_res: result.pred_tool_res,
+            parsed_res: result.parsed_res,
           });
         } else if (!isNewSequence) {
           //If sequence already exists, push only the prediction result
           this.topologies[sequenceIndex].sequence.results.push({
             toolname: result.tool,
             annotation: result.parsed_res.topology.annotation,
+            pred_res: result.pred_tool_res,
+            parsed_res: result.parsed_res,
           });
         }
 
@@ -319,24 +340,45 @@ export default {
       this.selectedTopology = this.topologies;
     },
     setSelectedMethod(index) {
+      this.viewAll = false;
       this.selectedMethod = this.predictionMethods[index];
       this.selectedMethodIndex = index;
-      this.pred_tool_res = this.results[index].pred_tool_res;
-      this.parsed_res = JSON.stringify(this.results[index].parsed_res, null, 2);
+      this.updateResDisplay();
     },
     setSelectedSequence(index) {
-      this.selectedSequence = this.topologies[index].sequence.name;
-      this.selectedSequenceIndex = index;
-      this.selectedTopology = [this.topologies[index]];
+      if (index < 0) {
+        this.viewAll = true;
+        // this.selectedSequenceIndex =
+        this.selectedMethod = "Method";
+        this.selectedTopology = this.topologies;
+      } else {
+        this.viewAll = false;
+        this.selectedSequence = this.topologies[index].sequence.name;
+        this.selectedSequenceIndex = index;
+        // this.selectedTopology = [this.topologies[index]];
+        this.updateResDisplay();
+      }
+    },
+    updateResDisplay() {
+      this.pred_tool_res = this.topologies[
+        this.selectedSequenceIndex
+      ].sequence.results[this.selectedMethodIndex].pred_res;
+      this.parsed_res =
+        JSON.stringify(
+          this.topologies[this.selectedSequenceIndex].sequence.results[
+            this.selectedMethodIndex
+          ].parsed_res,
+          null,
+          2
+        ) || "No Topology";
     },
   },
   sockets: {
     initial_progress(data) {
-      console.log("received initial progress socket");
-
-      this.total = data["total"];
-      this.percent = (data["current"] * 100) / data["total"];
-      this.job_status = data["status"] || data["state"];
+      // console.log("received initial progress socket");
+      // this.total = data["total"];
+      // this.percent = (data["current"] * 100) / data["total"];
+      // this.job_status = data["status"] || data["state"];
     },
     progress(data) {
       console.log("received progress socket");
@@ -351,7 +393,7 @@ export default {
 </script>
 <style scoped>
 #res_topo {
-  height: 480px;
+  min-height: 480px;
 }
 .text-black {
   color: black !important;

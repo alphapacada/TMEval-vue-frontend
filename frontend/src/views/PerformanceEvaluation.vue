@@ -43,7 +43,7 @@
       </v-card>
 
       <!-- PREDICTION ACC -->
-      <v-card class="mb-4">
+      <v-card id="topo_pred_acc" class="mb-4">
         <v-card-title primary-title>
           <h3>Topology Prediction Accuracies set {{ currentSet }}</h3>
           <h5>
@@ -53,33 +53,13 @@
           </h5>
         </v-card-title>
         <v-card-text>
-          <div class="row">
-            <div class="col">
-              <!-- <b-table small striped hover :items="current_pred_acc"></b-table> -->
-            </div>
-          </div>
-          <div class="pl-4 row">
-            Most of the prediction tools gained correct topology scores of 90
-            and above except HMMTOP. A reason for this unusually high score is
-            the proportion of the positive and negative set. The number of
-            transmembrane protein is only 9.6% of the number of non-tm proteins
-            (921 tm/ 9573 non-tm). Note that a correct topology for an observed
-            transmembrane proteins must meet the following conditions:<br />
-            1. Correct TM Count - The number of transmembrane segments of the
-            actual protein and prediction must be the same.<br />
-            2. Correct Segment Location - Each pair of actual and predicted
-            transmembrane segments must overlap by at least half the length of
-            the actual transmembrane segment<br />
-            3. Correct N Location - The N location of both actual and predicted
-            protein must be the same.<br />
-            For non transmembrane proteins, the only basis for a correct
-            topology is the absence of a transmembrane helix/segment.
-          </div>
+          <caption-table :src="assess.pred_acc" :text="current_pred_acc_cap">
+          </caption-table>
         </v-card-text>
       </v-card>
 
       <!-- PREDICTION ACC CLASSIFICATION -->
-      <v-card class="mb-4">
+      <v-card id="topo_pred_acc_class" class="mb-4">
         <v-card-title primary-title>
           <h3>
             Topology Prediction Accuracies for each Classification of Proteins
@@ -87,7 +67,10 @@
           </h3>
         </v-card-title>
         <v-card-text>
-          <caption-table :src="current_pred_acc_classification"></caption-table>
+          <caption-table
+            :src="assess.pred_acc_classification"
+            :text="current_pred_acc_classification_cap"
+          ></caption-table>
           <!-- <div class="row">
             <div class="col">
               <b-table
@@ -111,13 +94,14 @@
         </v-card-text>
       </v-card>
       <!-- FN FP -->
-      <v-card class="mb-4">
+      <v-card id="fn-fp" class="mb-4">
         <v-card-title primary-title>
           <h3>TM Per-Segment FN-FP Set {{ currentSet }}</h3>
         </v-card-title>
         <v-card-text>
           <div class="row">
             <div class="col">
+              <caption-table :src="assess.per_segment_fn_fp"></caption-table>
               <!-- <b-table
                 striped
                 hover
@@ -134,7 +118,7 @@
       </v-card>
 
       <!-- MCC -->
-      <v-card class="mb-4">
+      <v-card id="mcc" class="mb-4">
         <v-card-title primary-title>
           <h3>
             Matthew's Correlation Coefficient on Protein Orientation and
@@ -144,7 +128,10 @@
         <v-card-text>
           <div class="row">
             <div class="col">
-              <b-table striped hover :items="current_mcc"></b-table>
+              <!-- <b-table striped hover :items="current_mcc"></b-table> -->
+              <div class="col">
+                <caption-table :src="assess.mcc"></caption-table>
+              </div>
             </div>
           </div>
           <div class="pl-4 row">
@@ -154,14 +141,15 @@
       </v-card>
 
       <!-- SOV -->
-      <v-card class="mb-4">
+      <v-card id="sov" class="mb-4">
         <v-card-title primary-title>
           <h3>Segment Overlap Measure on Set {{ currentSet }}</h3>
         </v-card-title>
         <v-card-text>
           <div class="row">
             <div class="col">
-              <b-table striped hover :items="current_sov"></b-table>
+              <!-- <b-table striped hover :items="current_sov"></b-table> -->
+              <caption-table :src="assess.sov"></caption-table>
             </div>
           </div>
           <div class="pl-4 row"></div>
@@ -183,15 +171,19 @@ export default {
   name: "PredictionResultTable",
   data() {
     return {
-      assessment: {},
-      currentSeqId: "25",
+      // assessment: {},
+      // assess: {},
+
+      currentSeqId: "set_25",
       currentSet: "A",
       seqIdentity: "25",
-      current_pred_acc: "",
+      current_pred_acc: {},
+      current_pred_acc_cap: "",
       current_pred_acc_classification: {},
-      current_per_segment_fn_fp: "",
-      current_mcc: "",
-      current_sov: "",
+      current_pred_acc_classification_cap: "",
+      current_per_segment_fn_fp: {},
+      current_mcc: {},
+      current_sov: {},
       set: "A",
 
       table1:
@@ -228,22 +220,42 @@ export default {
         '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_mcc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Protein Orientation MCC</th>\n      <th>Protein Classification MCC</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.844473</td>\n      <td>0.531856</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.419027</td>\n      <td>0.320231</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.620411</td>\n      <td>0.805827</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0</th>\n      <td>0.451227</td>\n      <td>0.459662</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.732467</td>\n      <td>0.867385</td>\n    </tr>\n  </tbody>\n</table>',
     };
   },
-  methods: {
-    assignHeaders(array) {
-      let newItem = {};
-      newItem.headers = Object.keys(array[0]).map((key) => {
-        return {
-          text: key,
-          value: key,
-        };
-      });
-      newItem.items = array;
-
-      return newItem;
+  computed: {
+    assess() {
+      return this.assessment[this.currentSeqId][this.currentSet];
     },
+    assessment() {
+      console.log("computed Assessment");
+      console.log(this.$store.state.assessment_res);
+      return this.$store.state.assessment_res;
+    },
+    buttonText() {
+      if (
+        this.currentSeqId == this.seqIdentity &&
+        this.currentSet == this.set
+      ) {
+        return "Reload";
+      } else return "View results";
+    },
+  },
+  methods: {
+    // assignHeaders(array) {
+    //   let newItem = {};
+    //   newItem.headers = Object.keys(array[0]).map((key) => {
+    //     return {
+    //       text: key,
+    //       value: key,
+    //     };
+    //   });
+    //   newItem.items = array;
+    //   console.log(newItem);
+    //   return newItem;
+    // },
     // Call API here
     fetchResults() {
-      this.currentSeqId = this.seqIdentity;
+      // this.currentSeqId = this.seqIdentity;
+      this.currentSeqId = "set_25";
+
       this.currentSet = this.set;
       console.log(
         "Fetching results...\nSeq:",
@@ -251,22 +263,54 @@ export default {
         " Set: ",
         this.currentSet
       );
-      $backend
-        .getAssessment(this.currentSeqId, this.currentSet)
-        .then((response) => {
-          this.assessment = response;
-          // console.log("response", response.sov)
-          this.current_pred_acc = JSON.parse(response.sov);
-          console.log(typeof this.current_pred_acc);
-          this.current_pred_acc_classification = this.assignHeaders(
-            JSON.parse(response.pred_acc_classification)
-          );
-          this.current_per_segment_fn_fp = JSON.parse(
-            response.per_segment_fn_fp
-          );
-          this.current_mcc = JSON.parse(response.mcc);
-          this.current_sov = JSON.parse(response.sov);
-        });
+      // this.assess = this.assessment[this.currentSeqId][this.currentSet];
+      // console.log("Assessment");
+      // console.log(this.assessment);
+      // console.log(this.assessment[this.currentSeqId]);
+      // setTimeout(function() {
+      //   alert("VIDEO HAS STOPPED");
+      // }, 5000);
+      // console.log(this.assessment[this.currentSeqId].A);
+      // // let assess_res = this.$store.state.assessment_res;
+      // // console.log(this.$store.state.assessment_res);
+      // this.current_pred_acc = this.assessment[this.currentSeqId].A.pred_acc;
+      // this.current_pred_acc_classification = this.assessment[this.currentSeqId][
+      //   this.currentSet
+      // ].pred_acc_classification;
+
+      //       JSON.parse(response.pred_acc_classification)
+      // $backend
+      //   .getAssessment(this.currentSeqId, this.currentSet)
+      //   .then((response) => {
+      //     this.assessment = response;
+      //     // console.log("response", response.sov)
+      //     this.current_pred_acc = this.assignHeaders(JSON.parse(response.sov));
+      this.current_pred_acc_cap = ` Most of the prediction tools gained correct topology scores of 90
+            and above except HMMTOP. A reason for this unusually high score is
+            the proportion of the positive and negative set. The number of
+            transmembrane protein is only 9.6% of the number of non-tm proteins
+            (921 tm/ 9573 non-tm). Note that a correct topology for an observed
+            transmembrane proteins must meet the following conditions:
+            1. Correct TM Count - The number of transmembrane segments of the
+            actual protein and prediction must be the same.
+            2. Correct Segment Location - Each pair of actual and predicted
+            transmembrane segments must overlap by at least half the length of
+            the actual transmembrane segment
+            3. Correct N Location - The N location of both actual and predicted
+            protein must be the same.
+            For non transmembrane proteins, the only basis for a correct
+            topology is the absence of a transmembrane helix/segment.`;
+      //     this.current_pred_acc_classification = this.assignHeaders(
+      //       JSON.parse(response.pred_acc_classification)
+      //     );
+      //     this.current_pred_acc_classification_cap = `The table above shows that all the topology prediction tools perform
+      //       well on the -TM-SP proteins. For transmembrane proteins, CCTOP is
+      //       superior in predicting both with and without signal peptides. For
+      //       non-transmembrane proteins, CCTOP also leads in predicting those
+      //       with and without signal peptides. The least performing is HMMTOP in
+      //       majority of the classifications.`;
+
+      //   });
       // let fakeResults = {
       //     exp_set:'A',
       //     pred_acc: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_pred_acc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Correct TM Count</th>\n      <th>Correct Segment Location</th>\n      <th>N Location Success Rate</th>\n      <th>Correct Topology</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>95.586260</td>\n      <td>99.261178</td>\n      <td>95.854922</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>70.629438</td>\n      <td>97.591633</td>\n      <td>6.208021</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>95.557475</td>\n      <td>98.973326</td>\n      <td>78.919593</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>93.302629</td>\n      <td>98.618307</td>\n      <td>6.351948</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>96.094799</td>\n      <td>99.155632</td>\n      <td>7.685665</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
@@ -297,17 +341,10 @@ export default {
       // this.current_sov = response.sov;
     },
   },
-  computed: {
-    buttonText() {
-      if (
-        this.currentSeqId == this.seqIdentity &&
-        this.currentSet == this.set
-      ) {
-        return "Reload";
-      } else return "View results";
-    },
-  },
+
   mounted() {
+    console.log(this.assessment);
+
     this.fetchResults();
   },
 };

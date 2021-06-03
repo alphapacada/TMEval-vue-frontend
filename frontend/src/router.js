@@ -11,6 +11,7 @@ import DataComparison from "./views/DataComparison.vue";
 import Downloads from "./views/Downloads.vue";
 import EvaluationResult from "./views/EvaluationResult.vue";
 import IntersectSample from "./views/IntersectSample.vue";
+import JobsPage from "./views/JobsPage.vue";
 import PerformanceEvaluation from "./views/PerformanceEvaluation.vue";
 import PredictionResult from "./views/PredictionResult.vue";
 import Protvista from "./views/ProtvistaView.vue";
@@ -49,6 +50,11 @@ export default new Router({
         footer: tmFooter,
       },
       children: [
+        {
+          path: "/sidebartest/prediction/",
+          name: "job-table",
+          component: JobsPage,
+        },
         {
           path: "/sidebartest/prediction/:id",
           name: "pred-results",

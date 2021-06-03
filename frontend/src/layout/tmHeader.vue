@@ -73,9 +73,21 @@
             >
               <span> <i class="fa fa-bell"></i> </span>
             </a>
-            <a class="dropdown-item">Total jobs: {{ get_stats.jobs_count }}</a>
-            <a class="dropdown-item">Running: {{ get_stats.jobs_count }}</a>
-            <a class="dropdown-item">Completed: {{ get_stats.jobs_count }}</a>
+            <router-link
+              class="dropdown-item"
+              :to="{ path: '/sidebartest/prediction/' }"
+              >Total jobs: {{ get_stats.jobs_count }}</router-link
+            >
+            <router-link
+              class="dropdown-item"
+              :to="{ path: '/sidebartest/prediction/' }"
+              >Running: {{ get_stats.jobs_count }}</router-link
+            >
+            <router-link
+              class="dropdown-item"
+              :to="{ path: '/sidebartest/prediction/' }"
+              >Completed: {{ get_stats.jobs_count }}</router-link
+            >
           </base-dropdown>
         </li>
         <li class="nav-item">

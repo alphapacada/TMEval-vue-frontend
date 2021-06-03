@@ -374,6 +374,7 @@ export default {
       }
       formData.append("sequence", this.sequence);
       formData.append("tools", JSON.stringify(predictionData));
+      formData.append("use_cached_pssm", this.use_cached_pssm);
       formData.append("cdhit", this.use_cdhit);
       console.log("cdhit" + this.use_cdhit);
       $backend

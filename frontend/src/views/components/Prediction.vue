@@ -131,11 +131,33 @@
 
                                             <span :key=pssmfile.id v-for="pssmfile in pssmFile">{{ pssmfile.name }}</span></div> -->
                 <!-- </div> -->
+                <div class="form-group ml-4">
+                  <base-checkbox
+                    v-if="pssm_tools_used"
+                    v-model="use_cached_pssm"
+                    >Use cached pssm if available</base-checkbox
+                  >
+                  <v-card v-if="pssmBois" class="mt-3" max-width="100%" tile>
+                    <v-list-item v-for="(item, key) in pssmBois" :key="key">
+                      <v-list-item-title>{{ key }}</v-list-item-title>
+                      <v-list-item-icon>
+                        <v-icon v-if="item" class="vicon-green" right>
+                          fa-check
+                        </v-icon>
+                        <v-icon v-if="!item" class="vicon-red" right>
+                          fa-exclamation-triangle
+                        </v-icon>
+                      </v-list-item-icon>
+                    </v-list-item>
+                  </v-card>
+                </div>
+
                 <div class="form-group">
                   <base-checkbox v-model="use_cdhit"
                     >Remove redundancies using CDHIT</base-checkbox
                   >
                 </div>
+
                 <div
                   class="text-danger invalid-feedback"
                   style="display: block;"
@@ -195,7 +217,9 @@ export default {
       errorAlert: null,
       snackbar: false,
       file: null,
+      use_cached_pssm: false,
       use_cdhit: false,
+      pssmBois: {},
       pssmFiles: [],
       predictionMethods: [],
       predictionMethodToggles: [],
@@ -207,7 +231,7 @@ export default {
       message: null,
       fasta: null,
       sequence: "",
-      snackbarTimeout: 0,
+      snackbarTimeout: -1,
       snackbarText: "",
       example:
         ">Q9CQZ5 NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 6\nMAAAATGLRQAAAAAASTSVKPIFSRDLNEAKRRVRELYRAWYREVPNTVHLMQLDITVKQGRDKVREMFMKNAHVTDPRVVDLLVIKGKMELQETIKVWKQRTHVMRFFHETETPRPKDFLSKFYMGHDP\n>P60033 CD81 antigen\nMGVEGCTKCIKYLLFVFNFVFWLAGGVILGVALWLRHDPQTTNLLYLELGDKPAPNTFYVGIYILIAVGAVMMFVGFLGCYGAIQESQCLLGTFFTCLVILFACEVAAGIWGFVNKDQIAKDVKQFYDQALQQAVVDDDANNAKAVVKTFHETLDCCGSSTLTALTTSVLKNNLCPSGSNIISNLFKEDCHQKIDDLFSGKLYLIGIAAIVVAVIMIFEMILSMVLCCGIRNSSVY",
@@ -312,6 +336,8 @@ export default {
       if (fasta[0] == ">") {
         // remove one line, starting at the first position
         lines.splice(0, 1);
+      } else {
+        return false;
       }
 
       // join the array back into a single string without newlines and
@@ -363,6 +389,8 @@ export default {
         .catch((error) => {
           if (error.response) {
             this.errorAlert = error.response.data.message;
+
+            this.pssmBois = error.response.data.pssm;
             this.snackbar = true;
             this.snackbarTimeout = 0;
             this.snackbarText = error.response.data.message;
@@ -375,6 +403,7 @@ export default {
       this.errorSequence = "";
       this.errorToggle = "";
       this.file = null;
+      this.pssmFiles = [];
       let i;
       for (i = 0; i < this.predictionMethods.length; i++) {
         this.predictionMethodToggles[i] = true;
@@ -440,5 +469,11 @@ export default {
 <style>
 .toggle-text {
   font-size: 1rem;
+}
+.vicon-green {
+  color: green !important;
+}
+.vicon-red {
+  color: red !important;
 }
 </style>

@@ -34,7 +34,8 @@
         <v-card-title primary-title>Download</v-card-title>
         <v-card-text
           >Download job results and related files in a zip folder:
-          <a class="ml-2" :href="'/predictions/' + job_id + '.zip'">
+          <a style="display:none" ref="download"> </a>
+          <a class="ml-2" href="" @click.prevent="downloadFile()">
             ({{ job_id + ".zip" }})
           </a></v-card-text
         ></v-card
@@ -214,6 +215,11 @@ export default {
     this.job_url = this.$route.path;
   },
   methods: {
+    downloadFile() {
+      this.$refs.download.href =
+        $backend.getBaseURL() + "predict/" + this.job_id + ".zip";
+      this.$refs.download.click();
+    },
     onIntersect(entries, observer) {
       this.$nextTick(() => {
         // More information about these options
@@ -253,6 +259,7 @@ export default {
       this.job_state = "Prediction Job: " + responseData.data["state"];
 
       this.dateDone = responseData.data["date_done"];
+
       if (responseData.data["state"] == "SUCCESS") {
         this.numSeq = responseData.data["numSeq"];
         this.date = Date(responseData.data["date"]);

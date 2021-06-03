@@ -1,5 +1,5 @@
 <template>
-  <section id="view_assessment" class="section bg-secondary">
+  <section v-if="assessment" id="view_assessment" class="section bg-secondary">
     <div class="container">
       <card>
         <h4 class="display-3">Summary of performance metrics</h4>
@@ -32,7 +32,7 @@
 
             <b-carousel-slide
               v-for="(value, name) in images"
-              :img-src="path + value"
+              :img-src="value"
               :key="name"
               :caption="value.desc"
             ></b-carousel-slide>
@@ -141,17 +141,19 @@ export default {
         "bar_protein_count",
         "bar_tm_helix_length",
         "bar_tm_length",
-        "plot_cm_classification",
+        // "plot_cm_classification",
       ],
       figures: {
         tda: [
           {
+            name: "bar_mode_organisms",
             src: "/img/figures/bar_mode_organisms_25.png",
             desc: `The bar graph above shows the top 20 most common organisms
                             in the test set. H. sapiens is the most common organism with a count
                             more than double of S. cerevisiae, the second most common.`,
           },
           {
+            name: "bar_protein_count",
             src: "/img/figures/bar_protein_count_tx_all.png",
             desc: `The bar graph above shows the number of proteins within each
                             sequence similarity levels. It can be observed that the number of proteins
@@ -159,12 +161,14 @@ export default {
                             This is because there are many similar proteins in the dataset.`,
           },
           {
+            name: "bar_tm_helix_length",
             src: "/img/figures/bar_tm_helix_length_25.png",
             desc: `The bar graph above shows the different TM segments length in the non-redundant
                             dataset and the frequency of each. The dataset comprises mostly of proteins of segment length
                              20 with a count of more than 500.`,
           },
           {
+            name: "bar_tm_length",
             src: "/img/figures/bar_tm_length_25.png",
             desc: `The figure shows that single-pass membranes dominate in the test set, followed by multi-pass tm proteins that span the membrane three and seven times respectively`,
           },
@@ -204,7 +208,7 @@ export default {
       ],
       modal0: false,
       vertical: false,
-      assessment: {},
+      // assessment: {},
       tables: {
         pred_acc: { items: [], headers: [] },
         pred_acc_classification: { items: [], headers: [] },
@@ -217,49 +221,78 @@ export default {
   created() {
     window.addEventListener("resize", this.myEventHandler);
   },
+  // mounted() {
+  //   this.fetchResults(this.assessment);
+  // },
+  // mounted() {
+  //   // $backend.getAssessment(25, "A").then((response) => {
+  //   //   this.assessment = response;
+  //   //   this.figures.pca = JSON.parse(this.assessment.plot_cm_classification);
+  //   //   Object.keys(response).forEach((key) => {
+  //   //     if (
+  //   //       !this.figure_names.includes(key) &&
+  //   //       Object.keys(this.tables).includes(key)
+  //   //     )
+  //   //       this.json_to_datatable_item(key);
+  //   //   });
+  //   // });
+  // },
+  computed: {
+    assessment() {
+      console.log("computed:assessment");
+      return this.$store.state.assessment_res["set_25"]["A"];
+    },
+  },
   mounted() {
-    $backend.getAssessment(25, "A").then((response) => {
-      this.assessment = response;
-      this.figures.pca = JSON.parse(this.assessment.plot_cm_classification);
-      Object.keys(response).forEach((key) => {
-        if (
-          !this.figure_names.includes(key) &&
-          Object.keys(this.tables).includes(key)
-        )
-          this.json_to_datatable_item(key);
-      });
-    });
+    this.fetchResults(this.assessment);
+  },
+  watch: {
+    assessment(assessment_res) {
+      console.log("changed.");
+      this.fetchResults(assessment_res);
+    },
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
   },
-  computed: {
-    // images() { return this.figures.tda}
-  },
+  // computed: {
+  //   // images() { return this.figures.tda}
+  // },
   methods: {
-    json_to_datatable_item(name) {
-      this.tables[name].items = this.roundOffNumbers(
-        JSON.parse(this.assessment[name])
-      );
+    fetchResults(assessment_res) {
+      let assessment = assessment_res;
+      console.log("fetchResults");
+      this.figures.pca = assessment.plot_cm_classification;
+      console.log("bati");
+      Object.keys(assessment).forEach((key) => {
+        // console.log(key);
+        if (
+          !this.figure_names.includes(key) &&
+          Object.keys(this.tables).includes(key)
+        ) {
+          console.log(key);
 
-      this.tables[name].headers = Object.keys(this.tables[name].items[0]).map(
-        (key) => {
-          return { text: key, value: key };
+          this.tables[key].items = assessment[key].items;
+
+          this.tables[key].headers = assessment[key].headers;
         }
-      );
-    },
-
-    roundOffNumbers(obj) {
-      console.log(obj);
-      return obj.map((e) => {
-        Object.keys(e).forEach((key) => {
-          if (key != "Prediction Method") {
-            e[key] = Math.round(e[key] * 100) / 100;
-          }
-        });
-        return e;
+      });
+      this.figures.tda.forEach((item) => {
+        item.src = this.path + assessment[item.name];
       });
     },
+
+    // roundOffNumbers(obj) {
+    //   console.log(obj);
+    //   return obj.map((e) => {
+    //     Object.keys(e).forEach((key) => {
+    //       if (key != "Prediction Method") {
+    //         e[key] = Math.round(e[key] * 100) / 100;
+    //       }
+    //     });
+    //     return e;
+    //   });
+    // },
     myEventHandler(e) {
       // console.log(window.innerWidth);
 

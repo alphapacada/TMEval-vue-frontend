@@ -17,7 +17,7 @@
           <v-list-item to="/evaluation/overview">
             <v-list-item-title>Summary of Evaluation</v-list-item-title>
           </v-list-item>
-          <v-list-group>
+          <v-list-group color="black">
             <template v-slot:activator>
               <v-list-item-content
                 to="/evaluation/dataset-comparison/#dc-header"
@@ -38,7 +38,7 @@
               }}</v-list-item-title>
             </v-list-item>
           </v-list-group>
-          <v-list-group>
+          <v-list-group color="black">
             <template v-slot:activator>
               <v-list-item-content to="/evaluation/perf-eval">
                 <v-list-item-title class=""
@@ -72,7 +72,7 @@
               <v-list-item-title class="text-wrap pl-5">SOV</v-list-item-title>
             </v-list-item>
           </v-list-group>
-          <v-list-group>
+          <v-list-group color="black">
             <template v-slot:activator>
               <v-list-item-content to="/evaluation/sov">
                 <v-list-item-title class="">SOV analysis</v-list-item-title>
@@ -100,7 +100,7 @@
             </v-list-item>
           </v-list-group>
 
-          <v-list-group>
+          <v-list-group color="black">
             <template v-slot:activator>
               <v-list-item-content to="/evaluation/confusion-matrix">
                 <v-list-item-title>Confusion Matrix</v-list-item-title>
@@ -155,9 +155,7 @@ export default {
     drawer: true,
   }),
   methods: {},
-  created() {
-    this.$store.dispatch("instantiateAssessRes");
-  },
+  created() {},
   mounted() {
     // this.$store.dispatch("instantiateAssessRes");
   },
@@ -171,6 +169,7 @@ export default {
   background-color: black;
   color: white !important;
 }
+
 /* .v-application {
   margin-top: 60px;
 } */

@@ -2,10 +2,10 @@
   <v-app>
     <v-navigation-drawer app right fixed v-model="drawer">
       <v-list>
-        <v-list-item :to="'/sidebartest/evaluate/' + job_id">
-          <v-list-item-title>Evaluation</v-list-item-title>
+        <v-list-item :to="'/sidebartest/prediction/'">
+          <v-list-item-title>Jobs</v-list-item-title>
         </v-list-item>
-        <v-list-group :value="true">
+        <v-list-group v-if="job_id" :value="true">
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title>Results</v-list-item-title>

@@ -7,7 +7,7 @@
             Topology
           </v-card-title>
 
-          <v-card-text style="word-wrap:break-word">
+          <v-card-text class="pt-3" style="word-wrap:break-word">
             {{ modalText }}
           </v-card-text>
 
@@ -256,7 +256,7 @@
           <v-btn @click="appliedSearch = search">
             Search
           </v-btn>
-          <v-btn class="ma-2" tile outlined color="red">
+          <v-btn readonly class="ma-2" tile outlined color="red">
             Evaluate
             <!-- <v-icon right>fa-cloud-download</v-icon> -->
           </v-btn>

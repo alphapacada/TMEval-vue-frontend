@@ -30,6 +30,16 @@ export default {
     isConnected: false,
     isUserScrolling: false,
   }),
+  created() {
+    this.$store.dispatch("instantiateAssessRes").then(() => {
+      console.log("finished instantiating assess");
+      console.log(this.$store.state.assessment_res);
+      this.$store.dispatch("getAssessResFromApi").then(() => {
+        console.log("finished api request for assess");
+        console.log(this.$store.state.assessment_res);
+      });
+    });
+  },
   methods: {
     handleScroll(event) {
       // Any code to be executed when the window is scrolled

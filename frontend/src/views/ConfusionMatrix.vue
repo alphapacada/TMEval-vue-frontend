@@ -37,8 +37,8 @@
         <!-- Redundant -->
         <confusion-matrix
           @clicked="showImg($event, 'A', 'CCTOP')"
-          :lsrc="path + assess['A'].plot_cm_classification.CCTOP"
-          :rsrc="path + assess['A'].plot_cm_orientation.CCTOP"
+          :lsrc="assess ? path + assess['A'].plot_cm_classification.CCTOP : ''"
+          :rsrc="assess ? path + assess['A'].plot_cm_orientation.CCTOP : ''"
           text="CCTOP has fairly high correct predictions for the three classifications: +TM-SP, +TM+SP, and -TM-SP. It scored 0 on -TM+SP due to the fact that
                     if it encounters a non transmembrane (CCTOP has a TMFilter), it returns no topology. Therefore it  passes -TM-SP since just because it returns an empty string.
                     For N Location, CCTOP gained an accuracy of 84%. Its prediction of UND may be caused by non TMs with orientation or False Negative prediction of TM Proteins.  "
@@ -318,15 +318,25 @@ export default {
       path: process.env.VUE_APP_STATIC_URL,
       currentSeqId: "set_25",
       currentSet: "",
+      assess: {
+        A: { plot_cm_classification: {}, plot_cm_orientation: {} },
+        B: { plot_cm_classification: {}, plot_cm_orientation: {} },
+        C: { plot_cm_classification: {}, plot_cm_orientation: {} },
+        D: { plot_cm_classification: {}, plot_cm_orientation: {} },
+      },
     };
+  },
+  mounted() {
+    this.assess = this.assessment[this.currentSeqId];
+    console.log("assess", this.assess);
   },
   computed: {
     assessment() {
       return this.$store.state.assessment_res;
     },
-    assess() {
-      return this.assessment[this.currentSeqId];
-    },
+    // assess() {
+    //   return this.assessment[this.currentSeqId];
+    // },
   },
   methods: {
     showImg(idx, set, name) {

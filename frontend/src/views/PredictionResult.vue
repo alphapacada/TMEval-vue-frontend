@@ -184,8 +184,8 @@ export default {
       job_id: "---",
       job_url: "",
       numSeq: 0,
-      date: new Date(),
-      dateDone: new Date(),
+      date: "",
+      dateDone: "",
       progress_value: 0,
       percent: 0,
       status: "",
@@ -261,9 +261,11 @@ export default {
           this.fetchPredictionResults(responseData.data["result"]);
         }
       } else {
-        setTimeout(() => {
-          this.getLongTask(this.job_id);
-        }, 10000);
+        if (!responseData.data["state"] == "FAILURE") {
+          setTimeout(() => {
+            this.getLongTask(this.job_id);
+          }, 10000);
+        }
       }
     },
     getLongTask(task_id) {

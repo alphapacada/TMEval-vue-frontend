@@ -345,7 +345,7 @@ export default {
   mounted() {
     console.log(this.assessment);
 
-    this.fetchResults();
+    // this.fetchResults();
   },
 };
 </script>

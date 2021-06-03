@@ -9,7 +9,7 @@ import Assessment from "./views/Assessment.vue";
 import ConfusionMatrix from "./views/ConfusionMatrix.vue";
 import DataComparison from "./views/DataComparison.vue";
 import Downloads from "./views/Downloads.vue";
-import EvaluationResult from "./views/EvaluationResult.vue";
+import EvaluationSummary from "./views/EvaluationSummary.vue";
 import IntersectSample from "./views/IntersectSample.vue";
 import JobsPage from "./views/JobsPage.vue";
 import PerformanceEvaluation from "./views/PerformanceEvaluation.vue";
@@ -120,7 +120,7 @@ export default new Router({
         // UserPosts will be rendered inside User's <router-view>
         // when /user/:id/posts is matched
         { path: "/evaluation/table", component: TableTest2 },
-        { path: "/evaluation/overview", component: EvaluationResult },
+        { path: "/evaluation/overview", component: EvaluationSummary },
 
         { path: "/evaluation/dataset-comparison", component: DataComparison },
         { path: "/evaluation/perf-eval", component: PerformanceEvaluation },

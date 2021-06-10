@@ -402,7 +402,9 @@ export default {
     clearForm() {
       this.sequence = "";
       this.errorSequence = "";
+      this.snackbar = false;
       this.errorToggle = "";
+      this.pssmBois = {};
       this.file = null;
       this.pssmFiles = [];
       let i;

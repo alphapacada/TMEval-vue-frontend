@@ -65,12 +65,11 @@
                         </template>
                       </b-form-file>
                     </div>
-                    <span v-if="file" class="pl-0 col-lg-1 float-right my-auto"
+                    <span v-if="file" class="pl-0 col-lg-1 float-right my-auto" @click="file = null"
                       ><badge
                         class="w-100"
                         icon="fa fa-times"
                         type="danger"
-                        @click="file = null"
                       >
                       </badge
                     ></span>
@@ -83,55 +82,50 @@
                 </base-alert>
                 <div class="form-group"> -->
 
-                <label for>PSSM</label>
-                <div class="row">
-                  <div class="col">
-                    <b-form-file
-                      :disabled="!pssm_tools_used"
-                      v-model="pssmFiles"
-                      accept=".pssm"
-                      multiple
-                      :state="
-                        !pssm_tools_used ? null : Boolean(pssmFiles.length)
-                      "
-                      placeholder="Upload PSSM files"
-                      drop-placeholder="Drop file here..."
-                    >
-                      <template slot="file-name" slot-scope="{ names }">
-                        <badge type="default"> {{ names[0] }}</badge>
-                        <badge
-                          type="default"
-                          v-if="names.length > 1"
-                          class="ml-1"
-                        >
-                          + {{ names.length - 1 }} More files
+                <b-form-group>
+                  <label for class="pt-2">PSSM</label>
+                  <div class="row">
+                    <div class="col">
+                      <b-form-file
+                        class="col"
+                        size="lg"
+                        :disabled="!pssm_tools_used"
+                        id="pssm-file-input"
+                        v-model="pssmFiles"
+                        accept=".pssm"
+                        multiple
+                        :state="!pssm_tools_used ? null : Boolean(pssmFiles.length)"
+                        placeholder="Upload PSSM files"
+                        drop-placeholder="Drop file here..."
+                      >
+                        <template slot="file-name" slot-scope="{ names }">
+                          <badge type="default"> {{ names[0] }}</badge>
+                          <badge
+                            type="default"
+                            v-if="names.length > 1"
+                            class="ml-1"
+                          >
+                            + {{ names.length - 1 }} More files
+                          </badge>
+                          <!-- <icon  v-bind="$attrs" name="fa fa-times"></icon> -->
+                        </template>
+                        <badge icon="fa fa-times" @click.native="pssmFiles = []">
                         </badge>
-                        <!-- <icon  v-bind="$attrs" name="fa fa-times"></icon> -->
-                      </template>
-                      <badge icon="fa fa-times" @click.native="pssmFiles = []">
-                      </badge>
-                    </b-form-file>
-                  </div>
-                  <span
-                    v-if="pssmFiles.length > 0"
-                    class="pl-0 col-lg-1 float-right my-auto"
-                    ><badge
-                      class="w-100"
-                      icon="fa fa-times"
-                      type="danger"
+                      </b-form-file>
+                    </div>
+                    <span
+                      v-if="pssmFiles.length > 0"
+                      class="pl-0 col-lg-1 float-right my-auto"
                       @click="pssmFiles = []"
-                    >
-                    </badge
-                  ></span>
-                </div>
-                <!-- <span>{{this.pssmFiles}}</span> -->
-                <!-- <span>Nananana{{ pssm_tools_my-autoused }}</span> -->
-
-                <!-- <div class="mt-3">Selected file(s):
-
-                                            <span :key=pssmfile.id v-for="pssmfile in pssmFile">{{ pssmfile.name }}</span></div> -->
-                <!-- </div> -->
-                <div class="form-group ml-4">
+                      ><badge
+                        class="w-100"
+                        icon="fa fa-times"
+                        type="danger"
+                      >
+                      </badge
+                    ></span>
+                  </div>
+                  <div class="ml-4">
                   <base-checkbox
                     v-if="pssm_tools_used"
                     v-model="use_cached_pssm"
@@ -151,6 +145,15 @@
                     </v-list-item>
                   </v-card>
                 </div>
+                </b-form-group>
+                <!-- <span>{{this.pssmFiles}}</span> -->
+                <!-- <span>Nananana{{ pssm_tools_my-autoused }}</span> -->
+
+                <!-- <div class="mt-3">Selected file(s):
+
+                                            <span :key=pssmfile.id v-for="pssmfile in pssmFile">{{ pssmfile.name }}</span></div> -->
+                <!-- </div> -->
+
 
                 <div class="form-group">
                   <base-checkbox v-model="use_cdhit"
@@ -451,6 +454,7 @@ export default {
   },
   computed: {
     pssm_tools_used: {
+      cache:false, //required to update pssm when CLEAR button is pressed
       get: function() {
         let x = this.predictionMethodToggles[
           this.predictionMethods

@@ -318,7 +318,7 @@
     </v-card>
   </template> -->
           <template v-slot:footer>
-            <td :colspan="12">
+            <td :colspan="12" class="pt-2 pl-1">
               TM-Transmembrane,<span class="tab"></span>SP - Signal Peptide
             </td>
           </template>

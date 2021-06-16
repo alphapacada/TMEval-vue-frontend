@@ -17,24 +17,24 @@
                                 </v-expansion-panel-header>
                                 <v-expansion-panel-content class="dataset-panel">
                                     <div class="row dataset-row border border-bottom-0 border-dark dataset-table mt-1">
-                                        <div class=" col dataset-row-content border-bottom border-dark">
+                                        <div class=" col dataset-row-content border-bottom border-dark similarity-col">
                                             <span>{{$options.tmevalDataset[i].similarity.text}}</span>&nbsp;<span @click="downloadFasta($options.tmevalDataset[i].similarity)" class="download-text"> <i class="fa fa-download"></i></span>
                                         </div>
-                                        <div class=" col">
+                                        <div class="col downloads-col">
                                             <div v-for="organism_row in $options.tmevalDataset[i].organism" :key="organism_row.$index" class="row organism-row" >
                                                 <div class="dataset-row-content border-left border-bottom border-dark">
                                                     <span>{{organism_row.text}}</span>&nbsp;<span @click="downloadFasta(organism_row)" class="download-text"> <i class="fa fa-download"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col downloads-col">
                                             <div v-for="protein_type_row in $options.tmevalDataset[i].protein_type" :key="protein_type_row.$index" class="row protein-type-row">
                                                 <div class="dataset-row-content border-left border-bottom border-dark">
                                                     <span>{{protein_type_row.text}}</span>&nbsp;<span @click="downloadFasta(protein_type_row)" class="download-text"> <i class="fa fa-download"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=" col">
+                                        <div class="col downloads-col">
                                             <div v-for="sp_presence_row in $options.tmevalDataset[i].sp_presence" :key="sp_presence_row.$index" class="row">
                                                 <div class="dataset-row-content border-left border-bottom border-dark sp-presence-row">
                                                     <span>{{sp_presence_row.text}}</span>&nbsp;<span @click="downloadFasta(sp_presence_row)" class="download-text"> <i class="fa fa-download"></i></span>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <a style="display:none" ref="download">
-                    
+
                 </a>
                 <div id="training-dataset" class="row">
                     <div class="col">
@@ -71,7 +71,7 @@
                                         </td>
                                     </tr>
                                 </td>
-                            </tr>    
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -137,7 +137,16 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
+    .similarity-col
+    {
+        margin-left: 0px !important;
+    }
+    .col.downloads-col
+    {
+        padding: 0px;
+        margin: 0px;
+    }
     .table-entry :hover
     {
         background-color:rgb(188, 248, 188);
@@ -150,13 +159,12 @@ export default {
     .dataset-row-content
     {
         width:100%;
-        padding: 12px 15px;
-        position:relative;
+        margin-left:-12px;
     }
     .organism-row
     {
         height:216px;
-        
+
     }
     .protein-type-row
     {

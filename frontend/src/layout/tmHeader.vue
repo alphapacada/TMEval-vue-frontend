@@ -69,9 +69,9 @@
               target="_blank"
               rel="noopener"
               data-toggle="tooltip"
-              title="Notifications"
+              title="Prediction Jobs"
             >
-              <span> <i class="fa fa-bell"></i> </span>
+              <span> <i class="fa fa-tasks"></i> Jobs</span>
             </a>
             <router-link
               class="dropdown-item"
@@ -146,6 +146,15 @@ export default {
 };
 </script>
 <style scoped>
+li .nav-link
+{
+  padding: 10px !important
+}
+.dropdown-item.router-link-active
+{
+  background-color: transparent !important;
+  color: black !important;
+}
 .navbar >>> .container {
   padding: 0px;
 }

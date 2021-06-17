@@ -52,7 +52,7 @@
           </h2>
         </v-card-title>
         <v-card-text class="row mx-0">
-          <div class="col-6">
+          <div class="col">
             <textarea
               v-model="cdhitreduced"
               class="form-control text-black col"

@@ -6,6 +6,7 @@
         id="job_status"
         :job_id="job_id"
         :numSeq="numSeq"
+        :numSeqReduced="cdhitreduced_numSeq"
         :url="job_url"
         :date="date"
         :dateDone="dateDone"
@@ -50,6 +51,16 @@
             CDHIT-reduced Fasta Sequences
           </h2>
         </v-card-title>
+        <v-card-text class="row mx-0">
+          <div class="col-6">
+            <textarea
+              v-model="cdhitreduced"
+              class="form-control text-black col"
+              rows="20"
+              readonly
+            ></textarea>
+          </div>
+        </v-card-text>
       </v-card>
       <v-card
         class="pt-0 pb-3 mt-2"
@@ -202,6 +213,8 @@ export default {
       parsed_res: "",
       results: [],
       sequence_topo: [],
+      cdhitreduced: "",
+      cdhitreduced_numSeq: 0,
     };
   },
   components: {
@@ -209,12 +222,27 @@ export default {
     Topology,
   },
   created() {},
+  computed: {
+    get_stats() {
+      return this.$store.state.job_stats.jobs[this.job_id];
+    },
+  },
   mounted() {
-    this.fetchData();
     this.job_id = this.$route.params.id;
     this.job_url = this.$route.path;
+    this.fetchData();
+    this.numSeq = this.get_stats.numSeq;
+    this.date = Date(this.get_stats.date_submitted);
+    this.dateDone = Date(this.get_stats.date_completed);
+
+    // this.numSeq = this.get_stats.numSeq
+    // this.date_submitted = this.get_stats.date_submitted
+    // this.date_completed = this.get_stats.date_completed
   },
   methods: {
+    // readCDHitReduced() {
+
+    // }
     downloadFile() {
       this.$refs.download.href =
         $backend.getBaseURL() + "predict/" + this.job_id + ".zip";
@@ -257,9 +285,9 @@ export default {
         (responseData.data["current"] * 100) / responseData.data["total"];
       this.progress_value = this.percent;
       this.job_state = "Prediction Job: " + responseData.data["state"];
-
-      this.dateDone = responseData.data["date_done"];
-
+      // this.dateDone = responseData.data["date_done"];
+      this.cdhitreduced = responseData.data["cdhit"];
+      this.cdhitreduced_numSeq = responseData.data["cdhit_numSeq"];
       if (responseData.data["state"] == "SUCCESS") {
         this.numSeq = responseData.data["numSeq"];
         this.date = Date(responseData.data["date"]);
@@ -268,6 +296,9 @@ export default {
           this.fetchPredictionResults(responseData.data["result"]);
         }
       } else {
+        this.numSeq = this.get_stats.numSeq;
+        this.date = Date(this.get_stats.date_submitted);
+        this.dateDone = Date(this.get_stats.date_completed);
         if (!responseData.data["state"] == "FAILURE") {
           setTimeout(() => {
             this.getLongTask(this.job_id);

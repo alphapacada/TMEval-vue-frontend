@@ -20,6 +20,10 @@
         <td>{{ numSeq }}</td>
       </tr>
       <tr>
+        <td>Number of sequences from CDHIT output:</td>
+        <td>{{ numSeqReduced }}</td>
+      </tr>
+      <tr>
         <td>Results url:</td>
         <td>{{ url }}</td>
       </tr>
@@ -44,6 +48,10 @@ export default {
     numSeq: {
       type: Number,
       description: "Number of submitted sequences",
+    },
+    numSeqReduced: {
+      type: Number,
+      description: "Number of reduced sequences",
     },
     dateDone: {
       type: [Date, String],

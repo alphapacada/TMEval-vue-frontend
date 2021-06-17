@@ -27,6 +27,9 @@ $axios.defaults.baseURL =
   process.env.VUE_APP_API_URL || "http://localhost:5000/api/v1/";
 $axios.defaults.baseStaticURL = process.env.VUE_APP_STATIC_URL;
 export default {
+  getStaticURL() {
+    return $axios.defaults.baseStaticURL;
+  },
   getBaseURL() {
     return $axios.defaults.baseURL;
   },

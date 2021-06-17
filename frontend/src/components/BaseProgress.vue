@@ -79,4 +79,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.span-success {
+  color: var(--v-success-base) !important;
+}
+</style>

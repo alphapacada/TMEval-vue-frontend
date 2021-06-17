@@ -299,8 +299,9 @@ export default {
         this.numSeq = this.get_stats.numSeq;
         this.date = Date(this.get_stats.date_submitted);
         this.dateDone = Date(this.get_stats.date_completed);
-        if (!responseData.data["state"] == "FAILURE") {
+        if (responseData.data["state"] != "FAILURE") {
           setTimeout(() => {
+            console.log("loop and fetch results again");
             this.getLongTask(this.job_id);
           }, 10000);
         }

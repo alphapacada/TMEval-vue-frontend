@@ -32,7 +32,7 @@
 
             <b-carousel-slide
               v-for="(value, name) in images"
-              :img-src="value"
+              :img-src="value.src"
               :key="name"
               :caption="value.desc"
             ></b-carousel-slide>
@@ -240,7 +240,7 @@ export default {
   computed: {
     assessment() {
       console.log("computed:assessment");
-      return this.$store.state.assessment_res["set_25"]["A"];
+      return this.$store.state.assessment_res["set_25"]["C"];
     },
   },
   mounted() {
@@ -299,9 +299,9 @@ export default {
       this.vertical = window.innerWidth <= 767 ? true : false;
     },
     showImg(src, tab_images) {
-      // console.log("src", src);
-      // console.log("tab_images", tab_images);
-      this.images = tab_images;
+      console.log("src", src);
+      console.log("tab_images", tab_images);
+      this.images = Object.values(tab_images);
       this.$refs.carousel1.setSlide(src);
       this.modal0 = true;
     },

@@ -65,12 +65,11 @@
                         </template>
                       </b-form-file>
                     </div>
-                    <span v-if="file" class="pl-0 col-lg-1 float-right my-auto" @click="file = null"
-                      ><badge
-                        class="w-100"
-                        icon="fa fa-times"
-                        type="danger"
-                      >
+                    <span
+                      v-if="file"
+                      class="pl-0 col-lg-1 float-right my-auto"
+                      @click="file = null"
+                      ><badge class="w-100" icon="fa fa-times" type="danger">
                       </badge
                     ></span>
                   </div>
@@ -94,7 +93,9 @@
                         v-model="pssmFiles"
                         accept=".pssm"
                         multiple
-                        :state="!pssm_tools_used ? null : Boolean(pssmFiles.length)"
+                        :state="
+                          !pssm_tools_used ? null : Boolean(pssmFiles.length)
+                        "
                         placeholder="Upload PSSM files"
                         drop-placeholder="Drop file here..."
                       >
@@ -109,7 +110,10 @@
                           </badge>
                           <!-- <icon  v-bind="$attrs" name="fa fa-times"></icon> -->
                         </template>
-                        <badge icon="fa fa-times" @click.native="pssmFiles = []">
+                        <badge
+                          icon="fa fa-times"
+                          @click.native="pssmFiles = []"
+                        >
                         </badge>
                       </b-form-file>
                     </div>
@@ -117,34 +121,30 @@
                       v-if="pssmFiles.length > 0"
                       class="pl-0 col-lg-1 float-right my-auto"
                       @click="pssmFiles = []"
-                      ><badge
-                        class="w-100"
-                        icon="fa fa-times"
-                        type="danger"
-                      >
+                      ><badge class="w-100" icon="fa fa-times" type="danger">
                       </badge
                     ></span>
                   </div>
                   <div class="ml-4">
-                  <base-checkbox
-                    v-if="pssm_tools_used"
-                    v-model="use_cached_pssm"
-                    >Use cached pssm if available</base-checkbox
-                  >
-                  <v-card v-if="pssmBois" class="mt-3" max-width="100%" tile>
-                    <v-list-item v-for="(item, key) in pssmBois" :key="key">
-                      <v-list-item-title>{{ key }}</v-list-item-title>
-                      <v-list-item-icon>
-                        <v-icon v-if="item" class="vicon-green" right>
-                          fa-check
-                        </v-icon>
-                        <v-icon v-if="!item" class="vicon-red" right>
-                          fa-exclamation-triangle
-                        </v-icon>
-                      </v-list-item-icon>
-                    </v-list-item>
-                  </v-card>
-                </div>
+                    <base-checkbox
+                      v-if="pssm_tools_used"
+                      v-model="use_cached_pssm"
+                      >Use cached pssm if available</base-checkbox
+                    >
+                    <v-card v-if="pssmBois" class="mt-3" max-width="100%" tile>
+                      <v-list-item v-for="(item, key) in pssmBois" :key="key">
+                        <v-list-item-title>{{ key }}</v-list-item-title>
+                        <v-list-item-icon>
+                          <v-icon v-if="item" class="vicon-green" right>
+                            fa-check
+                          </v-icon>
+                          <v-icon v-if="!item" class="vicon-red" right>
+                            fa-exclamation-triangle
+                          </v-icon>
+                        </v-list-item-icon>
+                      </v-list-item>
+                    </v-card>
+                  </div>
                 </b-form-group>
                 <!-- <span>{{this.pssmFiles}}</span> -->
                 <!-- <span>Nananana{{ pssm_tools_my-autoused }}</span> -->
@@ -153,7 +153,6 @@
 
                                             <span :key=pssmfile.id v-for="pssmfile in pssmFile">{{ pssmfile.name }}</span></div> -->
                 <!-- </div> -->
-
 
                 <div class="form-group">
                   <base-checkbox v-model="use_cdhit"
@@ -387,7 +386,7 @@ export default {
           this.$store.commit("update_stats");
 
           this.$router.push({
-            path: `/prediction/${responseData["task_id"]}`,
+            path: `/sidebartest/prediction/${responseData["task_id"]}#job_status`,
           });
         })
         .catch((error) => {
@@ -454,7 +453,7 @@ export default {
   },
   computed: {
     pssm_tools_used: {
-      cache:false, //required to update pssm when CLEAR button is pressed
+      cache: false, //required to update pssm when CLEAR button is pressed
       get: function() {
         let x = this.predictionMethodToggles[
           this.predictionMethods

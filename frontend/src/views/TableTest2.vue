@@ -256,7 +256,7 @@
           <v-btn @click="appliedSearch = search">
             Search
           </v-btn>
-          <v-btn readonly class="ma-2" tile outlined color="red">
+          <v-btn disabled class="ma-2" tile outlined color="red">
             Evaluate
             <!-- <v-icon right>fa-cloud-download</v-icon> -->
           </v-btn>

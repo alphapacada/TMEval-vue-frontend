@@ -283,7 +283,7 @@ export default {
       console.log(responseData.data);
       this.percent =
         (responseData.data["current"] * 100) / responseData.data["total"];
-      this.progress_value = this.percent;
+      this.progress_value = this.percent || 0;
       this.job_state = "Prediction Job: " + responseData.data["state"];
       // this.dateDone = responseData.data["date_done"];
       this.cdhitreduced = responseData.data["cdhit"];

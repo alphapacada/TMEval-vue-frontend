@@ -23,20 +23,21 @@ import tmLanding from "./views/tmLanding.vue";
 
 Vue.use(Router);
 
-const originalPush = Router.prototype.push;
-Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch((error) => {
-    if (error.name == "NavigationDuplicated") {
-      // console.log(this);
-      // console.log(location);
-      location.hash = "";
-      return originalPush.call(this, location);
-    }
+// const originalPush = Router.prototype.push;
+// Router.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch((error) => {
+//     if (error.name == "NavigationDuplicated") {
+//       console.log("nav dup yo");
+//       console.log(location);
 
-    // avoid NavigationDuplicated
-    if (error.name !== "NavigationDuplicated") throw error;
-  });
-};
+//       location.hash = "";
+//       return originalPush.call(this, location);
+//     }
+
+//     // avoid NavigationDuplicated
+//     if (error.name !== "NavigationDuplicated") throw error;
+//   });
+// };
 export default new Router({
   mode: "history",
   linkExactActiveClass: "active",
@@ -219,17 +220,21 @@ export default new Router({
     // console.log(to, from, savedPosition);
     // if ( to.name === from.name && to.matched.some(routeDef => routeDef.meta.preventScroll) ){
     if (to.meta.preventScroll || to.params.preventScroll) {
+      console.log("1");
       return false;
     }
     if (to.hash) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
+          console.log("2");
+
           resolve({ selector: to.hash, offset: { x: 0, y: 60 } });
         }, 100);
       });
     } else {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
+          console.log("3");
           resolve({ x: 0, y: 0 });
         }, 200);
       });

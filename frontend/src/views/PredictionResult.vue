@@ -45,6 +45,7 @@
         class="pt-0 pb-3 mt-2"
         id="cdhit"
         v-intersect.quiet="handleIntersect"
+        v-if="cdhitreduced_numSeq > 0"
       >
         <v-card-title primary-title>
           <h2 class="col-md-9">
@@ -143,7 +144,7 @@
           <div class="col-md-3">
             <div class="row float-right">
               <base-button @click="setSelectedSequence(-1)" type="primary">
-                View All
+                View all predictions of this sequence
               </base-button>
             </div>
           </div>
@@ -292,6 +293,7 @@ export default {
         this.numSeq = responseData.data["numSeq"];
         this.date = Date(responseData.data["date"]);
         this.dateDone = Date(responseData.data["dateDone"]);
+        this.$store.commit("update_stats");
         if ("result" in responseData.data) {
           this.fetchPredictionResults(responseData.data["result"]);
         }
@@ -303,7 +305,8 @@ export default {
           setTimeout(() => {
             console.log("loop and fetch results again");
             this.getLongTask(this.job_id);
-          }, 10000);
+            // 10000
+          }, 5000);
         }
       }
     },

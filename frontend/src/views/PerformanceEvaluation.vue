@@ -253,8 +253,8 @@ export default {
     // },
     // Call API here
     fetchResults() {
-      // this.currentSeqId = this.seqIdentity;
-      this.currentSeqId = "set_25";
+      this.currentSeqId = "set_" + this.seqIdentity;
+      // this.currentSeqId = "set_25";
 
       this.currentSet = this.set;
       console.log(

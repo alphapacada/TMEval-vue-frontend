@@ -156,7 +156,8 @@
 
                 <div class="form-group">
                   <base-checkbox v-model="use_cdhit"
-                    >Remove redundancies using CDHIT</base-checkbox
+                    >Remove redundancies using CDHIT (&lt; 40% sequence
+                    similarity)</base-checkbox
                   >
                 </div>
 
@@ -383,11 +384,15 @@ export default {
         .postFasta(formData)
         .then((responseData) => {
           console.log(responseData["task_id"]);
-          this.$store.commit("update_stats");
 
-          this.$router.push({
-            path: `/sidebartest/prediction/${responseData["task_id"]}#job_status`,
-          });
+          this.$router
+            .push({
+              path: `/sidebartest/prediction/${responseData["task_id"]}`,
+            })
+            .catch((failure) => {
+              console.log("push fail", failure);
+            });
+          this.$store.commit("update_stats");
         })
         .catch((error) => {
           if (error.response) {

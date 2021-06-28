@@ -15,7 +15,7 @@ function assignHeaders(array) {
     };
   });
   newItem.items = array;
-  console.log(newItem);
+  // console.log(newItem);
   return newItem;
 }
 // function json_to_datatable_item(name) {
@@ -72,7 +72,7 @@ const store = new Vuex.Store({
       let set = payload.set;
       let response = payload.response;
 
-      console.log(seqId, set);
+      // console.log(seqId, set);
 
       // const plot_keys = ["plot_cm_orientation", "plot_cm_classification"];
       let new_assess_res = Object();
@@ -144,7 +144,7 @@ const store = new Vuex.Store({
       commit("setAssessment", assess_res);
     },
     getAssessResFromApi({ commit, state }) {
-      const seq_ident = [25];
+      const seq_ident = [25, 30, 40];
       const sets = ["A", "B", "C", "D"];
       for (let seq_ctr = 0; seq_ctr < seq_ident.length; seq_ctr++) {
         let key = seq_ident[seq_ctr];

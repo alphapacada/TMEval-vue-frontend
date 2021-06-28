@@ -29,14 +29,6 @@
             <span class="nav-link-inner--text">Home</span>
           </router-link>
         </li>
-        <li class="nav-item">
-          <router-link to="/#about" class="nav-link" role="button">
-            <i class="fa fa-info-circle d-lg-none"></i>
-            <span class="nav-link-inner--text">About</span>
-          </router-link>
-        </li>
-      </ul>
-      <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
         <base-dropdown tag="li" class="nav-item">
           <a
             slot="title"
@@ -51,13 +43,21 @@
           <router-link to="/evaluation" class="dropdown-item"
             >View Assessment</router-link
           >
-          <router-link to="/evaluation/table" class="dropdown-item"
+          <router-link to="/evaluation/table#data" class="dropdown-item"
             >View Dataset</router-link
           >
           <router-link to="/#predict_sequences" class="dropdown-item"
             >Predict Topology</router-link
           >
         </base-dropdown>
+        <!-- </ul> -->
+
+        <li class="nav-item">
+          <router-link to="/#about" class="nav-link" role="button">
+            <i class="fa fa-info-circle d-lg-none"></i>
+            <span class="nav-link-inner--text">About</span>
+          </router-link>
+        </li>
       </ul>
 
       <ul class="navbar-nav align-items-lg-center ml-lg-auto">
@@ -81,12 +81,12 @@
             <router-link
               class="dropdown-item"
               :to="{ path: '/sidebartest/prediction/' }"
-              >Running: {{ get_stats.jobs_count }}</router-link
+              >Running: {{ running }}</router-link
             >
             <router-link
               class="dropdown-item"
               :to="{ path: '/sidebartest/prediction/' }"
-              >Completed: {{ get_stats.jobs_count }}</router-link
+              >Completed: {{ completed }}</router-link
             >
           </base-dropdown>
         </li>
@@ -127,9 +127,12 @@ import CloseButton from "@/components/CloseButton";
 export default {
   data() {
     return {
+      running: 0,
+      completed: 0,
       job_stats: null,
     };
   },
+
   components: {
     BaseNav,
     CloseButton,
@@ -140,18 +143,32 @@ export default {
       return this.$store.state.job_stats;
     },
   },
+  watch: {
+    get_stats(val) {
+      let run_ctr = 0;
+      let comp_ctr = 0;
+      Object.keys(val.jobs).forEach((key) => {
+        if (val.jobs[key].status == "Running") {
+          run_ctr++;
+        }
+        if (val.jobs[key].status == "Completed") {
+          comp_ctr++;
+        }
+      });
+      this.running = run_ctr;
+      this.completed = comp_ctr;
+    },
+  },
   mounted() {
     this.$store.commit("update_stats");
   },
 };
 </script>
 <style scoped>
-li .nav-link
-{
-  padding: 10px !important
+li .nav-link {
+  padding: 10px !important;
 }
-.dropdown-item.router-link-active
-{
+.dropdown-item.router-link-active {
   background-color: transparent !important;
   color: black !important;
 }

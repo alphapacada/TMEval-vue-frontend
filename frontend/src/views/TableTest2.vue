@@ -239,7 +239,7 @@
         </v-card-actions>
       </v-card>
 
-      <v-card class="mt-4">
+      <v-card id="data" class="mt-4">
         <v-card-title primary-title class="align-middle">
           <h2 class="pb-0 mb-0">
             TMEval Protein Entries
@@ -349,10 +349,10 @@ export default {
       },
       origParameters: {
         tm: true,
-        sp: null,
-        tx: null,
-        count: null,
-        topo_type: null,
+        sp: "",
+        tx: "",
+        count: "",
+        topo_type: "",
         reduced: 25,
       },
       param_mapping: {
@@ -383,7 +383,7 @@ export default {
         Transmembrane: {
           selected: 1,
           choices: [
-            { text: "ALL", value: null },
+            { text: "ALL", value: "" },
             { text: "TRUE", value: true },
             { text: "FALSE", value: false },
           ],
@@ -391,7 +391,7 @@ export default {
         "Signal Peptide": {
           selected: 0,
           choices: [
-            { text: "ALL", value: null },
+            { text: "ALL", value: "" },
             { text: "TRUE", value: true },
             { text: "FALSE", value: false },
           ],
@@ -399,7 +399,7 @@ export default {
         Taxonomy: {
           selected: 0,
           choices: [
-            { text: "ALL", value: null },
+            { text: "ALL", value: "" },
             { text: "BACTERIA", value: "Bacteria" },
             { text: "VIRUSES", value: "Viruses" },
             { text: "ARCHAEA", value: "Archaea" },

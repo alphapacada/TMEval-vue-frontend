@@ -10,7 +10,14 @@ module.exports = {
     "appleMobileWebAppStatusBarStyle": "#172b4d"
   },
   "css": {
-    "sourceMap": true
+    "sourceMap": true,
+    "loaderOptions": {
+      "postcss": {
+          "plugins": [
+
+          ],
+      },
+    },
   },
   "devServer": {
     "inline": true,

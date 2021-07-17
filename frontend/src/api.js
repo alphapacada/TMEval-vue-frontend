@@ -24,8 +24,8 @@ let $axios = axios.create({
 // https://github.com/gtalarico/flask-vuejs-template/blob/master/src/backend.js
 
 $axios.defaults.baseURL =
-  process.env.VUE_APP_API_URL || "http://localhost:5000/api/v1/";
-$axios.defaults.baseStaticURL = process.env.VUE_APP_STATIC_URL;
+    'http://202.92.153.75/api/v1/' || process.env.VUE_APP_API_URL;
+$axios.defaults.baseStaticURL = 'http://202.92.153.75/static/' || process.env.VUE_APP_STATIC_URL;
 export default {
   getStaticURL() {
     return $axios.defaults.baseStaticURL;

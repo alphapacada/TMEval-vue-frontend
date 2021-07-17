@@ -61,7 +61,7 @@ Vue.use(Argon);
 Vue.use(
   new VueSocketIO({
     debug: false,
-    connection: process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
+    connection: 'http://202.92.153.75/socketio/' || process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
   })
 );
 

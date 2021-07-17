@@ -134,7 +134,7 @@ export default {
   name: "evaluation",
   data() {
     return {
-      path: process.env.VUE_APP_STATIC_URL,
+      path: $backend.getStaticURL(),
       pca_pred_method: null,
       figure_names: [
         "bar_mode_organisms",
@@ -150,27 +150,26 @@ export default {
             src: "/img/figures/bar_mode_organisms_25.png",
             desc: `The bar graph above shows the top 20 most common organisms
                             in the test set. H. sapiens is the most common organism with a count
-                            more than double of S. cerevisiae, the second most common.`,
+                            more than double of M. musculus, the second most common.`,
           },
           {
             name: "bar_protein_count",
             src: "/img/figures/bar_protein_count_tx_all.png",
             desc: `The bar graph above shows the number of proteins within each
                             sequence similarity levels. It can be observed that the number of proteins
-                            at 70% sequence similarity is almost double of the proteins at 25% sequence similarity.
-                            This is because there are many similar proteins in the dataset.`,
+                            decreased at a lower threshold and Eukaryotes dominate each dataset.`,
           },
           {
             name: "bar_tm_helix_length",
             src: "/img/figures/bar_tm_helix_length_25.png",
             desc: `The bar graph above shows the different TM segments length in the non-redundant
                             dataset and the frequency of each. The dataset comprises mostly of proteins of segment length
-                             20 with a count of more than 500.`,
+                             2 with a count of more than 500.`,
           },
           {
             name: "bar_tm_length",
             src: "/img/figures/bar_tm_length_25.png",
-            desc: `The figure shows that single-pass membranes dominate in the test set, followed by multi-pass tm proteins that span the membrane three and seven times respectively`,
+            desc: `The figure shows that single-pass membranes dominate in the test set, followed by multi-pass tm proteins that span the membrane twice and seven times respectively`,
           },
         ],
         pca: {},

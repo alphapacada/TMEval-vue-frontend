@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "set VUE_APP_API_URL=http://202.92.153.75/api/v1/&& set VUE_APP_SOCKETIO_CONNECTION_URL=http://202.92.153.75/socketio/&& vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },

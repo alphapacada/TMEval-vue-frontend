@@ -302,7 +302,7 @@ import DoubleImageFigure from "./components/DoubleImageFigure.vue";
 import { BCarousel } from "bootstrap-vue/esm/components/carousel/carousel";
 import { BCarouselSlide } from "bootstrap-vue/esm/components/carousel/carousel-slide";
 import Modal from "@/components/Modal.vue";
-
+import $backend from "../api";
 export default {
   name: "ConfusionMatrix",
   components: {
@@ -315,7 +315,7 @@ export default {
     return {
       images: null,
       modal0: false,
-      path: process.env.VUE_APP_STATIC_URL,
+      path: $backend.getStaticURL(),
       currentSeqId: "set_25",
       currentSet: "",
       assess: {

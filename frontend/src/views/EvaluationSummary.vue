@@ -51,67 +51,116 @@
         </v-data-table>
       </v-card>
       <div class="row">
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-lg-6">
           <stats-card
             title="Topology Accuracy"
             type="gradient-red"
             sub-title="CCTOP"
-            icon="ni ni-active-40"
+            icon=""
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
               <span class="text-success mr-2"
-                ><i class="fa fa-arrow-up"></i> 3.48%</span
+                >87.40%</span
               >
-              <span class="text-nowrap">Since last month</span>
+              
+              <span class="text-nowrap">77.63% TM protein topology</span>
             </template>
           </stats-card>
         </div>
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-lg-6">
+          <stats-card
+            title="Best non-TM Topology Accuracy"
+            type="gradient-red"
+            sub-title="TMSEG"
+            icon=""
+            class="mb-4 mb-xl-0"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2"
+                >93.42%</span
+              >
+              <span class="text-nowrap"></span>
+            </template>
+          </stats-card>
+        </div>
+         <div class="col-lg-6">
+          <stats-card
+            title="Most Accurate Protein Classifier"
+            type="gradient-red"
+            sub-title="TOPCONS2"
+            icon=""
+            class="mb-4 mb-xl-0"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2"
+                >90.8%</span
+              >
+              <span class="text-nowrap">0.88 Matthews correclation coefficient (MCC)</span>
+            </template>
+          </stats-card>
+        </div>
+        <div class="col-lg-6">
+          <stats-card
+            title="Most Accurate N-tail Location Classifier"
+            type="gradient-red"
+            sub-title="CCTOP"
+            icon=""
+            class="mb-4 mb-xl-0"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2"
+                >92.3%%</span
+              >
+              <span class="text-nowrap">0.84 Matthews correclation coefficient (MCC)</span>
+            </template>
+          </stats-card>
+        </div>
+        <div class="col-lg-6">
           <stats-card
             title="Lowest False Negatives Per-Segment"
             type="gradient-orange"
-            sub-title="TOPCONS2.0"
-            icon="ni ni-chart-pie-35"
+            sub-title="CCTOP"
+            icon=""
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
               <span class="text-success mr-2"
-                ><i class="fa fa-arrow-up"></i> 12.18%</span
+                >3.45</span
               >
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"></span>
             </template>
           </stats-card>
         </div>
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-lg-6">
           <stats-card
-            title="Lowest False Negatives Per-Segment"
+            title="Lowest False Positives Per-Segment"
             type="gradient-green"
-            sub-title="TMSEG"
-            icon="ni ni-money-coins"
+            sub-title="Philius"
+            icon=""
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
               <span class="text-danger mr-2"
-                ><i class="fa fa-arrow-down"></i> 5.72%</span
+                >7.24</span
               >
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"></span>
             </template>
           </stats-card>
         </div>
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-lg-6">
           <stats-card
-            title="Performance"
+            title="Segment Overlap"
             type="gradient-info"
-            sub-title="49,65%"
-            icon="ni ni-chart-bar-32"
+            sub-title="CCTOP"
+            icon=""
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
               <span class="text-success mr-2"
-                ><i class="fa fa-arrow-up"></i> 54.8%</span
+                >0.85</span
               >
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"></span>
             </template>
           </stats-card>
         </div>
@@ -122,18 +171,8 @@
   </div>
 </template>
 <script>
-// Charts
-import * as chartConfigs from "@/components/Charts/config";
-//   import LineChart from '@/components/Charts/LineChart';
-//   // Tables
-//   import SocialTrafficTable from './Dashboard/SocialTrafficTable';
-//   import PageVisitsTable from './Dashboard/PageVisitsTable';
 export default {
   components: {
-    // LineChart,
-    // BarChart,
-    // PageVisitsTable,
-    // SocialTrafficTable,
   },
   data() {
     return {
@@ -152,22 +191,8 @@ export default {
     },
   },
   methods: {
-    initBigChart(index) {
-      let chartData = {
-        datasets: [
-          {
-            label: "Performance",
-            data: this.bigLineChart.allData[index],
-          },
-        ],
-        labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      };
-      this.bigLineChart.chartData = chartData;
-      this.bigLineChart.activeIndex = index;
-    },
   },
   mounted() {
-    this.initBigChart(0);
   },
 };
 </script>

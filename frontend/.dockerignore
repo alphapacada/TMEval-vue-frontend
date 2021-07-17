@@ -8,3 +8,6 @@ docker-compose*
 .vscode
 .gitignore
 .git
+**/*.tar
+backend
+/TMEval_070121.tar

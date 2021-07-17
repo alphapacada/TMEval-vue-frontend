@@ -20,7 +20,7 @@
                 "text": "Archaea",
                 "file_name":"tmeval_25_Archaea",
                 "parameters": {"reduced":25, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
-            }, 
+            },
             {
                 "text": "Viruses",
                 "file_name":"tmeval_25_Viruses",
@@ -82,12 +82,12 @@
             },
             {
                 "text": "With SP",
-                "file_name":"tmeval_25_Eukaryotes_+TM+SP",
+                "file_name":"tmeval_25_Eukaryotes_-TM+SP",
                 "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":false, "sp":true, "count":"", "topo_type":""}
             },
             {
                 "text": "Without SP",
-                "file_name":"tmeval_25_Eukaryotes_+TM-SP",
+                "file_name":"tmeval_25_Eukaryotes_-TM-SP",
                 "parameters": {"reduced":25, "tx":"Eukaryotes", "tm":false, "sp":false, "count":"", "topo_type":""}
             },
             {
@@ -102,12 +102,12 @@
             },
             {
                 "text": "With SP",
-                "file_name":"tmeval_25_Bacteria_+TM+SP",
+                "file_name":"tmeval_25_Bacteria_-TM+SP",
                 "parameters": {"reduced":25, "tx":"Bacteria", "tm":false, "sp":true, "count":"", "topo_type":""}
             },
             {
                 "text": "Without SP",
-                "file_name":"tmeval_25_Bacteria_+TM-SP",
+                "file_name":"tmeval_25_Bacteria_-TM-SP",
                 "parameters": {"reduced":25, "tx":"Bacteria", "tm":false, "sp":false, "count":"", "topo_type":""}
             },
             {
@@ -122,12 +122,12 @@
             },
             {
                 "text": "With SP",
-                "file_name":"tmeval_25_Archaea_+TM+SP",
+                "file_name":"tmeval_25_Archaea_-TM+SP",
                 "parameters": {"reduced":25, "tx":"Archaea", "tm":false, "sp":true, "count":"", "topo_type":""}
             },
             {
                 "text": "Without SP",
-                "file_name":"tmeval_25_Archaea_+TM-SP",
+                "file_name":"tmeval_25_Archaea_-TM-SP",
                 "parameters": {"reduced":25, "tx":"Archaea", "tm":false, "sp":false, "count":"", "topo_type":""}
             },
             {
@@ -142,16 +142,16 @@
             },
             {
                 "text": "With SP",
-                "file_name":"tmeval_25_Viruses_+TM-SP",
+                "file_name":"tmeval_25_Viruses_-TM-SP",
                 "parameters": {"reduced":25, "tx":"Viruses", "tm":false, "sp":true, "count":"", "topo_type":""}
             },
             {
                 "text": "Without SP",
-                "file_name":"tmeval_25_Viruses_+TM-SP",
+                "file_name":"tmeval_25_Viruses_-TM-SP",
                 "parameters": {"reduced":25, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
             }
         ]
-        
+
     },
     {
         "similarity":{
@@ -174,7 +174,7 @@
                 "text": "Archaea",
                 "file_name":"tmeval_30_Archaea",
                 "parameters": {"reduced":30, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
-            }, 
+            },
             {
                 "text": "Viruses",
                 "file_name":"tmeval_30_Viruses",
@@ -305,7 +305,7 @@
                 "parameters": {"reduced":30, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
             }
         ]
-        
+
     },
     {
         "similarity":{
@@ -328,7 +328,7 @@
                 "text": "Archaea",
                 "file_name":"tmeval_40_Archaea",
                 "parameters": {"reduced":40, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
-            }, 
+            },
             {
                 "text": "Viruses",
                 "file_name":"tmeval_40_Viruses",
@@ -459,7 +459,7 @@
                 "parameters": {"reduced":40, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
             }
         ]
-        
+
     },
     {
         "similarity":{
@@ -482,7 +482,7 @@
                 "text": "Archaea",
                 "file_name":"tmeval_40_Archaea",
                 "parameters": {"reduced":70, "tx":"Archaea", "tm":"", "sp":"", "count":"", "topo_type":""}
-            }, 
+            },
             {
                 "text": "Viruses",
                 "file_name":"tmeval_40_Viruses",
@@ -613,6 +613,6 @@
                 "parameters": {"reduced":70, "tx":"Viruses", "tm":false, "sp":false, "count":"", "topo_type":""}
             }
         ]
-        
+
     }
 ]

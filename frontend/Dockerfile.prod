@@ -20,6 +20,7 @@ WORKDIR /opt/node_app/app
 COPY --chown=node:node frontend .
 # RUN chown node:node opt/node_app/app/dist
 USER node
+ENV NODE_ENV=production
 RUN npm run build
 
 # Production state

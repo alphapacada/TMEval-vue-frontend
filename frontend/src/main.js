@@ -37,6 +37,10 @@ import store from "./store";
 // import './registerServiceWorker'
 // Vue.use(VueAxios, axios)
 // Vue.prototype.$http = axios
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV == "production") {
+  console.log = function () {};
+}
 console.log(process.env.VUE_APP_SOCKETIO_CONNECTION_URL);
 console.log(process.env.VUE_APP_API_URL);
 Vue.config.productionTip = false;
@@ -61,7 +65,9 @@ Vue.use(Argon);
 Vue.use(
   new VueSocketIO({
     debug: false,
-    connection: 'http://202.92.153.75/socketio/' || process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
+    connection:
+      "http://202.92.153.75/socketio/" ||
+      process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
   })
 );
 

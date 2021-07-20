@@ -1,0 +1,11 @@
+Vue components/Views guide
+Assessment.vue - tab panel on the landing page
+Evaluation.vue - tabs
+
+Prediction.vue - upload fasta, submit prediction
+PredictionResult.vue  - jobsection, prediction job results
+
+
+EvaluationResult.vue - summary
+PerformanceEvalutation - individual performance metric
+TableTest2 - protein dataset

@@ -10,9 +10,7 @@
           <v-card-text class="pt-3" style="word-wrap:break-word">
             {{ modalText }}
           </v-card-text>
-
           <v-divider></v-divider>
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="modalOn = false">
@@ -29,28 +27,21 @@
             </v-card-title>
           </div>
         </div>
-        <!-- <div class="row">
-          <div class="col"> -->
         <v-card-subtitle>
           Use options below to narrow down results then click "Apply" at the
           lower left.
         </v-card-subtitle>
-        <!-- </div>
-        </div> -->
         <v-card-text>
           <div id="parameter-container">
             <v-row no-gutters class="align-items-center">
-              <!-- <v-col> -->
               <v-btn left outlined @click="clickFilter = !clickFilter" icon>
                 <v-icon>fa fa-filter</v-icon>
               </v-btn>
-              <!-- <v-spacer></v-spacer> -->
               <v-chip-group class="ml-2" active-class="primary--text" column>
                 <v-chip v-for="(tag, name) in activeParameters" :key="tag">
                   {{ getChipVal(name, tag) }}
                 </v-chip>
               </v-chip-group>
-              <!-- </v-col> -->
             </v-row>
             <div v-if="clickFilter" class="container">
               <v-card outlined>
@@ -58,7 +49,6 @@
                 <v-card-text>
                   <v-row>
                     <div class="col">
-                      <!-- <v-row> -->
                       <div class="py-2">
                         <span>
                           Transmembrane:
@@ -86,7 +76,6 @@
                           </base-dropdown>
                         </span>
                       </div>
-                      <!-- </v-row> -->
                       <div class="py-2">
                         Signal Peptide:
                         <base-dropdown>
@@ -258,7 +247,6 @@
           </v-btn>
           <v-btn disabled class="ma-2" tile outlined color="red">
             Evaluate
-            <!-- <v-icon right>fa-cloud-download</v-icon> -->
           </v-btn>
           <v-btn @click="download" class="ma-2" tile outlined color="success">
             Download
@@ -266,7 +254,6 @@
           </v-btn>
           <a style="display:none" ref="download"></a>
         </v-card-title>
-        <!--    -->
         <v-data-table
           :headers="mainHeaders"
           :items="mainItems"
@@ -299,24 +286,6 @@
               <td class="text-xs">{{ item.count }}</td>
             </tr>
           </template>
-          <!-- <template slot="expand" slot-scope="props">
-    <v-card class="elevation-10">
-      <v-card-text>
-
-        <v-data-table :headers="subHeaders"
-                      :items="subItems"
-                      item-key="color"
-                      hide-actions
-                      class="elevation-10">
-          <template slot="items" slot-scope="props">
-            <td class="text-xs">{{ props.item.color }}</td>
-            <td class="text-xs">{{ props.item.value }}</td>
-          </template>
-        </v-data-table>
-
-      </v-card-text>
-    </v-card>
-  </template> -->
           <template v-slot:footer>
             <td :colspan="12" class="pt-2 pl-1">
               TM-Transmembrane,<span class="tab"></span>SP - Signal Peptide
@@ -459,7 +428,6 @@ export default {
     },
     download() {
       var parameters = JSON.parse(JSON.stringify(this.parameters));
-      console.log(parameters);
       this.$refs.download.href =
         $backend.getBaseURL() +
         "proteins/download?" +
@@ -473,51 +441,36 @@ export default {
     loadProteins(parameters) {
       this.mainItems = [];
       this.tableText = LOADING_MSG;
-      console.log("Downloading data...");
       this.loadInProgress = true;
-      console.log("parameters", parameters);
       $backend
         .getProteins(parameters)
         .then((responseData) => {
-          console.log("Download complete");
-          console.log(responseData);
           this.tableText = "";
           this.mainItems = responseData;
           this.loadInProgress = false;
           if (this.mainItems.length == 0) this.tableText = "No matches.";
-          console.log("mainitems: ", this.mainItems);
         })
         .catch((responseData) => {
           this.loadInProgress = false;
           this.tableText = "Download failed!";
-          console.log("Download failed!");
         });
     },
     sendParameters() {
       var parameters = JSON.parse(JSON.stringify(this.parameters));
       this.loadProteins(parameters);
-      console.log(parameters);
-      console.log("Parameters sent!");
     },
     resetParameters() {
-      console.log("origParameters", this.origParameterChoices);
       this.parameterChoices = _.cloneDeep(this.origParameterChoices);
-      console.log("this.parameterChoices", this.parameterChoices);
       this.parameters = { ...this.origParameters };
-      console.log("Parameters reset!");
       this.sendParameters();
     },
     setParameter(name, index) {
-      console.log(name);
       let obj = this.parameterChoices[name];
-      // this.parameters.tx = obj.choices[obj.selected].value;
       obj.selected = index;
       let param_name = this.param_mapping[name];
-      console.log(param_name);
       this.parameters[param_name] = obj.choices[index].value;
     },
     selectedChoice(name) {
-      console.log("Selected Choice", this.parameterChoices);
       let obj = this.parameterChoices[name];
       let idx = obj.selected;
       return obj.choices[idx].text;
@@ -527,9 +480,6 @@ export default {
     this.resetParameters();
   },
   mounted() {
-    // var parameters = JSON.parse(JSON.stringify(this.parameters));
-    // console.log("huehue");
-    // this.loadProteins(parameters);
     this.loadInProgress = true;
     this.tableText = LOADING_MSG;
   },
@@ -544,8 +494,6 @@ export default {
 };
 </script>
 <style>
-/* .dropdown .btn {
-} */
 .v-card__title .primary--text {
   color: #2dce89 !important;
   caret-color: #2dce89 !important;
@@ -573,16 +521,9 @@ tfoot {
 .custom-toggle-slider {
   border-radius: 34px !important;
 }
-
-/* @import 'vuetify/dist/vuetify.min.css' */
 </style>
 <style scoped>
 .v-application >>> .rounded-circle {
   border-radius: 34px !important;
 }
 </style>
-
-// #parameter-container > * .col span { // display: block; // padding: 0.75rem;
-// /* box-shadow: antiquewhite; */ // border-radius: 0.25rem; // color:
-#393f49c2; // -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, // rgba(0, 0, 0,
-0.1) 0 4px 4px; // }

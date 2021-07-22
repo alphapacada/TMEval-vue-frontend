@@ -22,9 +22,7 @@
         <span></span>
       </div>
     </div>
-
     <!-- + PRED RES -->
-
     <div class="mt-4 container shape-container align-items-center">
       <div class="container">
         <v-alert v-if="Boolean(errorAlert)" text type="danger">
@@ -168,7 +166,6 @@
           </div>
         </v-card-text>
       </v-card>
-      <!-- - TOPOLOGY -->
     </div>
   </section>
 </template>
@@ -235,15 +232,8 @@ export default {
     this.numSeq = this.get_stats.numSeq;
     this.date = Date(this.get_stats.date_submitted);
     this.dateDone = Date(this.get_stats.date_completed);
-
-    // this.numSeq = this.get_stats.numSeq
-    // this.date_submitted = this.get_stats.date_submitted
-    // this.date_completed = this.get_stats.date_completed
   },
   methods: {
-    // readCDHitReduced() {
-
-    // }
     downloadFile() {
       this.$refs.download.href =
         $backend.getBaseURL() + "predict/" + this.job_id + ".zip";
@@ -280,13 +270,10 @@ export default {
       }
     },
     handlePredResults(responseData) {
-      console.log("Received GET response");
-      console.log(responseData.data);
       this.percent =
         (responseData.data["current"] * 100) / responseData.data["total"];
       this.progress_value = this.percent || 0;
       this.job_state = "Prediction Job: " + responseData.data["state"];
-      // this.dateDone = responseData.data["date_done"];
       this.cdhitreduced = responseData.data["cdhit"];
       this.cdhitreduced_numSeq = responseData.data["cdhit_numSeq"];
       if (responseData.data["state"] == "SUCCESS") {
@@ -303,9 +290,7 @@ export default {
         this.dateDone = Date(this.get_stats.date_completed);
         if (responseData.data["state"] != "FAILURE") {
           setTimeout(() => {
-            console.log("loop and fetch results again");
             this.getLongTask(this.job_id);
-            // 10000
           }, 5000);
         }
       }
@@ -323,7 +308,6 @@ export default {
           }
         });
     },
-    //prediction_res -> a dict containing the results of the prediction
     fetchPredictionResults(prediction_res) {
       this.results = prediction_res;
       let sequenceIndex = 0;
@@ -333,7 +317,6 @@ export default {
 
       for (const result of this.results) {
         isNewSequence = true;
-
         //Add prediction tool used as the results are being processed
         if (!this.predictionMethods.includes(result["tool"]))
           this.predictionMethods.push(result["tool"]);
@@ -392,14 +375,12 @@ export default {
     setSelectedSequence(index) {
       if (index < 0) {
         this.viewAll = true;
-        // this.selectedSequenceIndex =
         this.selectedMethod = "Method";
         this.selectedTopology = this.topologies;
       } else {
         this.viewAll = false;
         this.selectedSequence = this.topologies[index].sequence.name;
         this.selectedSequenceIndex = index;
-        // this.selectedTopology = [this.topologies[index]];
         this.updateResDisplay();
       }
     },
@@ -418,19 +399,8 @@ export default {
     },
   },
   sockets: {
-    initial_progress(data) {
-      // console.log("received initial progress socket");
-      // this.total = data["total"];
-      // this.percent = (data["current"] * 100) / data["total"];
-      // this.job_status = data["status"] || data["state"];
-    },
     progress(data) {
-      console.log("received progress socket");
-      // this.total = data["total"];
-      // this.percent = this.percent + 1 / data["total"];
       this.job_status = data["status"];
-
-      // this.status = data['status'];
     },
   },
 };

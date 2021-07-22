@@ -15,17 +15,15 @@ const retryDelay = (retryNumber = 0) => {
 };
 
 let $axios = axios.create({
-  // baseURL: process.env.VUE_APP_API_URL || 'http://localhost:5000/api/v1/',
   timeout: 5000,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
-  // credential: 'same-origin'
 });
-// https://github.com/gtalarico/flask-vuejs-template/blob/master/src/backend.js
 
 $axios.defaults.baseURL =
-    'http://202.92.153.75/api/v1/' || process.env.VUE_APP_API_URL;
-$axios.defaults.baseStaticURL = 'http://202.92.153.75/static/' || process.env.VUE_APP_STATIC_URL;
+  "http://202.92.153.75/api/v1/" || process.env.VUE_APP_API_URL;
+$axios.defaults.baseStaticURL =
+  "http://202.92.153.75/static/" || process.env.VUE_APP_STATIC_URL;
 export default {
   getStaticURL() {
     return $axios.defaults.baseStaticURL;
@@ -76,7 +74,6 @@ export default {
         timeout: 100000,
       })
       .then((response) => {
-        console.log("success");
         let DOGGO = new Blob([response], { type: "application/x-tar" }),
           url = window.URL.createObjectURL(DOGGO);
         window.open(url);
@@ -88,15 +85,12 @@ export default {
       .then((response) => response);
   },
   getDownloadableFasta(query) {
-    console.log(query.name);
-    console.log(query.parameters);
     return $axios
       .get(`files/tmeval-datasets/${query.name}`, {
         params: query.parameters,
         timeout: 100000,
       })
       .then((response) => {
-        console.log("success");
         let DOGGO = new Blob([response], { type: "application/x-tar" }),
           url = window.URL.createObjectURL(DOGGO);
 
@@ -105,12 +99,10 @@ export default {
   },
   getAssessment(seqId, set) {
     if (set) {
-      // console.log("set");
       return $axios
         .get(`assessment/${seqId}/${set}/`)
         .then((response) => response.data);
     } else {
-      // console.log("only seqid");
       return $axios
         .get(`assessment/${seqId}`)
         .then((response) => response.data);
@@ -119,22 +111,4 @@ export default {
   getJobs() {
     return $axios.get("jobs/").then((response) => response.data);
   },
-
-  // headers: { 'Access-Control-Allow-Origin': true }
-  //github.com/axios/axios#handling-errors
-  // axios.put(this.apiBaseEndpoint + '/' + id, input)
-  //   .then((response) => {
-
-  //   })
-  //   .catch(error) => {
-  //     if (error.response) {
-
-  //     } else if (error.request) {
-  //       console.log(error.request)
-  //     } else {
-  //       console.log('Error', error.message);
-
-  //     }
-  //     console.log(error.config)
-  //   });
 };

@@ -71,27 +71,6 @@
             :src="assess.pred_acc_classification"
             :text="current_pred_acc_classification_cap"
           ></caption-table>
-          <!-- <div class="row">
-            <div class="col">
-              <b-table
-                small
-                responsive
-                striped
-                hover
-                :items="current_pred_acc_classification"
-              >
-              </b-table>
-            </div>
-          </div>
-          <div class="pl-4 row">
-            The table above shows that all the topology prediction tools perform
-            well on the -TM-SP proteins. For transmembrane proteins, CCTOP is
-            superior in predicting both with and without signal peptides. For
-            non-transmembrane proteins, CCTOP also leads in predicting those
-            with and without signal peptides. The least performing is HMMTOP in
-            majority of the classifications.
-          </div> -->
-        </v-card-text>
       </v-card>
       <!-- FN FP -->
       <v-card id="fn-fp" class="mb-4">
@@ -102,11 +81,6 @@
           <div class="row">
             <div class="col">
               <caption-table :src="assess.per_segment_fn_fp"></caption-table>
-              <!-- <b-table
-                striped
-                hover
-                :items="current_per_segment_fn_fp"
-              ></b-table> -->
             </div>
           </div>
           <div class="pl-4 row">
@@ -128,7 +102,6 @@
         <v-card-text>
           <div class="row">
             <div class="col">
-              <!-- <b-table striped hover :items="current_mcc"></b-table> -->
               <div class="col">
                 <caption-table :src="assess.mcc"></caption-table>
               </div>
@@ -139,7 +112,6 @@
           </div>
         </v-card-text>
       </v-card>
-
       <!-- SOV -->
       <v-card id="sov" class="mb-4">
         <v-card-title primary-title>
@@ -148,7 +120,6 @@
         <v-card-text>
           <div class="row">
             <div class="col">
-              <!-- <b-table striped hover :items="current_sov"></b-table> -->
               <caption-table :src="assess.sov"></caption-table>
             </div>
           </div>
@@ -159,9 +130,7 @@
   </section>
 </template>
 <script>
-import $backend from "../api";
 import CaptionedTable from "@/views/components/CaptionedTable.vue";
-
 import { BTable } from "bootstrap-vue/esm/components/table";
 export default {
   components: {
@@ -171,9 +140,6 @@ export default {
   name: "PredictionResultTable",
   data() {
     return {
-      // assessment: {},
-      // assess: {},
-
       currentSeqId: "set_25",
       currentSet: "A",
       seqIdentity: "25",
@@ -185,7 +151,6 @@ export default {
       current_mcc: {},
       current_sov: {},
       set: "A",
-
       table1:
         '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_pred_acc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Correct TM Count</th>\n      <th>Correct Segment Location</th>\n      <th>N Location Success Rate</th>\n      <th>Correct Topology</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>95.586260</td>\n      <td>99.261178</td>\n      <td>95.854922</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>70.629438</td>\n      <td>97.591633</td>\n      <td>6.208021</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>95.557475</td>\n      <td>98.973326</td>\n      <td>78.919593</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>93.302629</td>\n      <td>98.618307</td>\n      <td>6.351948</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>96.094799</td>\n      <td>99.155632</td>\n      <td>7.685665</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
       table2:
@@ -225,8 +190,6 @@ export default {
       return this.assessment[this.currentSeqId][this.currentSet];
     },
     assessment() {
-      console.log("computed Assessment");
-      console.log(this.$store.state.assessment_res);
       return this.$store.state.assessment_res;
     },
     buttonText() {
@@ -239,52 +202,9 @@ export default {
     },
   },
   methods: {
-    // assignHeaders(array) {
-    //   let newItem = {};
-    //   newItem.headers = Object.keys(array[0]).map((key) => {
-    //     return {
-    //       text: key,
-    //       value: key,
-    //     };
-    //   });
-    //   newItem.items = array;
-    //   console.log(newItem);
-    //   return newItem;
-    // },
-    // Call API here
     fetchResults() {
       this.currentSeqId = "set_" + this.seqIdentity;
-      // this.currentSeqId = "set_25";
-
       this.currentSet = this.set;
-      console.log(
-        "Fetching results...\nSeq:",
-        this.currentSeqId,
-        " Set: ",
-        this.currentSet
-      );
-      // this.assess = this.assessment[this.currentSeqId][this.currentSet];
-      // console.log("Assessment");
-      // console.log(this.assessment);
-      // console.log(this.assessment[this.currentSeqId]);
-      // setTimeout(function() {
-      //   alert("VIDEO HAS STOPPED");
-      // }, 5000);
-      // console.log(this.assessment[this.currentSeqId].A);
-      // // let assess_res = this.$store.state.assessment_res;
-      // // console.log(this.$store.state.assessment_res);
-      // this.current_pred_acc = this.assessment[this.currentSeqId].A.pred_acc;
-      // this.current_pred_acc_classification = this.assessment[this.currentSeqId][
-      //   this.currentSet
-      // ].pred_acc_classification;
-
-      //       JSON.parse(response.pred_acc_classification)
-      // $backend
-      //   .getAssessment(this.currentSeqId, this.currentSet)
-      //   .then((response) => {
-      //     this.assessment = response;
-      //     // console.log("response", response.sov)
-      //     this.current_pred_acc = this.assignHeaders(JSON.parse(response.sov));
       this.current_pred_acc_cap = ` Most of the prediction tools gained correct topology scores of 90
             and above except HMMTOP. A reason for this unusually high score is
             the proportion of the positive and negative set. The number of
@@ -300,53 +220,9 @@ export default {
             protein must be the same.
             For non transmembrane proteins, the only basis for a correct
             topology is the absence of a transmembrane helix/segment.`;
-      //     this.current_pred_acc_classification = this.assignHeaders(
-      //       JSON.parse(response.pred_acc_classification)
-      //     );
-      //     this.current_pred_acc_classification_cap = `The table above shows that all the topology prediction tools perform
-      //       well on the -TM-SP proteins. For transmembrane proteins, CCTOP is
-      //       superior in predicting both with and without signal peptides. For
-      //       non-transmembrane proteins, CCTOP also leads in predicting those
-      //       with and without signal peptides. The least performing is HMMTOP in
-      //       majority of the classifications.`;
-
-      //   });
-      // let fakeResults = {
-      //     exp_set:'A',
-      //     pred_acc: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_pred_acc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Correct TM Count</th>\n      <th>Correct Segment Location</th>\n      <th>N Location Success Rate</th>\n      <th>Correct Topology</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>95.586260</td>\n      <td>99.261178</td>\n      <td>95.854922</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>70.629438</td>\n      <td>97.591633</td>\n      <td>6.208021</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>95.557475</td>\n      <td>98.973326</td>\n      <td>78.919593</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>93.302629</td>\n      <td>98.618307</td>\n      <td>6.351948</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>96.094799</td>\n      <td>99.155632</td>\n      <td>7.685665</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
-      //     pred_acc_classification: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25.df_pred_acc_classification">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>+TM-SP</th>\n      <th>+TM+SP</th>\n      <th>-TM-SP</th>\n      <th>-TM+SP</th>\n      <th>Overall</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>80.322004</td>\n      <td>90.756303</td>\n      <td>97.449483</td>\n      <td>89.424460</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>54.561717</td>\n      <td>49.019608</td>\n      <td>77.895515</td>\n      <td>32.589928</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>58.139535</td>\n      <td>80.672269</td>\n      <td>92.102021</td>\n      <td>94.748201</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>54.203936</td>\n      <td>68.907563</td>\n      <td>98.780187</td>\n      <td>72.446043</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>69.409660</td>\n      <td>85.714286</td>\n      <td>96.365205</td>\n      <td>91.294964</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
-      //     per_segment_fn_fp: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_fn_fp">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>FN Per-segment</th>\n      <th>FP Per-segment</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.470159</td>\n      <td>3.943581</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.815582</td>\n      <td>28.554980</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>1.285742</td>\n      <td>3.156784</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>1.228171</td>\n      <td>5.469200</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.767607</td>\n      <td>3.137594</td>\n    </tr>\n  </tbody>\n</table>',
-      //     mcc: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_reduced_df_mcc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Protein Orientation MCC</th>\n      <th>Protein Classification MCC</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.692814</td>\n      <td>0.359149</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.277160</td>\n      <td>0.238049</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.487906</td>\n      <td>0.741812</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>0.399812</td>\n      <td>0.376336</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.606363</td>\n      <td>0.825429</td>\n    </tr>\n  </tbody>\n</table>',
-      //     sov: '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_sov_tm_helix">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SOV</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>0.849833</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>0.810492</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>0.806505</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>0.810561</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>0.830279</td>\n    </tr>\n  </tbody>\n</table>',
-      //     plot_sample: 'somepath',
-      //     plot_cm_orientation: {
-      //         cctop: 'somepath',
-      //         hmmtop: 'somepath'
-      //     },
-      //     plot_cm_orientation: {
-      //         cctop: 'somepath',
-      //         hmmtop: 'somepath'
-      //     },
-      //     plot_tmh_length: {
-      //         cctop: 'somepath',
-      //         hmmtop: 'somepath'
-      //     },
-      // };
-      // let response = fakeResults;
-
-      // this.current_pred_acc = response.pred_acc;
-      // this.current_pred_acc_classification = response.pred_acc_classification;
-      // this.current_per_segment_fn_fp = response.per_segment_fn_fp;
-      // this.current_mcc = response.mcc;
-      // this.current_sov = response.sov;
     },
   },
 
-  mounted() {
-    console.log(this.assessment);
-
-    // this.fetchResults();
-  },
 };
 </script>
 <style>

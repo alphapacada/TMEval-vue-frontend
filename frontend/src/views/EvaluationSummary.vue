@@ -27,27 +27,6 @@
               >
             </td>
           </template>
-          <!-- <template v-slot:item="{ item }">
-          <tr @click="item.expanded = !item.expanded">
-            <td class="text-xs">{{ item.name }}</td>
-            <td class="text-xs">{{ item.length }}</td>
-            <td class="text-xs">{{ item.organism }}</td>
-            <td class="text-xs">{{ item.orientation }}</td>
-            <td class="text-xs">{{ item.taxonomy }}</td>
-            <td class="text-xs">{{ item.tm }}</td>
-            <td class="text-xs">{{ item.sp }}</td>
-            <td class="text-xs">
-              <v-btn
-                depressed
-                color="success"
-                @click="showTopology(item.topology)"
-                >Show</v-btn
-              >
-            </td>
-            <td class="text-xs">{{ item.topo_type }}</td>
-            <td class="text-xs">{{ item.count }}</td>
-          </tr>
-        </template> -->
         </v-data-table>
       </v-card>
       <div class="row">
@@ -60,10 +39,7 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2"
-                >87.40%</span
-              >
-              
+              <span class="text-success mr-2">87.40%</span>
               <span class="text-nowrap">77.63% TM protein topology</span>
             </template>
           </stats-card>
@@ -77,14 +53,12 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2"
-                >93.42%</span
-              >
+              <span class="text-success mr-2">93.42%</span>
               <span class="text-nowrap"></span>
             </template>
           </stats-card>
         </div>
-         <div class="col-lg-6">
+        <div class="col-lg-6">
           <stats-card
             title="Most Accurate Protein Classifier"
             type="gradient-red"
@@ -93,10 +67,10 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2"
-                >90.8%</span
+              <span class="text-success mr-2">90.8%</span>
+              <span class="text-nowrap"
+                >0.88 Matthews correclation coefficient (MCC)</span
               >
-              <span class="text-nowrap">0.88 Matthews correclation coefficient (MCC)</span>
             </template>
           </stats-card>
         </div>
@@ -109,10 +83,10 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2"
-                >92.3%%</span
+              <span class="text-success mr-2">92.3%%</span>
+              <span class="text-nowrap"
+                >0.84 Matthews correclation coefficient (MCC)</span
               >
-              <span class="text-nowrap">0.84 Matthews correclation coefficient (MCC)</span>
             </template>
           </stats-card>
         </div>
@@ -125,9 +99,7 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2"
-                >3.45</span
-              >
+              <span class="text-success mr-2">3.45</span>
               <span class="text-nowrap"></span>
             </template>
           </stats-card>
@@ -141,9 +113,7 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-danger mr-2"
-                >7.24</span
-              >
+              <span class="text-danger mr-2">7.24</span>
               <span class="text-nowrap"></span>
             </template>
           </stats-card>
@@ -157,9 +127,7 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2"
-                >0.85</span
-              >
+              <span class="text-success mr-2">0.85</span>
               <span class="text-nowrap"></span>
             </template>
           </stats-card>
@@ -172,8 +140,7 @@
 </template>
 <script>
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       search: "",
@@ -190,10 +157,8 @@ export default {
       return this.assessment.sample_data.items;
     },
   },
-  methods: {
-  },
-  mounted() {
-  },
+  methods: {},
+  mounted() {},
 };
 </script>
 <style></style>

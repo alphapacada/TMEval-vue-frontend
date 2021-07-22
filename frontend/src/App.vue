@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <card v-if="isConnected">Connected to socket</card> -->
     <router-view name="header"></router-view>
     <main v-on:scroll.passive="handleScroll">
       <fade-transition origin="center" mode="out-in" :duration="250">
@@ -32,25 +31,18 @@ export default {
   }),
   created() {
     this.$store.dispatch("instantiateAssessRes").then(() => {
-      console.log("finished instantiating assess");
-      console.log(this.$store.state.assessment_res);
-      this.$store.dispatch("getAssessResFromApi").then(() => {
-        console.log("finished api request for assess");
-        console.log(this.$store.state.assessment_res);
-      });
+      this.$store.dispatch("getAssessResFromApi").then(() => {});
     });
   },
   methods: {
     handleScroll(event) {
       // Any code to be executed when the window is scrolled
       this.isUserScrolling = window.scrollY > 0;
-      console.log("calling handleScroll");
     },
   },
   sockets: {
     connect() {
       this.isConnected = true;
-      console.log("connected to socket");
     },
   },
 };

@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     handleClick(selected) {
-      console.log(selected);
       this.$emit("clicked", selected);
     },
   },

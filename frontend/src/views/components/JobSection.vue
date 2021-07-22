@@ -32,11 +32,6 @@
 </template>
 <script>
 export default {
-  //   data() {
-  //     return {
-  //       date: "",
-  //     };
-  //   },
   name: "job-section",
   props: {
     job_id: {
@@ -61,21 +56,6 @@ export default {
       type: [Date, String],
       description: "Date Submitted",
     },
-  },
-  created() {
-    // var today = new Date();
-    // this.date =
-    //   today.getFullYear() +
-    //   "-" +
-    //   (today.getMonth() + 1) +
-    //   "-" +
-    //   today.getDate() +
-    //   " " +
-    //   today.getHours() +
-    //   ":" +
-    //   today.getMinutes() +
-    //   ":" +
-    //   today.getSeconds();
   },
 };
 </script>

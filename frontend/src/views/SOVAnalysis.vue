@@ -4,7 +4,6 @@
       Segment overlap measure is a segment based measure of 2D structure. All
       prediction tools perform well in this performance metric.
     </h4>
-
     <v-card id="redundant-data" class="mb-4">
       <v-card-title primary-title>
         <h1>
@@ -13,11 +12,6 @@
       </v-card-title>
       <v-card-text>
         <caption-table :src="assess['A'].sov"></caption-table>
-
-        <!-- <div class="row">
-          <div class="col" v-html="table1"></div>
-        </div>
-        <div class="pl-4 row"></div> -->
       </v-card-text>
     </v-card>
 
@@ -58,7 +52,6 @@
   </section>
 </template>
 <script>
-import $backend from "../api";
 import CaptionedTable from "@/views/components/CaptionedTable.vue";
 
 export default {
@@ -71,7 +64,6 @@ export default {
       currentSeqId: "set_25",
       currentSet: "A",
       seqIds: [25, 30, 40],
-      // sets: ["A", "B", "C", "D"],
       sets: ["A"],
       tables: {
         A: {},
@@ -91,12 +83,9 @@ export default {
   },
   computed: {
     assess() {
-      console.log(this.assessment[this.currentSeqId]);
       return this.assessment[this.currentSeqId];
     },
     assessment() {
-      console.log("computed Assessment");
-      console.log(this.$store.state.assessment_res);
       return this.$store.state.assessment_res;
     },
   },
@@ -106,40 +95,10 @@ export default {
         return this.asses;
       }
     },
-    // assignHeaders(array) {
-    //   let newItem = {};
-    //   newItem.headers = Object.keys(array[0]).map((key) => {
-    //     return {
-    //       text: key,
-    //       value: key,
-    //     };
-    //   });
-    //   newItem.items = array;
-    //   console.log(newItem);
-    //   return newItem;
-    // },
-    // fetchAssessment(seqId, set) {
-    //   let res = {};
-    //   $backend.getAssessment(seqId, set).then((response) => {
-    //     if (response) {
-    //       this.tables[set] = this.assignHeaders(JSON.parse(response.sov));
-    //     }
-    //     // console.log(JSON.parse(response));
-    //     // return JSON.parse(response);
-    //   });
-    // },
-    // fetchResults() {
-    //   // const response = fetchAssessment(25);
-    //   for (let i = 0; i < this.sets.length; i++) {
-    //     this.fetchAssessment(25, this.sets[i]);
-    //   }
-    // },
   },
   mounted() {
     this.currentSeqId = "set_25";
-    // this.fetchResults();
   },
-  // mounted() {},
 };
 </script>
 <style>

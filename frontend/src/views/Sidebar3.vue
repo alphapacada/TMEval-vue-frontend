@@ -154,11 +154,6 @@ export default {
     ],
     drawer: true,
   }),
-  methods: {},
-  created() {},
-  mounted() {
-    // this.$store.dispatch("instantiateAssessRes");
-  },
 };
 </script>
 <style scoped>
@@ -169,12 +164,4 @@ export default {
   background-color: black;
   color: white !important;
 }
-
-/* .v-application {
-  margin-top: 60px;
-} */
-
-/* .v-container {
-  padding-: 15px;
-} */
 </style>

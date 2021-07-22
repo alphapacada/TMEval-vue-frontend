@@ -34,16 +34,16 @@ import FeatureFactory from "ProtVista/src/FeatureFactory";
 export default {
   name: "topology",
   directives: {
-    "b-popover": VBPopover
+    "b-popover": VBPopover,
   },
   props: {
-    seq: String
+    seq: String,
   },
   data() {
     return {
       sequence: "",
       paths: [],
-      topologyWidth: 0
+      topologyWidth: 0,
     };
   },
   methods: {
@@ -114,8 +114,8 @@ export default {
               transform: "translate(" + tOffset + ",1)",
               popover: {
                 popover_msg: currentText,
-                title: "Details"
-              }
+                title: "Details",
+              },
             };
             this.paths.push(newPath);
             currentChar = this.sequence.charAt(currentIndex);
@@ -128,12 +128,12 @@ export default {
       } else {
         this.paths = [];
       }
-    }
+    },
   },
   mounted() {
     this.resizewatcher();
     this.loadPaths();
-  }
+  },
 };
 </script>
 

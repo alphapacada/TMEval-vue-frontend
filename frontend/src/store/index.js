@@ -5,9 +5,6 @@ Vue.use(Vuex);
 function assignHeaders(array) {
   let newItem = {};
   newItem.headers = Object.keys(array[0]).map((key) => {
-    // if (key != "Prediction Method") {
-    //   return { text: key, value: key, align: "center" };
-    // }
     return {
       text: key,
       value: key,
@@ -15,23 +12,8 @@ function assignHeaders(array) {
     };
   });
   newItem.items = array;
-  // console.log(newItem);
   return newItem;
 }
-// function json_to_datatable_item(name) {
-//   this.tables[name].items = this.roundOffNumbers(
-//     JSON.parse(this.assessment[name])
-//   );
-
-//   this.tables[name].headers = Object.keys(this.tables[name].items[0]).map(
-//     (key) => {
-//       if (key != "Prediction Method") {
-//         return { text: key, value: key, align: "center" };
-//       }
-//       return { text: key, value: key };
-//     }
-//   );
-// },
 const table_keys = [
   "sov",
   "pred_acc_classification",
@@ -61,30 +43,20 @@ const store = new Vuex.Store({
       state.count++;
     },
     update_stats(state) {
-      console.log("Retrieving new job stat");
       $backend.getJobs().then((responseData) => {
         state.job_stats = responseData;
       });
     },
     updateAssessment(state, payload) {
-      // console.log("setAssessmentSet");
       let seqId = payload.seqId;
       let set = payload.set;
       let response = payload.response;
-
-      // console.log(seqId, set);
-
-      // const plot_keys = ["plot_cm_orientation", "plot_cm_classification"];
       let new_assess_res = Object();
 
       Object.keys(response).forEach((res_key) => {
-        // check if undefined
         if (response[res_key]) {
-          console.log(res_key);
-
           if (table_keys.includes(res_key)) {
             if (res_key == "sample_data") {
-              console.log(response[res_key]);
             }
             new_assess_res[res_key] = assignHeaders(
               JSON.parse(response[res_key])
@@ -107,12 +79,6 @@ const store = new Vuex.Store({
       );
     },
     setAssessment(state, assess_res) {
-      // state.assessment_res = assess_res;
-      // state.assessment_res = Object.assign(
-      //   {},
-      //   state.assessment_res,
-      //   assess_res
-      // );
       state.assessment_res = Object.assign(
         {},
         state.assessment_res,
@@ -140,7 +106,6 @@ const store = new Vuex.Store({
           assess_res[set_key][subset_key] = { ...obj };
         });
       });
-
       commit("setAssessment", assess_res);
     },
     getAssessResFromApi({ commit, state }) {
@@ -153,7 +118,6 @@ const store = new Vuex.Store({
             .getAssessment(seq_ident[seq_ctr], sets[i])
             .then((response) => {
               if (response) {
-                // console.log("received response");
                 commit("updateAssessment", {
                   response: response,
                   seqId: "set_" + key,

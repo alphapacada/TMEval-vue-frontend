@@ -15,8 +15,6 @@
     </div>
     <modal :show.sync="modal0">
       <b-carousel ref="carousel1" controls no-animation :interval="0">
-        <!-- Text slides with image -->
-
         <b-carousel-slide
           v-for="(value, name) in images"
           :img-src="path + value"
@@ -328,23 +326,14 @@ export default {
   },
   mounted() {
     this.assess = this.assessment[this.currentSeqId];
-    console.log("assess", this.assess);
   },
   computed: {
     assessment() {
       return this.$store.state.assessment_res;
     },
-    // assess() {
-    //   return this.assessment[this.currentSeqId];
-    // },
   },
   methods: {
     showImg(idx, set, name) {
-      // let set = "A";
-      // let name = "TMSEG";
-      // let idx = 0;
-      console.log("show image");
-      console.log(idx + set + name);
       if (idx == 0) {
         this.images = Object.values(this.assess[set].plot_cm_classification);
         this.$refs.carousel1.setSlide(

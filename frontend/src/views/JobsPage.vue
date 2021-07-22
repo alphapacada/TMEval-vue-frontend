@@ -3,13 +3,11 @@
     <div class="container">
       <v-data-table :items="items" :headers="headers">
         <template v-slot:item.status="{ item }">
-          <!-- getColor(item.status) -->
           <v-chip :color="getColor(item.status)">
             {{ item.status }}
           </v-chip>
         </template>
         <template v-slot:item.job_id="{ item }">
-          <!-- getColor(item.status) -->
           <router-link
             :to="{ name: 'pred-results', params: { id: item.job_id } }"
             >{{ item.job_id }}</router-link
@@ -48,7 +46,6 @@ export default {
       let stats = this.get_stats;
       if (stats.jobs) {
         Object.keys(stats.jobs).forEach((key) => {
-          console.log(key);
           let row = Object();
 
           this.headers.forEach((item) => {
@@ -81,12 +78,8 @@ export default {
   },
   watch: {
     get_stats() {
-      console.log("getJobItems");
       this.items = this.getJobItems();
     },
   },
-  // beforeUpdate() {
-  //   this.getJobItems();
-  // },
 };
 </script>

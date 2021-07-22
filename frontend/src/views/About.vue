@@ -16,7 +16,6 @@
                 :ripple="{ class: 'success--text' }"
                 class="mr-sm-1 mb-4"
               >
-                <!-- <a href="http://www.enzim.hu/hmmtop/html/adv_submit.html" target="_blank"> -->
                 <v-card-title primary-title>
                   <h4>
                     <a
@@ -40,7 +39,6 @@
                 :ripple="{ class: 'default--text' }"
                 class="mb-4"
               >
-                <!-- <a href="http://cctop.enzim.ttk.mta.hu/" target="_blank"> -->
                 <v-card-title primary-title>
                   <h4>
                     <a
@@ -56,7 +54,6 @@
                   methods and incorporates topology information from existing
                   experimental and computational sources.
                 </v-card-text>
-                <!-- </a> -->
               </v-card>
             </div>
 
@@ -66,7 +63,6 @@
                 :ripple="{ class: 'red--text' }"
                 class="mr-sm-1 mb-4"
               >
-                <!-- <a href="http://www.yeastrc.org/philius/pages/philius/runPhilius.jsp" target="_blank"> -->
                 <v-card-title primary-title>
                   <h4>
                     <a
@@ -82,7 +78,6 @@
                   that extends Phobius by exploiting the power of dynamic
                   Bayesian networks.
                 </v-card-text>
-                <!-- </a> -->
               </v-card>
             </div>
             <div class="col-sm-6">
@@ -100,15 +95,12 @@
                     >
                     <badge rounded type="primary">Random Forest</badge>
                     <badge rounded type="primary">NN</badge>
-
-                    <!-- <badge rounded type="warning">Unavailable</badge> -->
                   </h4>
                 </v-card-title>
                 <v-card-text>
                   Uses PSSMs and physico-chemical properties of AAs in the
                   prediction consisting of 3 stages: RF > NN > RF
                 </v-card-text>
-                <!-- </a> -->
               </v-card>
             </div>
 
@@ -118,19 +110,16 @@
                 :ripple="{ class: 'default--text' }"
                 class="mr-sm-1 mb-4"
               >
-                <!-- <a href="http://topcons.net/" target="_blank"> -->
                 <v-card-title primary-title>
                   <h4>
                     <a href="http://topcons.net/" target="_blank">TOPCONS</a>
                     <badge rounded type="default">Consensus</badge>
-                    <!-- <badge rounded type="warning">Unavailable</badge> -->
                   </h4>
                 </v-card-title>
                 <v-card-text>
                   Consensus prediction of membrane protein topology and signal
                   peptides.
                 </v-card-text>
-                <!-- </a> -->
               </v-card>
             </div>
             <div class="col-sm-6">
@@ -139,7 +128,6 @@
                 :ripple="{ class: 'success--text' }"
                 class="mb-4"
               >
-                <!-- <a href="http://bioinf.cs.ucl.ac.uk/psipred/?memsatsvm=1" target="_blank"> -->
                 <v-card-title primary-title>
                   <h4>
                     <a

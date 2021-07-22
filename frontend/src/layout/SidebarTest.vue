@@ -67,9 +67,6 @@ export default {
       job_id: this.$route.params.id,
     };
   },
-  created() {
-    console.log(this.$route.params.id, this.$route.query.page);
-  },
 };
 </script>
 <style scoped>

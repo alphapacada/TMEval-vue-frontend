@@ -47,12 +47,8 @@ export default {
     //Text below image
     text: String,
   },
-  // mounted() {
-  //   this.getHeaders();
-  // },
   methods: {
     handleClick(evt) {
-      console.log("evt", evt);
       this.$emit("clicked");
     },
   },

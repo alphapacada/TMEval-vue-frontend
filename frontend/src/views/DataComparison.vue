@@ -25,7 +25,7 @@
           <div class="row">
             <div class="col">
               <p>
-                <!-- {{ dc.desc }} -->
+                {{ dc.desc }}
               </p>
             </div>
           </div>

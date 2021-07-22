@@ -25,11 +25,8 @@
         <h1 class="display-1">Assessment Results</h1>
       </span>
       <div>
-        <!-- <b-card> -->
         <modal :show.sync="modal0">
           <b-carousel ref="carousel1" controls no-animation :interval="0">
-            <!-- Text slides with image -->
-
             <b-carousel-slide
               v-for="(value, name) in images"
               :img-src="value.src"
@@ -99,23 +96,19 @@
                 :key="index"
                 :src="path + figure"
               ></image-figure>
-              <!-- :src="figure.src" -->
             </b-tab>
           </card>
         </b-tabs>
-        <!-- </b-card> -->
       </div>
     </div>
   </section>
 </template>
 <script>
-import ProtVista from "ProtVista";
 import ImageFigure from "../components/ImageFigure.vue";
 import CaptionedTable from "../components/CaptionedTable.vue";
 import { BTabs } from "bootstrap-vue/esm/components/tabs/tabs";
 import { BTab } from "bootstrap-vue/esm/components/tabs/tab";
 import { BCard } from "bootstrap-vue/esm/components/card/card";
-import { BImg } from "bootstrap-vue/esm/components/image/img";
 import { BCarousel } from "bootstrap-vue/esm/components/carousel/carousel";
 import { BCarouselSlide } from "bootstrap-vue/esm/components/carousel/carousel-slide";
 import Modal from "@/components/Modal.vue";
@@ -141,7 +134,6 @@ export default {
         "bar_protein_count",
         "bar_tm_helix_length",
         "bar_tm_length",
-        // "plot_cm_classification",
       ],
       figures: {
         tda: [
@@ -173,28 +165,6 @@ export default {
           },
         ],
         pca: {},
-        //   pca: {
-        //     TOPCONS2: {
-        //       src:
-        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TOPCONS2.png",
-        //     },
-        //     CCTOP: {
-        //       src:
-        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_CCTOP.png",
-        //     },
-        //     HMMTOP: {
-        //       src:
-        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_HMMTOP.png",
-        //     },
-        //     PHILIUS: {
-        //       src:
-        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_PHILIUS.png",
-        //     },
-        //     TMHMM2: {
-        //       src:
-        //         "/img/figures/cm_redundant/25_redundant_classification_confusion_matrix_TMHMM2.png",
-        //     },
-        //   },
       },
       mainHeaders: [
         { text: "Prediction Method", value: "Prediction Method" },
@@ -207,7 +177,6 @@ export default {
       ],
       modal0: false,
       vertical: false,
-      // assessment: {},
       tables: {
         pred_acc: { items: [], headers: [] },
         pred_acc_classification: { items: [], headers: [] },
@@ -220,25 +189,8 @@ export default {
   created() {
     window.addEventListener("resize", this.myEventHandler);
   },
-  // mounted() {
-  //   this.fetchResults(this.assessment);
-  // },
-  // mounted() {
-  //   // $backend.getAssessment(25, "A").then((response) => {
-  //   //   this.assessment = response;
-  //   //   this.figures.pca = JSON.parse(this.assessment.plot_cm_classification);
-  //   //   Object.keys(response).forEach((key) => {
-  //   //     if (
-  //   //       !this.figure_names.includes(key) &&
-  //   //       Object.keys(this.tables).includes(key)
-  //   //     )
-  //   //       this.json_to_datatable_item(key);
-  //   //   });
-  //   // });
-  // },
   computed: {
     assessment() {
-      console.log("computed:assessment");
       return this.$store.state.assessment_res["set_25"]["C"];
     },
   },
@@ -247,30 +199,21 @@ export default {
   },
   watch: {
     assessment(assessment_res) {
-      console.log("changed.");
       this.fetchResults(assessment_res);
     },
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
   },
-  // computed: {
-  //   // images() { return this.figures.tda}
-  // },
   methods: {
     fetchResults(assessment_res) {
       let assessment = assessment_res;
-      console.log("fetchResults");
       this.figures.pca = assessment.plot_cm_classification;
-      console.log("bati");
       Object.keys(assessment).forEach((key) => {
-        // console.log(key);
         if (
           !this.figure_names.includes(key) &&
           Object.keys(this.tables).includes(key)
         ) {
-          console.log(key);
-
           this.tables[key].items = assessment[key].items;
 
           this.tables[key].headers = assessment[key].headers;
@@ -280,26 +223,10 @@ export default {
         item.src = this.path + assessment[item.name];
       });
     },
-
-    // roundOffNumbers(obj) {
-    //   console.log(obj);
-    //   return obj.map((e) => {
-    //     Object.keys(e).forEach((key) => {
-    //       if (key != "Prediction Method") {
-    //         e[key] = Math.round(e[key] * 100) / 100;
-    //       }
-    //     });
-    //     return e;
-    //   });
-    // },
     myEventHandler(e) {
-      // console.log(window.innerWidth);
-
       this.vertical = window.innerWidth <= 767 ? true : false;
     },
     showImg(src, tab_images) {
-      console.log("src", src);
-      console.log("tab_images", tab_images);
       this.images = Object.values(tab_images);
       this.$refs.carousel1.setSlide(src);
       this.modal0 = true;
@@ -312,7 +239,6 @@ export default {
   max-width: 60% !important;
 }
 h1.display-1 {
-  /* font-weight: bolder; */
   text-align: center !important;
 }
 ul.nav {

@@ -7,61 +7,17 @@ import vuetify from "./plugins/vuetify";
 import router from "./router";
 import store from "./store";
 
-// import Socketio from 'socket.io-client';
-
-// import Vuetify from 'vuetify/lib';
-// import 'vuetify/src/stylus/app.styl'
-// import Vuetify from 'vuetify'
-// import 'vuetify/dist/vuetify.min.css'
-
-// import Vuetify, {
-//     VApp, //required
-//     VNavigationDrawer,
-//     VCard,
-//     VDataTable,
-//     VTextField,
-//     VList
-// } from 'vuetify/lib'
-
-// Vue.use(Vuetify, {
-//     components: {
-//         VApp,
-//         VNavigationDrawer,
-//         VCard,
-//         VDataTable,
-//         VTextField,
-//         VList
-//     },
-// });
-
-// import './registerServiceWorker'
-// Vue.use(VueAxios, axios)
-// Vue.prototype.$http = axios
-console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV == "production") {
-  console.log = function () {};
-}
 console.log(process.env.VUE_APP_SOCKETIO_CONNECTION_URL);
 console.log(process.env.VUE_APP_API_URL);
-Vue.config.productionTip = false;
-// export const SocketInstance = socketio('http://localhost:3000');
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV == "production") {
+  console.log = function() {};
+}
 
-// export const SocketInstance = socketio(process.env.VUE_APP_SOCKETIO_CONNECTION_URL);
-// Vue.use(new VueSocketIO({
-//     debug: true,
-//     connection: process.env.VUE_APP_SOCKETIO_CONNECTION_URL,
-//     // vuex: {
-//     //     store,
-//     //     actionPrefix: 'SOCKET_',
-//     //     mutationPrefix: 'SOCKET_'
-//     // },
-//     // options: { path: "/my-app/" } //Optional options
-// }))
+Vue.config.productionTip = false;
 
 Vue.use(VueResizeText);
 Vue.use(Argon);
-// Vue.use(VueSocketIO, SocketInstance)
-
 Vue.use(
   new VueSocketIO({
     debug: false,

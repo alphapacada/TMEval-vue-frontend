@@ -174,21 +174,19 @@ export default {
           size: "1.8 MB",
         },
         {
-          name: "TOPDB.tar.xz",
-          size: "4.5 MB",
+          name: "TMSEG.tar.xz",
+          size: "8.5 kB",
         },
       ],
     };
   },
   methods: {
     downloadFile(filename) {
-      console.log($backend.getBaseURL());
       this.$refs.download.href =
         $backend.getBaseURL() + "files/datasets/prediction/" + filename;
       this.$refs.download.click();
     },
     downloadFasta(file) {
-      console.log("downloadFasta");
       this.$refs.download.href =
         $backend.getBaseURL() +
         "files/tmeval-datasets/" +
@@ -196,7 +194,6 @@ export default {
         "?" +
         new URLSearchParams(file.parameters).toString();
       this.$refs.download.click();
-      // $backend.getDownloadableFasta(file)
     },
   },
 };

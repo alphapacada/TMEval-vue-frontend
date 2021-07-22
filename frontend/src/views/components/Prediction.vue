@@ -212,7 +212,7 @@
 <script>
 import { BFormFile, BFormGroup } from "bootstrap-vue";
 // "bootstrap-vue/esm/components/form-file/form-file";
-import ToolsToggler from "@/views/components/ToolsToggler";
+// import ToolsToggler from "@/views/components/ToolsToggler";
 import $backend from "@/api";
 export default {
   data() {
@@ -249,7 +249,7 @@ export default {
     };
   },
   components: {
-    ToolsToggler,
+    // ToolsToggler,
     "b-form-file": BFormFile,
     "b-form-group": BFormGroup,
   },
@@ -259,18 +259,11 @@ export default {
         ? files[0].name
         : `${files.length} files selected`;
     },
-    previewFiles: function() {
-      console.log(this.file);
-    },
-    test() {
-      ToolsToggler.test();
-    },
     checkForm(e) {
       e.preventDefault();
 
       let checkResults = [this.checkSequence(), this.checkToggles()];
       if (!checkResults.includes(false)) {
-        console.log("correct form");
         this.submitForm();
       } else {
         this.snackbarTimeout = 5000;
@@ -284,10 +277,8 @@ export default {
     },
     checkSequence() {
       if (!this.sequence && !Boolean(this.file)) {
-        console.log("Empty textarea");
         this.errorSequence = "Please enter a sequence or upload a file.";
       } else if (this.sequence && Boolean(this.file)) {
-        console.log("This shouldnt be reached.");
         this.errorSequence = "Please input either a sequence or a file only.";
       } else {
         if (this.sequence) {
@@ -299,7 +290,6 @@ export default {
               "Max of 10 FASTA sequences only per submission.";
             return false;
           }
-          // for (let i = 0; i < fastas.length; i++) {
           fastas.forEach((element) => {
             // immediately remove trailing spaces
             element = element.trim();
@@ -331,10 +321,8 @@ export default {
         // check there is something first of all
         return false;
       }
-
       // split on newlines...
       let lines = fasta.split("\n");
-
       // check for header
       if (fasta[0] == ">") {
         // remove one line, starting at the first position
@@ -342,15 +330,12 @@ export default {
       } else {
         return false;
       }
-
       // join the array back into a single string without newlines and
       // trailing or leading spaces
       fasta = lines.join("").trim();
-
       if (!fasta) {
         return false;
       }
-
       return /^[GALMFWKQESPVICYHRNDT\s]{1,20000}$/i.test(fasta);
     },
     submitForm() {
@@ -363,7 +348,6 @@ export default {
           predictionData.push(this.predictionMethods[i].name);
         }
       }
-      console.log(predictionData);
       let evaluationData = {
         file: this.file,
         sequence: this.sequence,
@@ -371,7 +355,6 @@ export default {
       };
       let formData = new FormData();
       formData.append("file", this.file);
-      //   pssm files
       for (let file of this.pssmFiles) {
         formData.append("pssm_files", file, file.name); // note, no square-brackets
       }
@@ -379,19 +362,14 @@ export default {
       formData.append("tools", JSON.stringify(predictionData));
       formData.append("use_cached_pssm", this.use_cached_pssm);
       formData.append("cdhit", this.use_cdhit);
-      console.log("cdhit" + this.use_cdhit);
       $backend
         .postFasta(formData)
         .then((responseData) => {
-          console.log(responseData["task_id"]);
-
           this.$router
             .push({
               path: `/sidebartest/prediction/${responseData["task_id"]}`,
             })
-            .catch((failure) => {
-              console.log("push fail", failure);
-            });
+            .catch((failure) => {});
           this.$store.commit("update_stats");
         })
         .catch((error) => {
@@ -404,7 +382,6 @@ export default {
             this.snackbarText = error.response.data.message;
           }
         });
-      console.log("Form submitted!");
     },
     clearForm() {
       this.sequence = "";
@@ -426,31 +403,21 @@ export default {
       this.sequence = "";
     },
     getTools() {
-      console.log("Retrieving tools.");
       $backend
         .getPredTools()
         .then((responseData) => {
           this.predictionMethods = responseData.data;
         })
         .catch((error) => {
-          // handle error
           this.snackbar = true;
           this.snackbarTimeout = 0;
           this.snackbarText = "Cannot connect to server.";
-          // console.log("error bui");
-          //   this.predictionMethods = this.fakeApiResults;
         });
     },
   },
   mounted() {
     // get tools from database
     this.getTools();
-
-    // console.log(
-    //   this.predictionMethodToggles.map(function(idx) {
-    //     return str.length > 0;
-    //   })
-    // );
     let i;
     for (i = 0; i < this.predictionMethods.length; i++) {
       this.predictionMethodToggles[i] = true;
@@ -467,11 +434,7 @@ export default {
             })
             .indexOf("tmseg")
         ];
-        // console.log("x")
-        // console.log(x)
         return x;
-        // console.log(this.predictionMethods.some(e => e.name == 'tmseg'))
-        // return this.predictionMethodToggles.some(e => e.name == 'tmseg')
       },
     },
   },

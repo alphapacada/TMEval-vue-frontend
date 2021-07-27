@@ -22,7 +22,6 @@
             <v-radio color="primary" label="25" value="25"></v-radio>
             <v-radio color="primary" label="30" value="30"></v-radio>
             <v-radio color="primary" label="40" value="40"></v-radio>
-            <v-radio color="primary" label="70" value="70"></v-radio>
           </v-radio-group>
           <label>
             Experiment Set:
@@ -71,6 +70,7 @@
             :src="assess.pred_acc_classification"
             :text="current_pred_acc_classification_cap"
           ></caption-table>
+        </v-card-text>
       </v-card>
       <!-- FN FP -->
       <v-card id="fn-fp" class="mb-4">
@@ -80,13 +80,11 @@
         <v-card-text>
           <div class="row">
             <div class="col">
-              <caption-table :src="assess.per_segment_fn_fp"></caption-table>
+              <caption-table
+                :src="assess.per_segment_fn_fp"
+                :text="current_per_segment_fn_fp_cap"
+              ></caption-table>
             </div>
-          </div>
-          <div class="pl-4 row">
-            The table above shows that HMMTOP is likely to overpredict the
-            number of transmembrane segments. TOPCONS and CCTOP got the least
-            errors in prediction (FN and FP)
           </div>
         </v-card-text>
       </v-card>
@@ -103,12 +101,12 @@
           <div class="row">
             <div class="col">
               <div class="col">
-                <caption-table :src="assess.mcc"></caption-table>
+                <caption-table
+                  :src="assess.mcc"
+                  :text="current_mcc_cap"
+                ></caption-table>
               </div>
             </div>
-          </div>
-          <div class="pl-4 row">
-            All the prediction tools' scores increased.
           </div>
         </v-card-text>
       </v-card>
@@ -120,10 +118,12 @@
         <v-card-text>
           <div class="row">
             <div class="col">
-              <caption-table :src="assess.sov"></caption-table>
+              <caption-table
+                :src="assess.sov"
+                :text="current_sov_cap"
+              ></caption-table>
             </div>
           </div>
-          <div class="pl-4 row"></div>
         </v-card-text>
       </v-card>
     </v-app>
@@ -148,8 +148,11 @@ export default {
       current_pred_acc_classification: {},
       current_pred_acc_classification_cap: "",
       current_per_segment_fn_fp: {},
+      current_per_segment_fn_fp_cap: "",
       current_mcc: {},
+      current_mcc_cap: "",
       current_sov: {},
+      current_sov_cap: "",
       set: "A",
       table1:
         '<table border="1" class="dataframe table table-sm table-striped table-bordered table-hover table-condensed" id="e_25_df_pred_acc">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Correct TM Count</th>\n      <th>Correct Segment Location</th>\n      <th>N Location Success Rate</th>\n      <th>Correct Topology</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>CCTOP</th>\n      <td>95.586260</td>\n      <td>99.261178</td>\n      <td>95.854922</td>\n      <td>95.231242</td>\n    </tr>\n    <tr>\n      <th>HMMTOP</th>\n      <td>70.629438</td>\n      <td>97.591633</td>\n      <td>6.208021</td>\n      <td>69.612358</td>\n    </tr>\n    <tr>\n      <th>PHILIUS</th>\n      <td>95.557475</td>\n      <td>98.973326</td>\n      <td>78.919593</td>\n      <td>90.241796</td>\n    </tr>\n    <tr>\n      <th>TMHMM2.0.0</th>\n      <td>93.302629</td>\n      <td>98.618307</td>\n      <td>6.351948</td>\n      <td>91.853771</td>\n    </tr>\n    <tr>\n      <th>TOPCONS2</th>\n      <td>96.094799</td>\n      <td>99.155632</td>\n      <td>7.685665</td>\n      <td>93.878334</td>\n    </tr>\n  </tbody>\n</table>',
@@ -203,26 +206,48 @@ export default {
   },
   methods: {
     fetchResults() {
+      console.log("fetch");
       this.currentSeqId = "set_" + this.seqIdentity;
       this.currentSet = this.set;
-      this.current_pred_acc_cap = ` Most of the prediction tools gained correct topology scores of 90
-            and above except HMMTOP. A reason for this unusually high score is
-            the proportion of the positive and negative set. The number of
-            transmembrane protein is only 9.6% of the number of non-tm proteins
-            (921 tm/ 9573 non-tm). Note that a correct topology for an observed
-            transmembrane proteins must meet the following conditions:
-            1. Correct TM Count - The number of transmembrane segments of the
-            actual protein and prediction must be the same.
-            2. Correct Segment Location - Each pair of actual and predicted
-            transmembrane segments must overlap by at least half the length of
+      // this.current_pred_acc_cap = ` Most of the prediction tools gained correct topology scores of 90
+      //       and above except HMMTOP. A reason for this unusually high score is
+      //       the proportion of the positive and negative set. The number of
+      //       transmembrane protein is only 9.6% of the number of non-tm proteins
+      //       (921 tm/ 9573 non-tm). Note that a correct topology for an observed
+      //       transmembrane proteins must meet the following conditions:
+      //       1. Correct TM Count - The number of transmembrane segments of the
+      //       actual protein and prediction must be the same.
+      //       2. Correct Segment Location - Each pair of actual and predicted
+      //       transmembrane segments must overlap by at least half the length of
+      //       the actual transmembrane segment
+      //       3. Correct N Location - The N location of both actual and predicted
+      //       protein must be the same.
+      //       For non transmembrane proteins, the only basis for a correct
+      //       topology is the absence of a transmembrane helix/segment.`;
+      if (this.currentSeqId == "set_25" && this.currentSet == "A") {
+        this.current_pred_acc_cap = ` Most of the prediction tools gained correct topology scores of 80 and above except HMMTOP. A reason for this unusually high score is the proportion of the positive and negative set. The number of transmembrane protein is only 8.50% of the number of non-tm proteins (908 TM/ 10676 non-TM). Note that a correct topology for an observed transmembrane proteins must meet the following conditions:
+
+            1. Correct TM Count - The number of transmembrane segments of the actual protein and prediction must be the same.
+            2. Correct Segment Location - Each pair of actual and predicted transmembrane segments must overlap by at least half the length of
             the actual transmembrane segment
-            3. Correct N Location - The N location of both actual and predicted
-            protein must be the same.
-            For non transmembrane proteins, the only basis for a correct
-            topology is the absence of a transmembrane helix/segment.`;
+            3. Correct N Location - The N location of both actual and predicted protein must be the same.
+            For non transmembrane proteins, the basis for a correct topology is the absence of a transmembrane helix/segment. For known non-TMs with SP, the prediction must only have an SP label.`;
+        this.current_pred_acc_classification_cap = ` HMMTOP and TMHMM2.0 scored 0 on +TM+SP and -TM+SP as they could not discriminate SPs. `;
+        this.current_per_segment_fn_fp = ` In terms of per-sequence entry evaluation on the predicted number of TM segments, all methods rarely had underpredictions (FN) and considerably had low overpredictions (FN).This means that the methods perform well in both measures except for HMMTOP which predicted a significant number of false positives (28.23% of the 870 TM predictions). `;
+        this.current_sov_cap = ` Every method had impressive SOV results which means that there was better quality attached to the overlap between the annotated and predicted TM segments. Each one delivered an SOV score of over 0.80 except for TMSEG.`;
+        this.current_mcc_cap = ` In the evaluation of the binary classification (e.g., Protein Orientation or N-tail location) and multi-class classification (e.g., protein classification) performance of the selected prediction tools, CCTOP best excelled in both categories (Table 20). It was followed by TOPCONS2 which also had the second best MCC scores. `;
+      } else {
+        this.current_pred_acc_cap = "";
+        this.current_pred_acc_classification_cap = "";
+        this.current_per_segment_fn_fp = "";
+        this.current_sov_cap = "";
+        this.current_mcc_cap = "";
+      }
     },
   },
-
+  mounted() {
+    this.fetchResults();
+  },
 };
 </script>
 <style>

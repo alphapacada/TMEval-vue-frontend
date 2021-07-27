@@ -99,7 +99,7 @@
             data-toggle="tooltip"
             title="View Repository"
           >
-            <i class="fa fa-gitlab"></i>
+            <i class="fa fa-github"></i>
             <span class="nav-link-inner--text d-lg-none">Github</span>
           </a>
         </li>

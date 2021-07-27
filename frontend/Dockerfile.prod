@@ -17,7 +17,7 @@ RUN npm install
 # RUN npm install @vue/cli
 RUN mkdir /opt/node_app/app && chown node:node /opt/node_app/app
 WORKDIR /opt/node_app/app
-COPY --chown=node:node frontend .
+COPY --chown=node:node frontend ./
 # RUN chown node:node opt/node_app/app/dist
 USER node
 ENV NODE_ENV=production

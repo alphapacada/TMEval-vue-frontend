@@ -39,8 +39,8 @@
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2">87.40%</span>
-              <span class="text-nowrap">77.63% TM protein topology</span>
+              <span class="text-success mr-2">82.89%</span>
+              <span class="text-nowrap">76.97% TM protein topology</span>
             </template>
           </stats-card>
         </div>
@@ -48,12 +48,12 @@
           <stats-card
             title="Best non-TM Topology Accuracy"
             type="gradient-red"
-            sub-title="TMSEG"
+            sub-title="TOPCONS2"
             icon=""
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2">93.42%</span>
+              <span class="text-success mr-2">91.11%</span>
               <span class="text-nowrap"></span>
             </template>
           </stats-card>

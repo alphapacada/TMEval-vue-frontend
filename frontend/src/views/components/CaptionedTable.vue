@@ -26,7 +26,7 @@
       <div v-if="Boolean(text)" class="row">
         <div
           v-resize-text="{ minFontSize: '9px', maxFontSize: '16px' }"
-          class="mx-auto p-3 col-xs-12 col-md-8 bg-secondary"
+          class="caption-text mx-auto p-3 col-xs-12 col-md-8 bg-secondary"
         >
           {{ text }}
         </div>
@@ -60,5 +60,10 @@ table {
 }
 .table-html {
   display: inline-block;
+}
+.caption-text {
+  white-space: pre-line;
+
+  /* // or pre-line */
 }
 </style>

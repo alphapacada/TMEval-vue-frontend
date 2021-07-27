@@ -9,5 +9,8 @@ docker-compose*
 .gitignore
 .git
 **/*.tar
+**/backend
+**backend/*
+**/flask-caching/
 backend
 /TMEval_070121.tar
